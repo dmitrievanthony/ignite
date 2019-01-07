@@ -29,10 +29,10 @@
     </properties>
 
     <parent>
-        <artifactId>ignite-parent</artifactId>
+        <artifactId>ignite-ml</artifactId>
         <groupId>org.apache.ignite</groupId>
-        <version>1</version>
-        <relativePath>../../../parent</relativePath>
+        <version>2.8.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
 
     <artifactId>ignite-ml-xgboost-model-parser</artifactId>
@@ -42,7 +42,7 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.ignite</groupId>
-            <artifactId>ignite-ml</artifactId>
+            <artifactId>ignite-ml-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

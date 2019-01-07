@@ -27,7 +27,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.apache.ignite.lang.IgniteBiTuple;
 import org.apache.ignite.ml.dataset.Dataset;
 import org.apache.ignite.ml.dataset.DatasetBuilder;
 import org.apache.ignite.ml.dataset.PartitionDataBuilder;
@@ -44,6 +43,7 @@ import org.apache.ignite.ml.structures.LabeledVector;
 import org.apache.ignite.ml.structures.LabeledVectorSet;
 import org.apache.ignite.ml.structures.partition.LabeledDatasetPartitionDataBuilderOnHeap;
 import org.apache.ignite.ml.trainers.SingleLabelDatasetTrainer;
+import org.apache.ignite.ml.util.BiTuple;
 
 /**
  * The trainer for KMeans algorithm.
@@ -169,7 +169,7 @@ public class KMeansTrainer extends SingleLabelDatasetTrainer<KMeansModel> {
             TotalCostAndCounts res = new TotalCostAndCounts();
 
             for (int i = 0; i < data.rowSize(); i++) {
-                final IgniteBiTuple<Integer, Double> closestCentroid = findClosestCentroid(finalCenters, data.getRow(i));
+                final BiTuple<Integer, Double> closestCentroid = findClosestCentroid(finalCenters, data.getRow(i));
 
                 int centroidIdx = closestCentroid.get1();
 
@@ -204,7 +204,7 @@ public class KMeansTrainer extends SingleLabelDatasetTrainer<KMeansModel> {
      * @param centers Centers to look in.
      * @param pnt Point.
      */
-    private IgniteBiTuple<Integer, Double> findClosestCentroid(Vector[] centers, LabeledVector pnt) {
+    private BiTuple<Integer, Double> findClosestCentroid(Vector[] centers, LabeledVector pnt) {
         double bestDistance = Double.POSITIVE_INFINITY;
         int bestInd = 0;
 
@@ -215,7 +215,7 @@ public class KMeansTrainer extends SingleLabelDatasetTrainer<KMeansModel> {
                 bestInd = i;
             }
         }
-        return new IgniteBiTuple<>(bestInd, bestDistance);
+        return new BiTuple<>(bestInd, bestDistance);
     }
 
     /**

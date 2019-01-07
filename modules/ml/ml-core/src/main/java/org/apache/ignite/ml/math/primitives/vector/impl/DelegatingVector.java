@@ -23,8 +23,8 @@ import java.io.ObjectOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Spliterator;
+import java.util.UUID;
 import java.util.function.IntToDoubleFunction;
-import org.apache.ignite.lang.IgniteUuid;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.functions.IgniteDoubleFunction;
 import org.apache.ignite.ml.math.functions.IgniteIntDoubleToDoubleBiFunction;
@@ -44,7 +44,7 @@ public class DelegatingVector implements Vector {
     private Map<String, Object> meta = new HashMap<>();
 
     /** GUID. */
-    private IgniteUuid guid = IgniteUuid.randomUuid();
+    private UUID guid = UUID.randomUUID();
 
     /** */
     public DelegatingVector() {
@@ -77,7 +77,7 @@ public class DelegatingVector implements Vector {
     @Override public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         dlg = (Vector)in.readObject();
         meta = (Map<String, Object>)in.readObject();
-        guid = (IgniteUuid)in.readObject();
+        guid = (UUID)in.readObject();
     }
 
     /** {@inheritDoc} */
@@ -368,7 +368,7 @@ public class DelegatingVector implements Vector {
     }
 
     /** {@inheritDoc} */
-    @Override public IgniteUuid guid() {
+    @Override public UUID guid() {
         return guid;
     }
 

@@ -20,11 +20,11 @@ package org.apache.ignite.ml.selection.scoring.cursor;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.IgniteModel;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.selection.scoring.LabelPair;
+import org.apache.ignite.ml.util.SerializableBiPredicate;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -39,7 +39,7 @@ public class LocalLabelPairCursor<L, K, V, T> implements LabelPairCursor<L> {
     private final Map<K, V> upstreamMap;
 
     /** Filter for {@code upstream} data. */
-    private final IgniteBiPredicate<K, V> filter;
+    private final SerializableBiPredicate<K, V> filter;
 
     /** Feature extractor. */
     private final IgniteBiFunction<K, V, Vector> featureExtractor;
@@ -59,7 +59,7 @@ public class LocalLabelPairCursor<L, K, V, T> implements LabelPairCursor<L> {
      * @param lbExtractor Label extractor.
      * @param mdl Model for inference.
      */
-    public LocalLabelPairCursor(Map<K, V> upstreamMap, IgniteBiPredicate<K, V> filter,
+    public LocalLabelPairCursor(Map<K, V> upstreamMap, SerializableBiPredicate<K, V> filter,
                                 IgniteBiFunction<K, V, Vector> featureExtractor, IgniteBiFunction<K, V, L> lbExtractor,
                                 IgniteModel<Vector, L> mdl) {
         this.upstreamMap = upstreamMap;
@@ -135,7 +135,7 @@ public class LocalLabelPairCursor<L, K, V, T> implements LabelPairCursor<L> {
             while (nextEntry == null && iter.hasNext()) {
                 Map.Entry<K, V> entry = iter.next();
 
-                if (filter.apply(entry.getKey(), entry.getValue())) {
+                if (filter.test(entry.getKey(), entry.getValue())) {
                     this.nextEntry = entry;
                     break;
                 }

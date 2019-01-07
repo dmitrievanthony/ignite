@@ -19,7 +19,7 @@ package org.apache.ignite.ml.math.primitives.matrix;
 
 import java.io.Externalizable;
 import java.util.Spliterator;
-import org.apache.ignite.lang.IgniteUuid;
+import java.util.UUID;
 import org.apache.ignite.ml.math.Destroyable;
 import org.apache.ignite.ml.math.MetaAttributes;
 import org.apache.ignite.ml.math.StorageOpsMetrics;
@@ -378,7 +378,7 @@ public interface Matrix extends MetaAttributes, Externalizable, StorageOpsMetric
      *
      * @return Matrix GUID.
      */
-    public IgniteUuid guid();
+    public UUID guid();
 
     /**
      * Sets given value.

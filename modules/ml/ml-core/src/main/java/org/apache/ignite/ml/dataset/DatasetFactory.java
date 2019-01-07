@@ -19,9 +19,6 @@ package org.apache.ignite.ml.dataset;
 
 import java.io.Serializable;
 import java.util.Map;
-import org.apache.ignite.Ignite;
-import org.apache.ignite.IgniteCache;
-import org.apache.ignite.ml.dataset.impl.cache.CacheBasedDatasetBuilder;
 import org.apache.ignite.ml.dataset.impl.local.LocalDatasetBuilder;
 import org.apache.ignite.ml.dataset.primitive.SimpleDataset;
 import org.apache.ignite.ml.dataset.primitive.SimpleLabeledDataset;
@@ -125,61 +122,6 @@ public class DatasetFactory {
     }
 
     /**
-     * Creates a new instance of distributed dataset using the specified {@code partCtxBuilder} and
-     * {@code partDataBuilder}. This is the generic methods that allows to create any Ignite Cache based datasets with
-     * any desired partition {@code context} and {@code data}.
-     *
-     * @param ignite Ignite instance.
-     * @param upstreamCache Ignite Cache with {@code upstream} data.
-     * @param envBuilder Learning environment builder.
-     * @param partCtxBuilder Partition {@code context} builder.
-     * @param partDataBuilder Partition {@code data} builder.
-     * @param <K> Type of a key in {@code upstream} data.
-     * @param <V> Type of a value in {@code upstream} data.
-     * @param <C> Type of a partition {@code context}.
-     * @param <D> Type of a partition {@code data}.
-     * @return Dataset.
-     */
-    public static <K, V, C extends Serializable, D extends AutoCloseable> Dataset<C, D> create(
-        Ignite ignite, IgniteCache<K, V> upstreamCache,
-        LearningEnvironmentBuilder envBuilder,
-        PartitionContextBuilder<K, V, C> partCtxBuilder,
-        PartitionDataBuilder<K, V, C, D> partDataBuilder) {
-        return create(
-            new CacheBasedDatasetBuilder<>(ignite, upstreamCache),
-            envBuilder,
-            partCtxBuilder,
-            partDataBuilder
-        );
-    }
-
-    /**
-     * Creates a new instance of distributed dataset using the specified {@code partCtxBuilder} and
-     * {@code partDataBuilder}. This is the generic methods that allows to create any Ignite Cache based datasets with
-     * any desired partition {@code context} and {@code data}.
-     *
-     * @param ignite Ignite instance.
-     * @param upstreamCache Ignite Cache with {@code upstream} data.
-     * @param partCtxBuilder Partition {@code context} builder.
-     * @param partDataBuilder Partition {@code data} builder.
-     * @param <K> Type of a key in {@code upstream} data.
-     * @param <V> Type of a value in {@code upstream} data.
-     * @param <C> Type of a partition {@code context}.
-     * @param <D> Type of a partition {@code data}.
-     * @return Dataset.
-     */
-    public static <K, V, C extends Serializable, D extends AutoCloseable> Dataset<C, D> create(
-        Ignite ignite, IgniteCache<K, V> upstreamCache,
-        PartitionContextBuilder<K, V, C> partCtxBuilder,
-        PartitionDataBuilder<K, V, C, D> partDataBuilder) {
-        return create(
-            new CacheBasedDatasetBuilder<>(ignite, upstreamCache),
-            partCtxBuilder,
-            partDataBuilder
-        );
-    }
-
-    /**
      * Creates a new instance of distributed {@link SimpleDataset} using the specified {@code partCtxBuilder} and
      * {@code featureExtractor}. This methods determines partition {@code data} to be {@link SimpleDatasetData}, but
      * allows to use any desired type of partition {@code context}.
@@ -204,34 +146,6 @@ public class DatasetFactory {
             partCtxBuilder,
             new SimpleDatasetDataBuilder<>(featureExtractor)
         ).wrap(SimpleDataset::new);
-    }
-
-    /**
-     * Creates a new instance of distributed {@link SimpleDataset} using the specified {@code partCtxBuilder} and
-     * {@code featureExtractor}. This methods determines partition {@code data} to be {@link SimpleDatasetData}, but
-     * allows to use any desired type of partition {@code context}.
-     *
-     * @param ignite Ignite instance.
-     * @param upstreamCache Ignite Cache with {@code upstream} data.
-     * @param envBuilder Learning environment builder.
-     * @param partCtxBuilder Partition {@code context} builder.
-     * @param featureExtractor Feature extractor used to extract features and build {@link SimpleDatasetData}.
-     * @param <K> Type of a key in {@code upstream} data.
-     * @param <V> Type of a value in {@code upstream} data.
-     * @param <C> Type of a partition {@code context}.
-     * @return Dataset.
-     */
-    public static <K, V, C extends Serializable> SimpleDataset<C> createSimpleDataset(Ignite ignite,
-        IgniteCache<K, V> upstreamCache,
-        LearningEnvironmentBuilder envBuilder,
-        PartitionContextBuilder<K, V, C> partCtxBuilder,
-        IgniteBiFunction<K, V, Vector> featureExtractor) {
-        return createSimpleDataset(
-            new CacheBasedDatasetBuilder<>(ignite, upstreamCache),
-            envBuilder,
-            partCtxBuilder,
-            featureExtractor
-        );
     }
 
     /**
@@ -264,38 +178,6 @@ public class DatasetFactory {
     }
 
     /**
-     * Creates a new instance of distributed {@link SimpleLabeledDataset} using the specified {@code partCtxBuilder},
-     * {@code featureExtractor} and {@code lbExtractor}. This method determines partition {@code data} to be
-     * {@link SimpleLabeledDatasetData}, but allows to use any desired type of partition {@code context}.
-     *
-     * @param ignite Ignite instance.
-     * @param upstreamCache Ignite Cache with {@code upstream} data.
-     * @param envBuilder Learning environment builder.
-     * @param partCtxBuilder Partition {@code context} builder.
-     * @param featureExtractor Feature extractor used to extract features and build {@link SimpleLabeledDatasetData}.
-     * @param lbExtractor Label extractor used to extract labels and build {@link SimpleLabeledDatasetData}.
-     * @param <K> Type of a key in {@code upstream} data.
-     * @param <V> Type of a value in {@code upstream} data.
-     * @param <C> Type of a partition {@code context}.
-     * @return Dataset.
-     */
-    public static <K, V, C extends Serializable> SimpleLabeledDataset<C> createSimpleLabeledDataset(
-        Ignite ignite,
-        IgniteCache<K, V> upstreamCache,
-        LearningEnvironmentBuilder envBuilder,
-        PartitionContextBuilder<K, V, C> partCtxBuilder,
-        IgniteBiFunction<K, V, Vector> featureExtractor,
-        IgniteBiFunction<K, V, double[]> lbExtractor) {
-        return createSimpleLabeledDataset(
-            new CacheBasedDatasetBuilder<>(ignite, upstreamCache),
-            envBuilder,
-            partCtxBuilder,
-            featureExtractor,
-            lbExtractor
-        );
-    }
-
-    /**
      * Creates a new instance of distributed {@link SimpleDataset} using the specified {@code featureExtractor}. This
      * methods determines partition {@code context} to be {@link EmptyContext} and partition {@code data} to be
      * {@link SimpleDatasetData}.
@@ -315,54 +197,6 @@ public class DatasetFactory {
             datasetBuilder,
             envBuilder,
             new EmptyContextBuilder<>(),
-            featureExtractor
-        );
-    }
-
-    /**
-     * Creates a new instance of distributed {@link SimpleDataset} using the specified {@code featureExtractor}. This
-     * methods determines partition {@code context} to be {@link EmptyContext} and partition {@code data} to be
-     * {@link SimpleDatasetData}.
-     *
-     * @param ignite Ignite instance.
-     * @param upstreamCache Ignite Cache with {@code upstream} data.
-     * @param envBuilder Learning environment builder.
-     * @param featureExtractor Feature extractor used to extract features and build {@link SimpleDatasetData}.
-     * @param <K> Type of a key in {@code upstream} data.
-     * @param <V> Type of a value in {@code upstream} data.
-     * @return Dataset.
-     */
-    public static <K, V> SimpleDataset<EmptyContext> createSimpleDataset(
-        Ignite ignite,
-        IgniteCache<K, V> upstreamCache,
-        LearningEnvironmentBuilder envBuilder,
-        IgniteBiFunction<K, V, Vector> featureExtractor) {
-        return createSimpleDataset(
-            new CacheBasedDatasetBuilder<>(ignite, upstreamCache),
-            envBuilder,
-            featureExtractor
-        );
-    }
-
-    /**
-     * Creates a new instance of distributed {@link SimpleDataset} using the specified {@code featureExtractor}. This
-     * methods determines partition {@code context} to be {@link EmptyContext} and partition {@code data} to be
-     * {@link SimpleDatasetData}.
-     *
-     * @param ignite Ignite instance.
-     * @param upstreamCache Ignite Cache with {@code upstream} data.
-     * @param featureExtractor Feature extractor used to extract features and build {@link SimpleDatasetData}.
-     * @param <K> Type of a key in {@code upstream} data.
-     * @param <V> Type of a value in {@code upstream} data.
-     * @return Dataset.
-     */
-    public static <K, V> SimpleDataset<EmptyContext> createSimpleDataset(
-        Ignite ignite,
-        IgniteCache<K, V> upstreamCache,
-        IgniteBiFunction<K, V, Vector> featureExtractor) {
-        return createSimpleDataset(
-            new CacheBasedDatasetBuilder<>(ignite, upstreamCache),
-            LearningEnvironmentBuilder.defaultBuilder(),
             featureExtractor
         );
     }
@@ -389,33 +223,6 @@ public class DatasetFactory {
             datasetBuilder,
             envBuilder,
             new EmptyContextBuilder<>(),
-            featureExtractor,
-            lbExtractor
-        );
-    }
-
-    /**
-     * Creates a new instance of distributed {@link SimpleLabeledDataset} using the specified {@code featureExtractor}
-     * and {@code lbExtractor}. This methods determines partition {@code context} to be {@link EmptyContext} and
-     * partition {@code data} to be {@link SimpleLabeledDatasetData}.
-     *
-     * @param ignite Ignite instance.
-     * @param upstreamCache Ignite Cache with {@code upstream} data.
-     * @param envBuilder Learning environment builder.
-     * @param featureExtractor Feature extractor used to extract features and build {@link SimpleLabeledDatasetData}.
-     * @param lbExtractor Label extractor used to extract labels and build {@link SimpleLabeledDatasetData}.
-     * @param <K> Type of a key in {@code upstream} data.
-     * @param <V> Type of a value in {@code upstream} data.
-     * @return Dataset.
-     */
-    public static <K, V> SimpleLabeledDataset<EmptyContext> createSimpleLabeledDataset(
-        Ignite ignite,
-        LearningEnvironmentBuilder envBuilder,
-        IgniteCache<K, V> upstreamCache, IgniteBiFunction<K, V, Vector> featureExtractor,
-        IgniteBiFunction<K, V, double[]> lbExtractor) {
-        return createSimpleLabeledDataset(
-            new CacheBasedDatasetBuilder<>(ignite, upstreamCache),
-            envBuilder,
             featureExtractor,
             lbExtractor
         );

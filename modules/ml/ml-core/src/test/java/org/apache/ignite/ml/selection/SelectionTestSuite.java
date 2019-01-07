@@ -19,10 +19,8 @@ package org.apache.ignite.ml.selection;
 
 import org.apache.ignite.ml.selection.cv.CrossValidationTest;
 import org.apache.ignite.ml.selection.paramgrid.ParameterSetGeneratorTest;
-import org.apache.ignite.ml.selection.scoring.cursor.CacheBasedLabelPairCursorTest;
 import org.apache.ignite.ml.selection.scoring.cursor.LocalLabelPairCursorTest;
 import org.apache.ignite.ml.selection.scoring.evaluator.BinaryClassificationEvaluatorTest;
-import org.apache.ignite.ml.selection.scoring.evaluator.EvaluatorTest;
 import org.apache.ignite.ml.selection.scoring.metric.AccuracyTest;
 import org.apache.ignite.ml.selection.scoring.metric.BinaryClassificationMetricsTest;
 import org.apache.ignite.ml.selection.scoring.metric.BinaryClassificationMetricsValuesTest;
@@ -48,8 +46,6 @@ import org.junit.runners.Suite;
     FmeasureTest.class,
     SHA256UniformMapperTest.class,
     TrainTestDatasetSplitterTest.class,
-    EvaluatorTest.class,
-    CacheBasedLabelPairCursorTest.class,
     BinaryClassificationMetricsTest.class,
     BinaryClassificationMetricsValuesTest.class,
     BinaryClassificationEvaluatorTest.class,

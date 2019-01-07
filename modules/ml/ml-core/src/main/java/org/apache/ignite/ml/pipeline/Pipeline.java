@@ -20,11 +20,8 @@ package org.apache.ignite.ml.pipeline;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.apache.ignite.Ignite;
-import org.apache.ignite.IgniteCache;
 import org.apache.ignite.ml.IgniteModel;
 import org.apache.ignite.ml.dataset.DatasetBuilder;
-import org.apache.ignite.ml.dataset.impl.cache.CacheBasedDatasetBuilder;
 import org.apache.ignite.ml.dataset.impl.local.LocalDatasetBuilder;
 import org.apache.ignite.ml.environment.LearningEnvironmentBuilder;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
@@ -99,18 +96,6 @@ public class Pipeline<K, V, R> {
     public Pipeline<K, V, R> addTrainer(DatasetTrainer trainer) {
         this.finalStage = trainer;
         return this;
-    }
-
-    /**
-     * Fits the pipeline to the input cache.
-     *
-     * @param ignite Ignite instance.
-     * @param cache Ignite cache with {@code upstream} data.
-     * @return The fitted model based on chain of preprocessors and final trainer.
-     */
-    public PipelineMdl<K, V> fit(Ignite ignite, IgniteCache<K, V> cache) {
-        DatasetBuilder datasetBuilder = new CacheBasedDatasetBuilder<>(ignite, cache);
-        return fit(datasetBuilder);
     }
 
     /**

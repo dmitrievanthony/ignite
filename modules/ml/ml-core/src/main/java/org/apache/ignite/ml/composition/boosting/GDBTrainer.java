@@ -19,7 +19,6 @@ package org.apache.ignite.ml.composition.boosting;
 
 import java.util.Arrays;
 import java.util.List;
-import org.apache.ignite.lang.IgniteBiTuple;
 import org.apache.ignite.ml.IgniteModel;
 import org.apache.ignite.ml.composition.ModelsComposition;
 import org.apache.ignite.ml.composition.boosting.convergence.ConvergenceCheckerFactory;
@@ -43,6 +42,7 @@ import org.apache.ignite.ml.tree.DecisionTreeRegressionTrainer;
 import org.apache.ignite.ml.tree.data.DecisionTreeData;
 import org.apache.ignite.ml.tree.data.DecisionTreeDataBuilder;
 import org.apache.ignite.ml.tree.randomforest.RandomForestRegressionTrainer;
+import org.apache.ignite.ml.util.BiTuple;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -100,7 +100,7 @@ public abstract class GDBTrainer extends DatasetTrainer<ModelsComposition, Doubl
         if (!learnLabels(datasetBuilder, featureExtractor, lbExtractor))
             return getLastTrainedModelOrThrowEmptyDatasetException(mdl);
 
-        IgniteBiTuple<Double, Long> initAndSampleSize = computeInitialValue(
+        BiTuple<Double, Long> initAndSampleSize = computeInitialValue(
             envBuilder,
             datasetBuilder,
             featureExtractor,
@@ -189,7 +189,7 @@ public abstract class GDBTrainer extends DatasetTrainer<ModelsComposition, Doubl
      * @param featureExtractor Feature extractor.
      * @param lbExtractor Label extractor.
      */
-    protected <V, K> IgniteBiTuple<Double, Long> computeInitialValue(
+    protected <V, K> BiTuple<Double, Long> computeInitialValue(
         LearningEnvironmentBuilder envBuilder,
         DatasetBuilder<K, V> builder,
         IgniteBiFunction<K, V, Vector> featureExtractor,
@@ -200,10 +200,10 @@ public abstract class GDBTrainer extends DatasetTrainer<ModelsComposition, Doubl
             new EmptyContextBuilder<>(),
             new DecisionTreeDataBuilder<>(featureExtractor, lbExtractor, false)
         )) {
-            IgniteBiTuple<Double, Long> meanTuple = dataset.compute(
+            BiTuple<Double, Long> meanTuple = dataset.compute(
                 data -> {
                     double sum = Arrays.stream(data.getLabels()).map(this::externalLabelToInternal).sum();
-                    return new IgniteBiTuple<>(sum, (long)data.getLabels().length);
+                    return new BiTuple<>(sum, (long)data.getLabels().length);
                 },
                 (a, b) -> {
                     if (a == null)

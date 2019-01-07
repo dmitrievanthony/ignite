@@ -19,7 +19,6 @@ package org.apache.ignite.ml;
 
 import java.io.Serializable;
 import java.util.function.BiFunction;
-import org.apache.ignite.ml.inference.Model;
 
 /** Basic interface for all models. */
 public interface IgniteModel<T, V> extends Model<T, V>, Serializable {

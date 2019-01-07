@@ -18,12 +18,12 @@
 package org.apache.ignite.ml.math.exceptions.knn;
 
 import java.nio.file.Path;
-import org.apache.ignite.IgniteException;
+import org.apache.ignite.ml.math.exceptions.MLRuntimeException;
 
 /**
  * Shows non-parsed data in specific row by given file path.
  */
-public class FileParsingException extends IgniteException {
+public class FileParsingException extends MLRuntimeException {
     /** */
     private static final long serialVersionUID = 0L;
 

@@ -19,8 +19,8 @@ package org.apache.ignite.ml.math.primitives.vector;
 
 import java.io.Externalizable;
 import java.util.Spliterator;
+import java.util.UUID;
 import java.util.function.IntToDoubleFunction;
-import org.apache.ignite.lang.IgniteUuid;
 import org.apache.ignite.ml.math.Destroyable;
 import org.apache.ignite.ml.math.MetaAttributes;
 import org.apache.ignite.ml.math.StorageOpsMetrics;
@@ -509,7 +509,7 @@ public interface Vector extends MetaAttributes, Externalizable, StorageOpsMetric
      *
      * @return Vector GUID.
      */
-    public IgniteUuid guid();
+    public UUID guid();
 
     /**
      * Replace vector entry with value oldVal at i with result of computing f(i, oldVal).

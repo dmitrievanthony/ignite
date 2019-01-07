@@ -30,12 +30,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.apache.ignite.IgniteLogger;
-import org.apache.ignite.lang.IgniteUuid;
 import org.apache.ignite.ml.math.primitives.matrix.Matrix;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
+import org.apache.ignite.ml.util.TMPLogger;
 
 /**
  * Utility methods to support output of {@link Vector} and {@link Matrix} instances to plain text or HTML.
@@ -93,10 +93,10 @@ public class Tracer {
 
     /**
      * @param vec Vector to show.
-     * @param log {@link IgniteLogger} instance for output.
+     * @param log {@link TMPLogger} instance for output.
      * @param fmt Format string for vector elements.
      */
-    public static void showAscii(Vector vec, IgniteLogger log, String fmt) {
+    public static void showAscii(Vector vec, TMPLogger log, String fmt) {
         String cls = vec.getClass().getSimpleName();
 
         log.info(String.format(LOCALE, "%s(%d) [%s]", cls, vec.size(), mkString(vec, fmt)));
@@ -104,9 +104,9 @@ public class Tracer {
 
     /**
      * @param vec Vector to show as plain text.
-     * @param log {@link IgniteLogger} instance for output.
+     * @param log {@link TMPLogger} instance for output.
      */
-    public static void showAscii(Vector vec, IgniteLogger log) {
+    public static void showAscii(Vector vec, TMPLogger log) {
         showAscii(vec, log, "%4f");
     }
 
@@ -198,10 +198,10 @@ public class Tracer {
 
     /**
      * @param mtx {@link Matrix} object to show as a plain text.
-     * @param log {@link IgniteLogger} instance to output the logged matrix.
+     * @param log {@link TMPLogger} instance to output the logged matrix.
      * @param fmt Format string for matrix rows.
      */
-    public static void showAscii(Matrix mtx, IgniteLogger log, String fmt) {
+    public static void showAscii(Matrix mtx, TMPLogger log, String fmt) {
         String cls = mtx.getClass().getSimpleName();
 
         int rows = mtx.rowSize();
@@ -415,7 +415,7 @@ public class Tracer {
      * @throws IOException Thrown in case of any errors.
      */
     private static void openHtmlFile(String html) throws IOException {
-        File temp = File.createTempFile(IgniteUuid.randomUuid().toString(), ".html");
+        File temp = File.createTempFile(UUID.randomUUID().toString(), ".html");
 
         BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
 

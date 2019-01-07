@@ -25,8 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Spliterator;
+import java.util.UUID;
 import java.util.function.Consumer;
-import org.apache.ignite.lang.IgniteUuid;
 import org.apache.ignite.ml.math.Blas;
 import org.apache.ignite.ml.math.exceptions.CardinalityException;
 import org.apache.ignite.ml.math.exceptions.ColumnIndexException;
@@ -71,7 +71,7 @@ public abstract class AbstractMatrix implements Matrix {
     private Map<String, Object> meta = new HashMap<>();
 
     /** Matrix's GUID. */
-    private IgniteUuid guid = IgniteUuid.randomUuid();
+    private UUID guid = UUID.randomUUID();
 
     /**
      * @param sto Backing {@link MatrixStorage}.
@@ -323,7 +323,7 @@ public abstract class AbstractMatrix implements Matrix {
     @Override public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         sto = (MatrixStorage)in.readObject();
         meta = (Map<String, Object>)in.readObject();
-        guid = (IgniteUuid)in.readObject();
+        guid = (UUID)in.readObject();
     }
 
     /** {@inheritDoc} */
@@ -645,7 +645,7 @@ public abstract class AbstractMatrix implements Matrix {
     }
 
     /** {@inheritDoc} */
-    @Override public IgniteUuid guid() {
+    @Override public UUID guid() {
         return guid;
     }
 

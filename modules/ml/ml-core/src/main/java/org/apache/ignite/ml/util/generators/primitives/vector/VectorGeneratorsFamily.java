@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.apache.ignite.internal.util.typedef.internal.A;
 import org.apache.ignite.ml.math.functions.IgniteFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.structures.LabeledVector;
+import org.apache.ignite.ml.util.ArgumentCheck;
 import org.apache.ignite.ml.util.generators.DataStreamGenerator;
 import org.apache.ignite.ml.util.generators.primitives.scalar.DiscreteRandomProducer;
 
@@ -101,7 +101,7 @@ public class VectorGeneratorsFamily implements VectorGenerator {
          * @return This builder.
          */
         public Builder add(VectorGenerator generator, double weight) {
-            A.ensure(weight > 0, "weight > 0");
+            ArgumentCheck.ensure(weight > 0, "weight > 0");
 
             family.add(generator);
             weights.add(weight);
@@ -146,7 +146,7 @@ public class VectorGeneratorsFamily implements VectorGenerator {
          * @return Vector generators family.
          */
         public VectorGeneratorsFamily build(long seed) {
-            A.notEmpty(family, "family.size != 0");
+            ArgumentCheck.notEmpty(family, "family.size != 0");
             double sumOfWeigts = weights.stream().mapToDouble(x -> x).sum();
             double[] probs = weights.stream().mapToDouble(w -> w / sumOfWeigts).toArray();
 

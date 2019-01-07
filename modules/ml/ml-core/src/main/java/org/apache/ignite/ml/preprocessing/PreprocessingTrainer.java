@@ -18,10 +18,7 @@
 package org.apache.ignite.ml.preprocessing;
 
 import java.util.Map;
-import org.apache.ignite.Ignite;
-import org.apache.ignite.IgniteCache;
 import org.apache.ignite.ml.dataset.DatasetBuilder;
-import org.apache.ignite.ml.dataset.impl.cache.CacheBasedDatasetBuilder;
 import org.apache.ignite.ml.dataset.impl.local.LocalDatasetBuilder;
 import org.apache.ignite.ml.environment.LearningEnvironmentBuilder;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
@@ -59,43 +56,6 @@ public interface PreprocessingTrainer<K, V, T, R> {
         DatasetBuilder<K, V> datasetBuilder,
         IgniteBiFunction<K, V, T> basePreprocessor) {
         return fit(LearningEnvironmentBuilder.defaultBuilder(), datasetBuilder, basePreprocessor);
-    }
-
-    /**
-     * Fits preprocessor.
-     *
-     * @param ignite Ignite instance.
-     * @param cache Ignite cache.
-     * @param basePreprocessor Base preprocessor.
-     * @return Preprocessor.
-     */
-    public default IgniteBiFunction<K, V, R> fit(
-        Ignite ignite, IgniteCache<K, V> cache,
-        IgniteBiFunction<K, V, T> basePreprocessor) {
-        return fit(
-            new CacheBasedDatasetBuilder<>(ignite, cache),
-            basePreprocessor
-        );
-    }
-
-    /**
-     * Fits preprocessor.
-     *
-     * @param envBuilder Learning environment builder.
-     * @param ignite Ignite instance.
-     * @param cache Ignite cache.
-     * @param basePreprocessor Base preprocessor.
-     * @return Preprocessor.
-     */
-    public default IgniteBiFunction<K, V, R> fit(
-        LearningEnvironmentBuilder envBuilder,
-        Ignite ignite, IgniteCache<K, V> cache,
-        IgniteBiFunction<K, V, T> basePreprocessor) {
-        return fit(
-            envBuilder,
-            new CacheBasedDatasetBuilder<>(ignite, cache),
-            basePreprocessor
-        );
     }
 
     /**

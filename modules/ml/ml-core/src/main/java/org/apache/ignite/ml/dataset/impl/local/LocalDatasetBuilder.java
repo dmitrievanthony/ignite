@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.dataset.DatasetBuilder;
 import org.apache.ignite.ml.dataset.PartitionContextBuilder;
 import org.apache.ignite.ml.dataset.PartitionDataBuilder;
@@ -34,6 +33,7 @@ import org.apache.ignite.ml.dataset.UpstreamTransformerBuilder;
 import org.apache.ignite.ml.environment.LearningEnvironment;
 import org.apache.ignite.ml.environment.LearningEnvironmentBuilder;
 import org.apache.ignite.ml.math.functions.IgniteFunction;
+import org.apache.ignite.ml.util.SerializableBiPredicate;
 import org.apache.ignite.ml.util.Utils;
 
 /**
@@ -51,7 +51,7 @@ public class LocalDatasetBuilder<K, V> implements DatasetBuilder<K, V> {
     private final int partitions;
 
     /** Filter for {@code upstream} data. */
-    private final IgniteBiPredicate<K, V> filter;
+    private final SerializableBiPredicate<K, V> filter;
 
     /** Upstream transformers. */
     private final UpstreamTransformerBuilder<K, V> upstreamTransformerBuilder;
@@ -76,7 +76,7 @@ public class LocalDatasetBuilder<K, V> implements DatasetBuilder<K, V> {
      * @param upstreamTransformerBuilder Builder of upstream transformer.
      */
     public LocalDatasetBuilder(Map<K, V> upstreamMap,
-        IgniteBiPredicate<K, V> filter,
+        SerializableBiPredicate<K, V> filter,
         int partitions,
         UpstreamTransformerBuilder<K, V> upstreamTransformerBuilder) {
         this.upstreamMap = upstreamMap;
@@ -93,7 +93,7 @@ public class LocalDatasetBuilder<K, V> implements DatasetBuilder<K, V> {
      * @param partitions Number of partitions.
      */
     public LocalDatasetBuilder(Map<K, V> upstreamMap,
-        IgniteBiPredicate<K, V> filter,
+        SerializableBiPredicate<K, V> filter,
         int partitions) {
         this(upstreamMap, filter, partitions, UpstreamTransformerBuilder.identity());
     }
@@ -110,7 +110,7 @@ public class LocalDatasetBuilder<K, V> implements DatasetBuilder<K, V> {
         upstreamMap
             .entrySet()
             .stream()
-            .filter(en -> filter.apply(en.getKey(), en.getValue()))
+            .filter(en -> filter.test(en.getKey(), en.getValue()))
             .map(en -> new UpstreamEntry<>(en.getKey(), en.getValue()))
             .forEach(entriesList::add);
 
@@ -165,9 +165,10 @@ public class LocalDatasetBuilder<K, V> implements DatasetBuilder<K, V> {
     }
 
     /** {@inheritDoc} */
-    @Override public DatasetBuilder<K, V> withFilter(IgniteBiPredicate<K, V> filterToAdd) {
+    @SuppressWarnings("unchecked")
+    @Override public DatasetBuilder<K, V> withFilter(SerializableBiPredicate<K, V> filterToAdd) {
         return new LocalDatasetBuilder<>(upstreamMap,
-            (e1, e2) -> filter.apply(e1, e2) && filterToAdd.apply(e1, e2), partitions);
+            (e1, e2) -> filter.test(e1, e2) && filterToAdd.test(e1, e2), partitions);
     }
 
     /**

@@ -17,7 +17,7 @@
 
 package org.apache.ignite.ml.util.generators.primitives.scalar;
 
-import org.apache.ignite.internal.util.typedef.internal.A;
+import org.apache.ignite.ml.util.ArgumentCheck;
 
 /**
  * Pseudorandom producer generating values from uniform continuous distribution.
@@ -49,7 +49,7 @@ public class UniformRandomProducer extends RandomProducerWithGenerator {
     public UniformRandomProducer(double from, double to, long seed) {
         super(seed);
 
-        A.ensure(to >= from, "from >= to");
+        ArgumentCheck.ensure(to >= from, "from >= to");
 
         this.from = from;
         this.to = to;

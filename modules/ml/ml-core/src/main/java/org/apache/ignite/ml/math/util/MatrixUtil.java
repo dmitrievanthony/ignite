@@ -18,7 +18,6 @@
 package org.apache.ignite.ml.math.util;
 
 import java.util.List;
-import org.apache.ignite.internal.util.GridArgumentCheck;
 import org.apache.ignite.ml.math.StorageConstants;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.functions.IgniteTriFunction;
@@ -28,6 +27,7 @@ import org.apache.ignite.ml.math.primitives.matrix.impl.SparseMatrix;
 import org.apache.ignite.ml.math.primitives.matrix.impl.ViewMatrix;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.math.primitives.vector.impl.DenseVector;
+import org.apache.ignite.ml.util.ArgumentCheck;
 
 /**
  * Utility class for various matrix operations.
@@ -134,7 +134,7 @@ public class MatrixUtil {
 
     /** */
     public static DenseMatrix fromList(List<Vector> vecs, boolean entriesAreRows) {
-        GridArgumentCheck.notEmpty(vecs, "vecs");
+        ArgumentCheck.notEmpty(vecs, "vecs");
 
         int dim = vecs.get(0).size();
         int vecsSize = vecs.size();

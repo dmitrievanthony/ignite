@@ -26,9 +26,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Spliterator;
+import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.IntToDoubleFunction;
-import org.apache.ignite.lang.IgniteUuid;
 import org.apache.ignite.ml.math.exceptions.CardinalityException;
 import org.apache.ignite.ml.math.exceptions.IndexException;
 import org.apache.ignite.ml.math.exceptions.UnsupportedOperationException;
@@ -55,7 +55,7 @@ public abstract class AbstractVector implements Vector {
     private Map<String, Object> meta = new HashMap<>();
 
     /** Vector's GUID. */
-    private IgniteUuid guid = IgniteUuid.randomUuid();
+    private UUID guid = UUID.randomUUID();
 
     /** Cached value for length squared. */
     private double lenSq = 0.0;
@@ -334,7 +334,7 @@ public abstract class AbstractVector implements Vector {
     }
 
     /** {@inheritDoc} */
-    @Override public IgniteUuid guid() {
+    @Override public UUID guid() {
         return guid;
     }
 
@@ -884,7 +884,7 @@ public abstract class AbstractVector implements Vector {
     @Override public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         sto = (VectorStorage)in.readObject();
         meta = (Map<String, Object>)in.readObject();
-        guid = (IgniteUuid)in.readObject();
+        guid = (UUID)in.readObject();
         readOnly = in.readBoolean();
     }
 

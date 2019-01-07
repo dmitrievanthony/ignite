@@ -18,9 +18,9 @@
 package org.apache.ignite.ml.util.generators.standard;
 
 import java.util.stream.Stream;
-import org.apache.ignite.internal.util.typedef.internal.A;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.structures.LabeledVector;
+import org.apache.ignite.ml.util.ArgumentCheck;
 import org.apache.ignite.ml.util.generators.DataStreamGenerator;
 import org.apache.ignite.ml.util.generators.primitives.scalar.GaussRandomProducer;
 import org.apache.ignite.ml.util.generators.primitives.vector.VectorGeneratorsFamily;
@@ -64,9 +64,9 @@ public class RingsDataStream implements DataStreamGenerator {
      * @param seed Seed.
      */
     public RingsDataStream(int cntOfRings, double minRadius, double distanceBetweenRings, long seed) {
-        A.ensure(cntOfRings > 0, "countOfRings > 0");
-        A.ensure(minRadius > 0, "minRadius > 0");
-        A.ensure(distanceBetweenRings > 0, "distanceBetweenRings > 0");
+        ArgumentCheck.ensure(cntOfRings > 0, "countOfRings > 0");
+        ArgumentCheck.ensure(minRadius > 0, "minRadius > 0");
+        ArgumentCheck.ensure(distanceBetweenRings > 0, "distanceBetweenRings > 0");
 
         this.cntOfRings = cntOfRings;
         this.minRadius = minRadius;

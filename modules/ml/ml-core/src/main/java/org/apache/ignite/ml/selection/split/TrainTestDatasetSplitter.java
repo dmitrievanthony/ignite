@@ -18,9 +18,9 @@
 package org.apache.ignite.ml.selection.split;
 
 import java.io.Serializable;
-import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.selection.split.mapper.SHA256UniformMapper;
 import org.apache.ignite.ml.selection.split.mapper.UniformMapper;
+import org.apache.ignite.ml.util.SerializableBiPredicate;
 
 /**
  * Dataset splitter that splits dataset into train and test subsets.
@@ -80,7 +80,7 @@ public class TrainTestDatasetSplitter<K, V> implements Serializable {
      * pair to a point on the segment (0, 1) and an interval inside that segment (for example (0, 0.2)). After that this
      * filter will pass all entries whose mappings lie in the specified interval.
      */
-    class DatasetSplitFilter implements IgniteBiPredicate<K,V> {
+    class DatasetSplitFilter implements SerializableBiPredicate<K,V> {
         /** */
         private static final long serialVersionUID = 2247757751655582254L;
 
@@ -111,7 +111,7 @@ public class TrainTestDatasetSplitter<K, V> implements Serializable {
         }
 
         /** {@inheritDoc} */
-        @Override public boolean apply(K key, V val) {
+        @Override public boolean test(K key, V val) {
             double pnt = mapper.map(key, val);
 
             assert pnt >= 0 && pnt <= 1 : "Point should be in interval (0, 1)";

@@ -20,10 +20,10 @@ package org.apache.ignite.ml.util.generators.primitives.scalar;
 import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
-import org.apache.ignite.internal.util.typedef.internal.A;
 import org.apache.ignite.ml.math.functions.IgniteFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.math.primitives.vector.VectorUtils;
+import org.apache.ignite.ml.util.ArgumentCheck;
 import org.apache.ignite.ml.util.generators.primitives.vector.VectorGenerator;
 
 /**
@@ -71,7 +71,7 @@ public interface RandomProducer extends Supplier<Double> {
      * @return Vector generator.
      */
     public static VectorGenerator vectorize(RandomProducer... producers) {
-        A.notEmpty(producers, "producers");
+        ArgumentCheck.notEmpty(producers, "producers");
 
         return () -> VectorUtils.of(Arrays.stream(producers).mapToDouble(Supplier::get).toArray());
     }

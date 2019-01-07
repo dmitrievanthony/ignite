@@ -18,11 +18,10 @@
 package org.apache.ignite.ml.dataset;
 
 import java.io.Serializable;
-import org.apache.ignite.lang.IgniteBiPredicate;
-import org.apache.ignite.ml.dataset.impl.cache.CacheBasedDatasetBuilder;
 import org.apache.ignite.ml.dataset.impl.local.LocalDatasetBuilder;
 import org.apache.ignite.ml.environment.LearningEnvironmentBuilder;
 import org.apache.ignite.ml.trainers.transformers.BaggingUpstreamTransformer;
+import org.apache.ignite.ml.util.SerializableBiPredicate;
 
 /**
  * A builder constructing instances of a {@link Dataset}. Implementations of this interface encapsulate logic of
@@ -32,7 +31,6 @@ import org.apache.ignite.ml.trainers.transformers.BaggingUpstreamTransformer;
  * @param <K> Type of a key in {@code upstream} data.
  * @param <V> Type of a value in {@code upstream} data.
  *
- * @see CacheBasedDatasetBuilder
  * @see LocalDatasetBuilder
  * @see Dataset
  */
@@ -73,5 +71,5 @@ public interface DatasetBuilder<K, V> {
      * Returns new instance of DatasetBuilder using conjunction of internal filter and {@code filterToAdd}.
      * @param filterToAdd Additional filter.
      */
-    public DatasetBuilder<K,V> withFilter(IgniteBiPredicate<K,V> filterToAdd);
+    public DatasetBuilder<K,V> withFilter(SerializableBiPredicate<K,V> filterToAdd);
 }

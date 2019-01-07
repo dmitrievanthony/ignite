@@ -17,10 +17,10 @@
 
 package org.apache.ignite.ml.util.generators;
 
-import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.dataset.UpstreamTransformerBuilder;
 import org.apache.ignite.ml.dataset.impl.local.LocalDatasetBuilder;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
+import org.apache.ignite.ml.util.SerializableBiPredicate;
 
 /**
  * DataStreamGenerator to DatasetBuilder adapter.
@@ -47,7 +47,7 @@ class DatasetBuilderAdapter extends LocalDatasetBuilder<Vector, Double> {
      * @param upstreamTransformerBuilder Upstream transformer builder.
      */
     public DatasetBuilderAdapter(DataStreamGenerator generator, int datasetSize,
-        IgniteBiPredicate<Vector, Double> filter, int partitions,
+        SerializableBiPredicate<Vector, Double> filter, int partitions,
         UpstreamTransformerBuilder<Vector, Double> upstreamTransformerBuilder) {
 
         super(generator.asMap(datasetSize), filter, partitions, upstreamTransformerBuilder);
@@ -62,7 +62,7 @@ class DatasetBuilderAdapter extends LocalDatasetBuilder<Vector, Double> {
      * @param partitions Partitions.
      */
     public DatasetBuilderAdapter(DataStreamGenerator generator, int datasetSize,
-        IgniteBiPredicate<Vector, Double> filter, int partitions) {
+        SerializableBiPredicate<Vector, Double> filter, int partitions) {
 
         super(generator.asMap(datasetSize), filter, partitions);
     }

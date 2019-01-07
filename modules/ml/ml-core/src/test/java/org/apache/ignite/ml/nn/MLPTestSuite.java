@@ -28,7 +28,6 @@ import org.junit.runners.Suite;
     MLPTest.class,
     MLPTrainerTest.class,
     LossFunctionsTest.class,
-    MLPTrainerIntegrationTest.class
 })
 public class MLPTestSuite {
 }

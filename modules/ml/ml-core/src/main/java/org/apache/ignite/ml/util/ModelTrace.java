@@ -20,7 +20,6 @@ package org.apache.ignite.ml.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.apache.ignite.lang.IgniteBiTuple;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -32,7 +31,7 @@ public class ModelTrace {
     /** Use pretty mode. */
     private final boolean pretty;
     /** Model fields. */
-    private List<IgniteBiTuple<String, Object>> mdlFields = new ArrayList<>();
+    private List<BiTuple<String, Object>> mdlFields = new ArrayList<>();
 
     /**
      * Creates an instance of ModelTrace.
@@ -71,7 +70,7 @@ public class ModelTrace {
      * @param val Value.
      */
     public ModelTrace addField(String name, String val) {
-        mdlFields.add(new IgniteBiTuple<>(name, val));
+        mdlFields.add(new BiTuple<>(name, val));
         return this;
     }
 
@@ -82,7 +81,7 @@ public class ModelTrace {
      * @param values Values.
      */
     public ModelTrace addField(String name, List values) {
-        mdlFields.add(new IgniteBiTuple<>(name, values));
+        mdlFields.add(new BiTuple<>(name, values));
         return this;
     }
 
@@ -109,7 +108,7 @@ public class ModelTrace {
      * @param kv Field name and value.
      * @param pretty Use pretty mode.
      */
-    @NotNull private String fieldToString(IgniteBiTuple<String, Object> kv, boolean pretty) {
+    @NotNull private String fieldToString(BiTuple<String, Object> kv, boolean pretty) {
         StringBuilder builder = new StringBuilder(pretty ? "\t" : "")
             .append(kv.getKey()).append(" = [");
         if (kv.getValue() instanceof List) {

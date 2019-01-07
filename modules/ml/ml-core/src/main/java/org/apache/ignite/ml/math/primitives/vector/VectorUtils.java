@@ -19,11 +19,11 @@ package org.apache.ignite.ml.math.primitives.vector;
 
 import java.util.Arrays;
 import java.util.Objects;
-import org.apache.ignite.internal.util.typedef.internal.A;
 import org.apache.ignite.ml.math.StorageConstants;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.primitives.vector.impl.DenseVector;
 import org.apache.ignite.ml.math.primitives.vector.impl.SparseVector;
+import org.apache.ignite.ml.util.ArgumentCheck;
 
 /**
  * Some utils for {@link Vector}.
@@ -190,7 +190,7 @@ public class VectorUtils {
      * @param values Values.
      */
     public static Vector of(double ... values) {
-        A.notNull(values, "values");
+        ArgumentCheck.notNull(values, "values");
 
         return new DenseVector(values);
     }
@@ -203,7 +203,7 @@ public class VectorUtils {
      * @param values Values.
      */
     public static Vector of(Double[] values) {
-        A.notNull(values, "values");
+        ArgumentCheck.notNull(values, "values");
 
         Vector answer;
         if (Arrays.stream(values).anyMatch(Objects::isNull))

@@ -19,10 +19,10 @@ package org.apache.ignite.ml.util.generators.primitives.vector;
 
 import java.util.Arrays;
 import java.util.List;
-import org.apache.ignite.internal.util.typedef.internal.A;
 import org.apache.ignite.ml.math.functions.IgniteFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.math.primitives.vector.VectorUtils;
+import org.apache.ignite.ml.util.ArgumentCheck;
 import org.apache.ignite.ml.util.generators.primitives.scalar.RandomProducer;
 
 /**
@@ -47,7 +47,7 @@ public class ParametricVectorGenerator implements VectorGenerator {
     public ParametricVectorGenerator(RandomProducer paramGenerator,
         IgniteFunction<Double, Double>... perDimensionGenerators) {
 
-        A.notEmpty(perDimensionGenerators, "perDimensionGenerators.length != 0");
+        ArgumentCheck.notEmpty(perDimensionGenerators, "perDimensionGenerators.length != 0");
 
         this.perDimensionGenerators = Arrays.asList(perDimensionGenerators);
         this.randomProducer = paramGenerator;

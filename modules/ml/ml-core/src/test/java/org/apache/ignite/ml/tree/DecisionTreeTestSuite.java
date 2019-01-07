@@ -41,8 +41,6 @@ import org.junit.runners.Suite;
     MSEImpurityMeasureTest.class,
     StepFunctionTest.class,
     SimpleStepFunctionCompressorTest.class,
-    DecisionTreeRegressionTrainerIntegrationTest.class,
-    DecisionTreeClassificationTrainerIntegrationTest.class
 })
 public class DecisionTreeTestSuite {
 }

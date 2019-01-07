@@ -17,13 +17,13 @@
 
 package org.apache.ignite.ml.tree.randomforest.data;
 
-import org.apache.ignite.lang.IgniteBiTuple;
+import org.apache.ignite.ml.util.BiTuple;
 
 /**
  * Class represents Node id in Random Forest consisting of tree id and node id in tree in according to
  * breadth-first search in tree.
  */
-public class NodeId extends IgniteBiTuple<Integer, Long> {
+public class NodeId extends BiTuple<Integer, Long> {
     /** Serial version uid. */
     private static final long serialVersionUID = 4400852013136423333L;
 

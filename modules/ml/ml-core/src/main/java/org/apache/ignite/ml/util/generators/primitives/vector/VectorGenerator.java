@@ -24,12 +24,12 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import org.apache.ignite.internal.util.typedef.internal.A;
-import org.apache.ignite.lang.IgnitePredicate;
 import org.apache.ignite.ml.math.functions.IgniteFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.math.primitives.vector.VectorUtils;
 import org.apache.ignite.ml.structures.LabeledVector;
+import org.apache.ignite.ml.util.ArgumentCheck;
+import org.apache.ignite.ml.util.SerializablePredicate;
 import org.apache.ignite.ml.util.generators.DataStreamGenerator;
 import org.apache.ignite.ml.util.generators.primitives.scalar.RandomProducer;
 
@@ -53,13 +53,13 @@ public interface VectorGenerator extends Supplier<Vector> {
      * @param predicate Predicate.
      * @return Vector generator with filtered vectors.
      */
-    public default VectorGenerator filter(IgnitePredicate<Vector> predicate) {
+    public default VectorGenerator filter(SerializablePredicate<Vector> predicate) {
         return () -> {
             Vector v = null;
             do {
                 v = get();
             }
-            while (!predicate.apply(v));
+            while (!predicate.test(v));
 
             return v;
         };
@@ -147,7 +147,7 @@ public interface VectorGenerator extends Supplier<Vector> {
      * @return Generator.
      */
     public default VectorGenerator duplicateRandomFeatures(int increaseSize, Long seed) {
-        A.ensure(increaseSize > 0, "increaseSize > 0");
+        ArgumentCheck.ensure(increaseSize > 0, "increaseSize > 0");
 
         Random rnd = new Random(seed);
         return map(original -> {

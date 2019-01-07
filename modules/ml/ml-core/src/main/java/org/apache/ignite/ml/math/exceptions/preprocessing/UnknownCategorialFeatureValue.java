@@ -17,12 +17,12 @@
 
 package org.apache.ignite.ml.math.exceptions.preprocessing;
 
-import org.apache.ignite.IgniteException;
+import org.apache.ignite.ml.math.exceptions.MLRuntimeException;
 
 /**
  * Indicates an unknown categorial feature value for Encoder.
  */
-public class UnknownCategorialFeatureValue extends IgniteException {
+public class UnknownCategorialFeatureValue extends MLRuntimeException {
     /** */
     private static final long serialVersionUID = 0L;
 

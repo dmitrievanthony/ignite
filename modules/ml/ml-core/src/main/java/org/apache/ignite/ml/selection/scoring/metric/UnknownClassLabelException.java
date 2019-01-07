@@ -17,12 +17,12 @@
 
 package org.apache.ignite.ml.selection.scoring.metric;
 
-import org.apache.ignite.IgniteException;
+import org.apache.ignite.ml.math.exceptions.MLRuntimeException;
 
 /**
  * Indicates an unknown class label for metric calculator.
  */
-public class UnknownClassLabelException extends IgniteException {
+public class UnknownClassLabelException extends MLRuntimeException {
     /** */
     private static final long serialVersionUID = 0L;
 

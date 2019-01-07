@@ -24,7 +24,6 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
-import org.apache.ignite.lang.IgniteBiTuple;
 import org.apache.ignite.ml.clustering.kmeans.KMeansModel;
 import org.apache.ignite.ml.clustering.kmeans.KMeansTrainer;
 import org.apache.ignite.ml.dataset.Dataset;
@@ -41,6 +40,7 @@ import org.apache.ignite.ml.structures.LabeledVector;
 import org.apache.ignite.ml.structures.LabeledVectorSet;
 import org.apache.ignite.ml.structures.partition.LabeledDatasetPartitionDataBuilderOnHeap;
 import org.apache.ignite.ml.trainers.SingleLabelDatasetTrainer;
+import org.apache.ignite.ml.util.BiTuple;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -195,7 +195,7 @@ public class ANNClassificationTrainer extends SingleLabelDatasetTrainer<ANNClass
                 CentroidStat res = new CentroidStat();
 
                 for (int i = 0; i < data.rowSize(); i++) {
-                    final IgniteBiTuple<Integer, Double> closestCentroid = findClosestCentroid(centers, data.getRow(i));
+                    final BiTuple<Integer, Double> closestCentroid = findClosestCentroid(centers, data.getRow(i));
 
                     int centroidIdx = closestCentroid.get1();
 
@@ -238,7 +238,7 @@ public class ANNClassificationTrainer extends SingleLabelDatasetTrainer<ANNClass
      * @param centers Centers to look in.
      * @param pnt Point.
      */
-    private IgniteBiTuple<Integer, Double> findClosestCentroid(List<Vector> centers, LabeledVector pnt) {
+    private BiTuple<Integer, Double> findClosestCentroid(List<Vector> centers, LabeledVector pnt) {
         double bestDistance = Double.POSITIVE_INFINITY;
         int bestInd = 0;
 
@@ -251,7 +251,7 @@ public class ANNClassificationTrainer extends SingleLabelDatasetTrainer<ANNClass
                 }
             }
         }
-        return new IgniteBiTuple<>(bestInd, bestDistance);
+        return new BiTuple<>(bestInd, bestDistance);
     }
 
     /**

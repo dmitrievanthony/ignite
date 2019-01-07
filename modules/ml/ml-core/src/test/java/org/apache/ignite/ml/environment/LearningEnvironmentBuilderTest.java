@@ -17,13 +17,13 @@
 
 package org.apache.ignite.ml.environment;
 
-import org.apache.ignite.logger.NullLogger;
 import org.apache.ignite.ml.environment.logging.ConsoleLogger;
 import org.apache.ignite.ml.environment.logging.CustomMLLogger;
 import org.apache.ignite.ml.environment.logging.MLLogger;
 import org.apache.ignite.ml.environment.logging.NoOpLogger;
 import org.apache.ignite.ml.environment.parallelism.DefaultParallelismStrategy;
 import org.apache.ignite.ml.environment.parallelism.NoParallelismStrategy;
+import org.apache.ignite.ml.util.NullTMPLogger;
 import org.junit.Test;
 
 import static org.apache.ignite.ml.environment.parallelism.ParallelismStrategy.Type.NO_PARALLELISM;
@@ -83,10 +83,10 @@ public class LearningEnvironmentBuilderTest {
         assertTrue(LearningEnvironmentBuilder.defaultBuilder().withLoggingFactoryDependency(part -> NoOpLogger.factory())
             .buildForTrainer().logger(this.getClass()) instanceof NoOpLogger);
 
-        assertTrue(LearningEnvironmentBuilder.defaultBuilder().withLoggingFactoryDependency(part -> CustomMLLogger.factory(new NullLogger()))
+        assertTrue(LearningEnvironmentBuilder.defaultBuilder().withLoggingFactoryDependency(part -> CustomMLLogger.factory(new NullTMPLogger()))
             .buildForTrainer().logger() instanceof CustomMLLogger);
 
-        assertTrue(LearningEnvironmentBuilder.defaultBuilder().withLoggingFactoryDependency(part -> CustomMLLogger.factory(new NullLogger()))
+        assertTrue(LearningEnvironmentBuilder.defaultBuilder().withLoggingFactoryDependency(part -> CustomMLLogger.factory(new NullTMPLogger()))
             .buildForTrainer().logger(this.getClass()) instanceof CustomMLLogger);
     }
 }

@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
-import org.apache.ignite.IgniteException;
+import org.apache.ignite.ml.math.exceptions.MLRuntimeException;
 import org.apache.ignite.ml.math.primitives.vector.impl.DenseVector;
 
 /**
@@ -43,7 +43,7 @@ public class MnistUtils {
      * @param rnd Random numbers generator.
      * @param cnt Count of samples to read.
      * @return Stream of MNIST samples.
-     * @throws IgniteException In case of exception.
+     * @throws MLRuntimeException In case of exception.
      */
     public static Stream<DenseVector> mnistAsStream(String imagesPath, String labelsPath, Random rnd, int cnt)
         throws IOException {
@@ -161,7 +161,7 @@ public class MnistUtils {
      * @param outPath Path to output path.
      * @param rnd Random numbers generator.
      * @param cnt Count of samples to read.
-     * @throws IgniteException In case of exception.
+     * @throws MLRuntimeException In case of exception.
      */
     public static void asLIBSVM(String imagesPath, String labelsPath, String outPath, Random rnd, int cnt)
         throws IOException {
@@ -182,7 +182,7 @@ public class MnistUtils {
 
                 }
                 catch (IOException e) {
-                    throw new IgniteException("Error while converting to LIBSVM.");
+                    throw new MLRuntimeException("Error while converting to LIBSVM.");
                 }
             });
         }

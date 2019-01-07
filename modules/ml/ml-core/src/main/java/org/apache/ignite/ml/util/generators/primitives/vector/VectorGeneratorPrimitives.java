@@ -17,9 +17,9 @@
 
 package org.apache.ignite.ml.util.generators.primitives.vector;
 
-import org.apache.ignite.internal.util.typedef.internal.A;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.math.primitives.vector.VectorUtils;
+import org.apache.ignite.ml.util.ArgumentCheck;
 import org.apache.ignite.ml.util.generators.primitives.scalar.GaussRandomProducer;
 import org.apache.ignite.ml.util.generators.primitives.scalar.RandomProducer;
 import org.apache.ignite.ml.util.generators.primitives.scalar.UniformRandomProducer;
@@ -37,8 +37,8 @@ public class VectorGeneratorPrimitives {
      * @return Generator.
      */
     public static VectorGenerator gauss(Vector means, Vector variances, Long seed) {
-        A.notEmpty(means.asArray(), "mean.size() != 0");
-        A.ensure(means.size() == variances.size(), "mean.size() == variances.size()");
+        ArgumentCheck.notEmpty(means.asArray(), "mean.size() != 0");
+        ArgumentCheck.ensure(means.size() == variances.size(), "mean.size() == variances.size()");
 
         RandomProducer[] producers = new RandomProducer[means.size()];
         for (int i = 0; i < producers.length; i++)
@@ -104,7 +104,7 @@ public class VectorGeneratorPrimitives {
      * @return Generator.
      */
     public static VectorGenerator parallelogram(Vector bounds, long seed) {
-        A.ensure(bounds.size() != 0, "bounds.size() != 0");
+        ArgumentCheck.ensure(bounds.size() != 0, "bounds.size() != 0");
 
         UniformRandomProducer[] producers = new UniformRandomProducer[bounds.size()];
         for (int i = 0; i < producers.length; i++)

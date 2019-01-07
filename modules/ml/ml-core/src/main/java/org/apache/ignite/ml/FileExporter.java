@@ -22,7 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import org.apache.ignite.IgniteLogger;
+import org.apache.ignite.ml.util.TMPLogger;
 
 /**
  * Implementation of exporter to/from file.
@@ -31,12 +31,12 @@ import org.apache.ignite.IgniteLogger;
  */
 public class FileExporter<D> implements Exporter<D, String> {
     /** */
-    private IgniteLogger log = null;
+    private TMPLogger log = null;
 
     /**
      * @param log Logger.
      */
-    public void setLog(IgniteLogger log) {
+    public void setLog(TMPLogger log) {
         this.log = log;
     }
 

@@ -33,14 +33,14 @@ public class TrainTestDatasetSplitterTest {
 
         TrainTestSplit<Double, Double> split = splitter.split(0.4, 0.4);
 
-        assertTrue(split.getTrainFilter().apply(0.0, 0.0));
-        assertTrue(split.getTrainFilter().apply(0.2, 0.0));
-        assertFalse(split.getTrainFilter().apply(0.4, 0.0));
-        assertFalse(split.getTrainFilter().apply(0.6, 0.0));
+        assertTrue(split.getTrainFilter().test(0.0, 0.0));
+        assertTrue(split.getTrainFilter().test(0.2, 0.0));
+        assertFalse(split.getTrainFilter().test(0.4, 0.0));
+        assertFalse(split.getTrainFilter().test(0.6, 0.0));
 
-        assertFalse(split.getTestFilter().apply(0.0, 0.0));
-        assertFalse(split.getTestFilter().apply(0.2, 0.0));
-        assertTrue(split.getTestFilter().apply(0.4, 0.0));
-        assertTrue(split.getTestFilter().apply(0.6, 0.0));
+        assertFalse(split.getTestFilter().test(0.0, 0.0));
+        assertFalse(split.getTestFilter().test(0.2, 0.0));
+        assertTrue(split.getTestFilter().test(0.4, 0.0));
+        assertTrue(split.getTestFilter().test(0.6, 0.0));
     }
 }

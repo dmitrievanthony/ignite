@@ -23,9 +23,9 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import org.apache.ignite.IgniteException;
 import org.apache.ignite.ml.math.ExternalizeTest;
 import org.apache.ignite.ml.math.exceptions.CardinalityException;
+import org.apache.ignite.ml.math.exceptions.MLRuntimeException;
 import org.apache.ignite.ml.math.exceptions.UnsupportedOperationException;
 import org.apache.ignite.ml.math.primitives.vector.impl.DelegatingVector;
 import org.apache.ignite.ml.math.primitives.vector.impl.DenseVector;
@@ -99,7 +99,7 @@ public class VectorImplementationsTest { // TODO: IGNITE-5723, split this to sma
             try {
                 v.getX(-1);
             }
-            catch (ArrayIndexOutOfBoundsException | IgniteException e) {
+            catch (ArrayIndexOutOfBoundsException | MLRuntimeException e) {
                 expECaught = true;
             }
 
@@ -111,7 +111,7 @@ public class VectorImplementationsTest { // TODO: IGNITE-5723, split this to sma
             try {
                 v.setX(-1, 0);
             }
-            catch (ArrayIndexOutOfBoundsException | IgniteException e) {
+            catch (ArrayIndexOutOfBoundsException | MLRuntimeException e) {
                 expECaught = true;
             }
 
@@ -122,7 +122,7 @@ public class VectorImplementationsTest { // TODO: IGNITE-5723, split this to sma
             try {
                 v.incrementX(-1, 1);
             }
-            catch (ArrayIndexOutOfBoundsException | IgniteException e) {
+            catch (ArrayIndexOutOfBoundsException | MLRuntimeException e) {
                 expECaught = true;
             }
 
@@ -133,7 +133,7 @@ public class VectorImplementationsTest { // TODO: IGNITE-5723, split this to sma
             try {
                 v.getX(v.size());
             }
-            catch (ArrayIndexOutOfBoundsException | IgniteException e) {
+            catch (ArrayIndexOutOfBoundsException | MLRuntimeException e) {
                 expECaught = true;
             }
 
@@ -145,7 +145,7 @@ public class VectorImplementationsTest { // TODO: IGNITE-5723, split this to sma
             try {
                 v.setX(v.size(), 1);
             }
-            catch (ArrayIndexOutOfBoundsException | IgniteException e) {
+            catch (ArrayIndexOutOfBoundsException | MLRuntimeException e) {
                 expECaught = true;
             }
 
@@ -156,7 +156,7 @@ public class VectorImplementationsTest { // TODO: IGNITE-5723, split this to sma
             try {
                 v.incrementX(v.size(), 1);
             }
-            catch (ArrayIndexOutOfBoundsException | IgniteException e) {
+            catch (ArrayIndexOutOfBoundsException | MLRuntimeException e) {
                 expECaught = true;
             }
 

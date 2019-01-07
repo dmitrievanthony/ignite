@@ -17,14 +17,12 @@
 
 package org.apache.ignite.ml.math.exceptions;
 
-import org.apache.ignite.IgniteException;
-
 /**
  * Indicate that a specific operation is not supported by the underlying implementation.
  * In some cases, an operation may be unsupported only in certain cases where, for example,
  * it could not be deterministically completed in polynomial time.
  */
-public class UnsupportedOperationException extends IgniteException {
+public class UnsupportedOperationException extends MLRuntimeException {
     /** */
     private static final long serialVersionUID = 0L;
 

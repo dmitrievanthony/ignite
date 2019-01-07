@@ -17,7 +17,6 @@
 
 package org.apache.ignite.ml.composition.boosting.convergence.mean;
 
-import org.apache.ignite.lang.IgniteBiTuple;
 import org.apache.ignite.ml.composition.ModelsComposition;
 import org.apache.ignite.ml.composition.boosting.convergence.ConvergenceChecker;
 import org.apache.ignite.ml.composition.boosting.loss.Loss;
@@ -29,6 +28,7 @@ import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.functions.IgniteFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.math.primitives.vector.VectorUtils;
+import org.apache.ignite.ml.util.BiTuple;
 
 /**
  * Use mean value of errors for estimating error on dataset.
@@ -62,7 +62,7 @@ public class MeanAbsValueConvergenceChecker<K,V> extends ConvergenceChecker<K,V>
     @Override public Double computeMeanErrorOnDataset(Dataset<EmptyContext, ? extends FeatureMatrixWithLabelsOnHeapData> dataset,
         ModelsComposition mdl) {
 
-        IgniteBiTuple<Double, Long> sumAndCnt = dataset.compute(
+        BiTuple<Double, Long> sumAndCnt = dataset.compute(
             partition -> computeStatisticOnPartition(mdl, partition),
             this::reduce
         );
@@ -79,7 +79,7 @@ public class MeanAbsValueConvergenceChecker<K,V> extends ConvergenceChecker<K,V>
      * @param part Partition.
      * @return Tuple (sum of errors, count of rows)
      */
-    private IgniteBiTuple<Double, Long> computeStatisticOnPartition(ModelsComposition mdl, FeatureMatrixWithLabelsOnHeapData part) {
+    private BiTuple<Double, Long> computeStatisticOnPartition(ModelsComposition mdl, FeatureMatrixWithLabelsOnHeapData part) {
         Double sum = 0.0;
 
         for(int i = 0; i < part.getFeatures().length; i++) {
@@ -87,7 +87,7 @@ public class MeanAbsValueConvergenceChecker<K,V> extends ConvergenceChecker<K,V>
             sum += Math.abs(error);
         }
 
-        return new IgniteBiTuple<>(sum, (long) part.getLabels().length);
+        return new BiTuple<>(sum, (long) part.getLabels().length);
     }
 
     /**
@@ -97,18 +97,18 @@ public class MeanAbsValueConvergenceChecker<K,V> extends ConvergenceChecker<K,V>
      * @param right Right.
      * @return merged value.
      */
-    private IgniteBiTuple<Double, Long> reduce(IgniteBiTuple<Double, Long> left, IgniteBiTuple<Double, Long> right) {
+    private BiTuple<Double, Long> reduce(BiTuple<Double, Long> left, BiTuple<Double, Long> right) {
         if (left == null) {
             if (right != null)
                 return right;
             else
-                return new IgniteBiTuple<>(0.0, 0L);
+                return new BiTuple<>(0.0, 0L);
         }
 
         if (right == null)
             return left;
 
-        return new IgniteBiTuple<>(
+        return new BiTuple<>(
             left.getKey() + right.getKey(),
             right.getValue() + left.getValue()
         );

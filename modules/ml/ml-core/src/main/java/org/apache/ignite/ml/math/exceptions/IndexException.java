@@ -17,12 +17,10 @@
 
 package org.apache.ignite.ml.math.exceptions;
 
-import org.apache.ignite.IgniteException;
-
 /**
  * Indicates an invalid, i.e. out of bound, index on matrix or vector operations.
  */
-public class IndexException extends IgniteException {
+public class IndexException extends MLRuntimeException {
     /** */
     private static final long serialVersionUID = 0L;
 

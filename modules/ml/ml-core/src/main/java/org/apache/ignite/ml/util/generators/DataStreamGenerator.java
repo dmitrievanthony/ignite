@@ -20,13 +20,13 @@ package org.apache.ignite.ml.util.generators;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.dataset.DatasetBuilder;
 import org.apache.ignite.ml.dataset.UpstreamTransformerBuilder;
 import org.apache.ignite.ml.math.functions.IgniteFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.structures.DatasetRow;
 import org.apache.ignite.ml.structures.LabeledVector;
+import org.apache.ignite.ml.util.SerializableBiPredicate;
 import org.apache.ignite.ml.util.generators.primitives.scalar.RandomProducer;
 
 /**
@@ -110,7 +110,7 @@ public interface DataStreamGenerator {
      * @param partitions Partitions count.
      * @return Dataset builder.
      */
-    public default DatasetBuilder<Vector, Double> asDatasetBuilder(int datasetSize, IgniteBiPredicate<Vector, Double> filter,
+    public default DatasetBuilder<Vector, Double> asDatasetBuilder(int datasetSize, SerializableBiPredicate<Vector, Double> filter,
         int partitions) {
 
         return new DatasetBuilderAdapter(this, datasetSize, filter, partitions);
@@ -125,7 +125,7 @@ public interface DataStreamGenerator {
      * @param upstreamTransformerBuilder Upstream transformer builder.
      * @return Dataset builder.
      */
-    public default DatasetBuilder<Vector, Double> asDatasetBuilder(int datasetSize, IgniteBiPredicate<Vector, Double> filter,
+    public default DatasetBuilder<Vector, Double> asDatasetBuilder(int datasetSize, SerializableBiPredicate<Vector, Double> filter,
         int partitions, UpstreamTransformerBuilder<Vector, Double> upstreamTransformerBuilder) {
 
         return new DatasetBuilderAdapter(this, datasetSize, filter, partitions, upstreamTransformerBuilder);

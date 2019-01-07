@@ -17,7 +17,7 @@
 
 package org.apache.ignite.ml.composition.predictionsaggregator;
 
-import org.apache.ignite.internal.util.typedef.internal.A;
+import org.apache.ignite.ml.util.ArgumentCheck;
 
 /**
  * Predictions aggregator returning weighted plus of predictions.
@@ -52,7 +52,7 @@ public class WeightedPredictionsAggregator implements PredictionsAggregator {
 
     /** {@inheritDoc} */
     @Override public Double apply(double[] answers) {
-        A.ensure(answers.length == weights.length,
+        ArgumentCheck.ensure(answers.length == weights.length,
             "Composition vector must have same size as weights vector");
 
         double res = bias;

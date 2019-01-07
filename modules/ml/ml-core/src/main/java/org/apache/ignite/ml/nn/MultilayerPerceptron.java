@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import org.apache.ignite.lang.IgniteBiTuple;
 import org.apache.ignite.ml.IgniteModel;
 import org.apache.ignite.ml.math.Tracer;
 import org.apache.ignite.ml.math.functions.IgniteDifferentiableDoubleToDoubleFunction;
@@ -37,6 +36,7 @@ import org.apache.ignite.ml.nn.architecture.TransformationLayerArchitecture;
 import org.apache.ignite.ml.nn.initializers.MLPInitializer;
 import org.apache.ignite.ml.nn.initializers.RandomInitializer;
 import org.apache.ignite.ml.optimization.SmoothParametrized;
+import org.apache.ignite.ml.util.BiTuple;
 
 import static org.apache.ignite.ml.math.util.MatrixUtil.elementWiseTimes;
 
@@ -426,14 +426,14 @@ public class MultilayerPerceptron implements IgniteModel<Matrix, Matrix>, Smooth
         for (int l = 1; l < layersCount(); l++) {
             MLPLayer layer = layers.get(l - 1);
 
-            IgniteBiTuple<Integer, Matrix> readRes = readFromVector(vector, layer.weights.rowSize(),
+            BiTuple<Integer, Matrix> readRes = readFromVector(vector, layer.weights.rowSize(),
                 layer.weights.columnSize(), off);
 
             off = readRes.get1();
             layer.weights = readRes.get2();
 
             if (hasBiases(l)) {
-                IgniteBiTuple<Integer, Vector> readRes1 = readFromVector(vector, layer.biases.size(), off);
+                BiTuple<Integer, Vector> readRes1 = readFromVector(vector, layer.biases.size(), off);
                 off = readRes1.get1();
 
                 layer.biases = readRes1.get2();
@@ -458,14 +458,14 @@ public class MultilayerPerceptron implements IgniteModel<Matrix, Matrix>, Smooth
      * @param off Start read position.
      * @return New offset position which is last matrix entry position + 1.
      */
-    private IgniteBiTuple<Integer, Matrix> readFromVector(Vector v, int rows, int cols, int off) {
+    private BiTuple<Integer, Matrix> readFromVector(Vector v, int rows, int cols, int off) {
         Matrix mtx = new DenseMatrix(rows, cols);
 
         int size = rows * cols;
         for (int i = 0; i < size; i++)
             mtx.setX(i / cols, i % cols, v.getX(off + i));
 
-        return new IgniteBiTuple<>(off + size, mtx);
+        return new BiTuple<>(off + size, mtx);
     }
 
     /**
@@ -476,13 +476,13 @@ public class MultilayerPerceptron implements IgniteModel<Matrix, Matrix>, Smooth
      * @param off Start read position.
      * @return New offset position which is last read vector entry position + 1.
      */
-    private IgniteBiTuple<Integer, Vector> readFromVector(Vector v, int size, int off) {
+    private BiTuple<Integer, Vector> readFromVector(Vector v, int size, int off) {
         Vector vec = new DenseVector(size);
 
         for (int i = 0; i < size; i++)
             vec.setX(i, v.getX(off + i));
 
-        return new IgniteBiTuple<>(off + size, vec);
+        return new BiTuple<>(off + size, vec);
     }
 
     /**

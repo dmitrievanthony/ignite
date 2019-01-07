@@ -17,7 +17,7 @@
 
 package org.apache.ignite.ml.util.generators.primitives.scalar;
 
-import org.apache.ignite.internal.util.typedef.internal.A;
+import org.apache.ignite.ml.util.ArgumentCheck;
 
 /**
  * Pseudorandom producer generating values from gauss distribution.
@@ -64,7 +64,7 @@ public class GaussRandomProducer extends RandomProducerWithGenerator {
     public GaussRandomProducer(double mean, double variance, long seed) {
         super(seed);
 
-        A.ensure(variance > 0, "variance > 0");
+        ArgumentCheck.ensure(variance > 0, "variance > 0");
 
         this.mean = mean;
         this.variance = variance;

@@ -28,7 +28,7 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-import org.apache.ignite.IgniteException;
+import org.apache.ignite.ml.math.exceptions.MLRuntimeException;
 
 /**
  * Class with various utility methods.
@@ -58,7 +58,7 @@ public class Utils {
             obj = in.readObject();
         }
         catch (IOException | ClassNotFoundException e) {
-            throw new IgniteException("Couldn't copy the object.", e);
+            throw new MLRuntimeException("Couldn't copy the object.", e);
         }
 
         return (T)obj;

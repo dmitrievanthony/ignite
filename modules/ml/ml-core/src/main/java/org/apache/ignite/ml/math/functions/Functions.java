@@ -20,7 +20,7 @@ package org.apache.ignite.ml.math.functions;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiFunction;
-import org.apache.ignite.lang.IgniteBiTuple;
+import org.apache.ignite.ml.util.BiTuple;
 
 /**
  * Compatibility with Apache Mahout.
@@ -116,7 +116,7 @@ public final class Functions {
     public static final IgniteBiFunction<Double, Double, Double> COMPARE = (a, b) -> a < b ? -1.0 : a > b ? 1.0 : 0.0;
 
     /** */
-    public static <A, B extends Comparable<B>> IgniteBiTuple<Integer, A> argmin(List<A> args, IgniteFunction<A, B> f) {
+    public static <A, B extends Comparable<B>> BiTuple<Integer, A> argmin(List<A> args, IgniteFunction<A, B> f) {
         A res = null;
         B fRes = null;
 
@@ -139,7 +139,7 @@ public final class Functions {
 
             i++;
         }
-        return new IgniteBiTuple<>(resInd, res);
+        return new BiTuple<>(resInd, res);
     }
 
     /**

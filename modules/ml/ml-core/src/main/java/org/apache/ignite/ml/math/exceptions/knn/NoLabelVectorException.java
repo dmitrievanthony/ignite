@@ -17,12 +17,12 @@
 
 package org.apache.ignite.ml.math.exceptions.knn;
 
-import org.apache.ignite.IgniteException;
+import org.apache.ignite.ml.math.exceptions.MLRuntimeException;
 
 /**
  * Shows Labeled Dataset index with non-existing Labeled Vector.
  */
-public class NoLabelVectorException extends IgniteException {
+public class NoLabelVectorException extends MLRuntimeException {
     /** */
     private static final long serialVersionUID = 0L;
 

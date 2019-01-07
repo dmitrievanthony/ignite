@@ -20,7 +20,7 @@ package org.apache.ignite.ml.util.generators.primitives.scalar;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
-import org.apache.ignite.internal.util.typedef.internal.A;
+import org.apache.ignite.ml.util.ArgumentCheck;
 
 /**
  * Pseudorandom producer generating values from user provided discrete distribution.
@@ -55,8 +55,8 @@ public class DiscreteRandomProducer extends RandomProducerWithGenerator {
 
         boolean allElementsAreGEZero = Arrays.stream(probs).allMatch(p -> p >= 0.0);
         boolean sumOfProbsEqOne = Math.abs(Arrays.stream(probs).sum() - 1.0) < EPS;
-        A.ensure(allElementsAreGEZero, "all elements should be great or equals 0.0");
-        A.ensure(sumOfProbsEqOne, "sum of probs should equal 1.0");
+        ArgumentCheck.ensure(allElementsAreGEZero, "all elements should be great or equals 0.0");
+        ArgumentCheck.ensure(sumOfProbsEqOne, "sum of probs should equal 1.0");
 
         this.probs = Arrays.copyOf(probs, probs.length);
         this.ids = IntStream.range(0, probs.length).toArray();
@@ -122,7 +122,7 @@ public class DiscreteRandomProducer extends RandomProducerWithGenerator {
      * @return Probabilities array.
      */
     public static double[] randomDistribution(int numOfValues, long seed) {
-        A.ensure(numOfValues > 0, "numberOfValues > 0");
+        ArgumentCheck.ensure(numOfValues > 0, "numberOfValues > 0");
 
         Random random = new Random(seed);
         long[] rnd = IntStream.range(0, numOfValues)

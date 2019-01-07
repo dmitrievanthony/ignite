@@ -17,12 +17,10 @@
 
 package org.apache.ignite.ml.math.exceptions;
 
-import org.apache.ignite.IgniteException;
-
 /**
  * This exception is used to indicate any error condition accessing matrix elements by invalid column index.
  */
-public class ColumnIndexException extends IgniteException {
+public class ColumnIndexException extends MLRuntimeException {
     /** */
     private static final long serialVersionUID = 0L;
 

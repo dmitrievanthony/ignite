@@ -18,7 +18,6 @@
 package org.apache.ignite.ml.dataset;
 
 import java.io.Serializable;
-import org.apache.ignite.ml.dataset.impl.cache.CacheBasedDataset;
 import org.apache.ignite.ml.dataset.impl.local.LocalDataset;
 import org.apache.ignite.ml.environment.LearningEnvironment;
 import org.apache.ignite.ml.math.functions.IgniteBiConsumer;
@@ -48,7 +47,6 @@ import org.apache.ignite.ml.math.functions.IgniteTriFunction;
  * @param <C> Type of a partition {@code context}.
  * @param <D> Type of a partition {@code data}.
  *
- * @see CacheBasedDataset
  * @see LocalDataset
  * @see DatasetFactory
  */

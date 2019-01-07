@@ -17,12 +17,12 @@
 
 package org.apache.ignite.ml.math.exceptions.knn;
 
-import org.apache.ignite.IgniteException;
+import org.apache.ignite.ml.math.exceptions.MLRuntimeException;
 
 /**
  * Shows empty filename.
  */
-public class EmptyFileException extends IgniteException {
+public class EmptyFileException extends MLRuntimeException {
     /** */
     private static final long serialVersionUID = 0L;
 

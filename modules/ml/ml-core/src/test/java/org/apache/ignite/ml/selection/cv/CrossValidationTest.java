@@ -19,7 +19,9 @@ package org.apache.ignite.ml.selection.cv;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.ignite.ml.dataset.impl.local.LocalDatasetBuilder;
 import org.apache.ignite.ml.math.primitives.vector.VectorUtils;
+import org.apache.ignite.ml.selection.scoring.cursor.LocalLabelPairCursor;
 import org.apache.ignite.ml.selection.scoring.metric.Accuracy;
 import org.apache.ignite.ml.selection.scoring.metric.BinaryClassificationMetricValues;
 import org.apache.ignite.ml.selection.scoring.metric.BinaryClassificationMetrics;
@@ -52,8 +54,8 @@ public class CrossValidationTest {
         verifyScores(folds, scoreCalculator.score(
             trainer,
             new Accuracy<>(),
-            data,
-            1,
+            predicate -> new LocalDatasetBuilder<>(data, predicate, 1),
+            (predicate, mdl) -> new LocalLabelPairCursor<>(data, predicate, (k, v) -> VectorUtils.of(k), (k, v) -> v, mdl),
             (k, v) -> VectorUtils.of(k),
             (k, v) -> v,
             folds
@@ -62,9 +64,9 @@ public class CrossValidationTest {
         verifyScores(folds, scoreCalculator.score(
             trainer,
             new Accuracy<>(),
-            data,
+            predicate -> new LocalDatasetBuilder<>(data, predicate, 1),
+            (predicate, mdl) -> new LocalLabelPairCursor<>(data, predicate, (k, v) -> VectorUtils.of(k), (k, v) -> v, mdl),
             (e1, e2) -> true,
-            1,
             (k, v) -> VectorUtils.of(k),
             (k, v) -> v,
             folds
@@ -92,8 +94,8 @@ public class CrossValidationTest {
         verifyScores(folds, scoreCalculator.score(
             trainer,
             metrics,
-            data,
-            1,
+            predicate -> new LocalDatasetBuilder<>(data, predicate, 1),
+            (predicate, mdl) -> new LocalLabelPairCursor<>(data, predicate, (k, v) -> VectorUtils.of(k), (k, v) -> v, mdl),
             (k, v) -> VectorUtils.of(k),
             (k, v) -> v,
             folds
@@ -102,9 +104,9 @@ public class CrossValidationTest {
         verifyScores(folds, scoreCalculator.score(
             trainer,
             new Accuracy<>(),
-            data,
+            predicate -> new LocalDatasetBuilder<>(data, predicate, 1),
+            (predicate, mdl) -> new LocalLabelPairCursor<>(data, predicate, (k, v) -> VectorUtils.of(k), (k, v) -> v, mdl),
             (e1, e2) -> true,
-            1,
             (k, v) -> VectorUtils.of(k),
             (k, v) -> v,
             folds
@@ -129,8 +131,8 @@ public class CrossValidationTest {
         double[] scores = scoreCalculator.score(
             trainer,
             new Accuracy<>(),
-            data,
-            1,
+            predicate -> new LocalDatasetBuilder<>(data, predicate, 1),
+            (predicate, mdl) -> new LocalLabelPairCursor<>(data, predicate, (k, v) -> VectorUtils.of(k), (k, v) -> v, mdl),
             (k, v) -> VectorUtils.of(k),
             (k, v) -> v,
             folds

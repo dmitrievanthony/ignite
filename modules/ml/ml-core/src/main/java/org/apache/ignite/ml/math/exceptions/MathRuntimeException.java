@@ -16,15 +16,13 @@
  */
 package org.apache.ignite.ml.math.exceptions;
 
-import org.apache.ignite.IgniteException;
-
 /**
  * This class is based on the corresponding class from Apache Common Math lib.
  * In most cases, this class should not be instantiated directly: it should
  * serve as a base class for implementing exception classes that describe a
  * specific "problem".
  */
-public class MathRuntimeException extends IgniteException {
+public class MathRuntimeException extends MLRuntimeException {
     /** Serializable version Id. */
     private static final long serialVersionUID = 20120926L;
 

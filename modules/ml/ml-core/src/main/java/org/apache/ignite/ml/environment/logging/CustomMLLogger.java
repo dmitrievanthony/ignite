@@ -17,24 +17,24 @@
 
 package org.apache.ignite.ml.environment.logging;
 
-import org.apache.ignite.IgniteLogger;
 import org.apache.ignite.ml.IgniteModel;
 import org.apache.ignite.ml.math.Tracer;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
+import org.apache.ignite.ml.util.TMPLogger;
 
 /**
  * MLLogger implementation based on IgniteLogger.
  */
 public class CustomMLLogger implements MLLogger {
     /** Ignite logger instance. */
-    private final IgniteLogger log;
+    private final TMPLogger log;
 
     /**
      * Creates an instance of CustomMLLogger.
      *
      * @param log Basic Logger.
      */
-    private CustomMLLogger(IgniteLogger log) {
+    private CustomMLLogger(TMPLogger log) {
         this.log = log;
     }
 
@@ -43,7 +43,7 @@ public class CustomMLLogger implements MLLogger {
      *
      * @param rootLog Root logger.
      */
-    public static Factory factory(IgniteLogger rootLog) {
+    public static Factory factory(TMPLogger rootLog) {
         return new Factory(rootLog);
     }
 
@@ -86,14 +86,14 @@ public class CustomMLLogger implements MLLogger {
      */
     private static class Factory implements MLLogger.Factory {
         /** Root logger. */
-        private IgniteLogger rootLog;
+        private TMPLogger rootLog;
 
         /**
          * Creates an instance of factory.
          *
          * @param rootLog Root logger.
          */
-        public Factory(IgniteLogger rootLog) {
+        public Factory(TMPLogger rootLog) {
             this.rootLog = rootLog;
         }
 

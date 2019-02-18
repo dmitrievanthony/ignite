@@ -15,3 +15,4 @@
 
 from ignite_ml import gateway
 
+Ignition = gateway.jvm.org.apache.ignite.Ignition

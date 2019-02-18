@@ -32,6 +32,7 @@
             <bean class="org.apache.ignite.ml.util.plugin.MLPluginConfiguration">
                 <property name="withMdlStorage" value="#{true}" />
                 <property name="withMdlDescStorage" value="#{true}" />
+                <property name="withPython" value="#{true}" />
             </bean>
         </property>
     </bean>

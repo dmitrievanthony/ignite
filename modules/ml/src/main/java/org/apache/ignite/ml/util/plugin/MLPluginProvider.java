@@ -37,13 +37,14 @@ import org.apache.ignite.plugin.PluginContext;
 import org.apache.ignite.plugin.PluginProvider;
 import org.apache.ignite.plugin.PluginValidationException;
 import org.jetbrains.annotations.Nullable;
+import py4j.GatewayServer;
 
 /**
  * Machine learning inference plugin provider.
  */
 public class MLPluginProvider implements PluginProvider<MLPluginConfiguration> {
     /** Plugin name. */
-    private static final String ML_INFERENCE_PLUGIN_NAME = "ml-inference-plugin";
+    private static final String ML_INFERENCE_PLUGIN_NAME = "ml-plugin";
 
     /** Plugin version/ */
     private static final String ML_INFERENCE_PLUGIN_VERSION = "1.0.0";
@@ -132,6 +133,9 @@ public class MLPluginProvider implements PluginProvider<MLPluginConfiguration> {
 
             if (cfg.isWithMdlDescStorage())
                 startModelDescriptorStorage(cfg);
+
+            if (cfg.isWithPython())
+                startPy4JServer();
         }
     }
 
@@ -191,5 +195,15 @@ public class MLPluginProvider implements PluginProvider<MLPluginConfiguration> {
         ignite.getOrCreateCache(storageCfg);
 
         log.info("ML model descriptor storage is ready");
+    }
+
+    /**
+     * Start Py4J server.
+     */
+    private void startPy4JServer() {
+        GatewayServer gatewaySrv = new GatewayServer();
+        gatewaySrv.start();
+
+        log.info("Py4J server started.");
     }
 }

@@ -35,6 +35,9 @@ public class MLPluginConfiguration implements PluginConfiguration {
     /** Number of backups in model descriptor storage cache. */
     private Integer mdlDescStorageBackups;
 
+    /** PY4J server should be created on startup. */
+    private boolean withPython;
+
     /** */
     public boolean isWithMdlStorage() {
         return withMdlStorage;
@@ -73,5 +76,15 @@ public class MLPluginConfiguration implements PluginConfiguration {
     /** */
     public void setMdlDescStorageBackups(Integer mdlDescStorageBackups) {
         this.mdlDescStorageBackups = mdlDescStorageBackups;
+    }
+
+    /** */
+    public boolean isWithPython() {
+        return withPython;
+    }
+
+    /** */
+    public void setWithPython(boolean withPython) {
+        this.withPython = withPython;
     }
 }

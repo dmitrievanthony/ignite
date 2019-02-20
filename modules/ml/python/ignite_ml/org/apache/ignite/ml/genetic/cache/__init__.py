@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-GeneCacheConfig = gateway.jvm.org.apache.ignite.ml.genetic.cache.GeneCacheConfig
 PopulationCacheConfig = gateway.jvm.org.apache.ignite.ml.genetic.cache.PopulationCacheConfig
+GeneCacheConfig = gateway.jvm.org.apache.ignite.ml.genetic.cache.GeneCacheConfig

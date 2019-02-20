@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
+StackedModel = gateway.jvm.org.apache.ignite.ml.composition.stacking.StackedModel
 SimpleStackedDatasetTrainer = gateway.jvm.org.apache.ignite.ml.composition.stacking.SimpleStackedDatasetTrainer
 StackedDatasetTrainer = gateway.jvm.org.apache.ignite.ml.composition.stacking.StackedDatasetTrainer
-StackedModel = gateway.jvm.org.apache.ignite.ml.composition.stacking.StackedModel
 StackedVectorDatasetTrainer = gateway.jvm.org.apache.ignite.ml.composition.stacking.StackedVectorDatasetTrainer

@@ -17,8 +17,8 @@ from ignite_ml import gateway
 
 Activators = gateway.jvm.org.apache.ignite.ml.nn.Activators
 MLPLayer = gateway.jvm.org.apache.ignite.ml.nn.MLPLayer
-MLPState = gateway.jvm.org.apache.ignite.ml.nn.MLPState
-MLPTrainer = gateway.jvm.org.apache.ignite.ml.nn.MLPTrainer
-MultilayerPerceptron = gateway.jvm.org.apache.ignite.ml.nn.MultilayerPerceptron
 ReplicatedVectorMatrix = gateway.jvm.org.apache.ignite.ml.nn.ReplicatedVectorMatrix
 UpdatesStrategy = gateway.jvm.org.apache.ignite.ml.nn.UpdatesStrategy
+MultilayerPerceptron = gateway.jvm.org.apache.ignite.ml.nn.MultilayerPerceptron
+MLPState = gateway.jvm.org.apache.ignite.ml.nn.MLPState
+MLPTrainer = gateway.jvm.org.apache.ignite.ml.nn.MLPTrainer

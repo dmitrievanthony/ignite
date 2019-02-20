@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-LayerArchitecture = gateway.jvm.org.apache.ignite.ml.nn.architecture.LayerArchitecture
-MLPArchitecture = gateway.jvm.org.apache.ignite.ml.nn.architecture.MLPArchitecture
 TransformationLayerArchitecture = gateway.jvm.org.apache.ignite.ml.nn.architecture.TransformationLayerArchitecture
+MLPArchitecture = gateway.jvm.org.apache.ignite.ml.nn.architecture.MLPArchitecture
+LayerArchitecture = gateway.jvm.org.apache.ignite.ml.nn.architecture.LayerArchitecture

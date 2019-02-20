@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-CacheBasedDatasetBuilder = gateway.jvm.org.apache.ignite.ml.dataset.impl.cache.CacheBasedDatasetBuilder
 CacheBasedDataset = gateway.jvm.org.apache.ignite.ml.dataset.impl.cache.CacheBasedDataset
+CacheBasedDatasetBuilder = gateway.jvm.org.apache.ignite.ml.dataset.impl.cache.CacheBasedDatasetBuilder

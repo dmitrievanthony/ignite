@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-SHA256UniformMapper = gateway.jvm.org.apache.ignite.ml.selection.split.mapper.SHA256UniformMapper
 UniformMapper = gateway.jvm.org.apache.ignite.ml.selection.split.mapper.UniformMapper
+SHA256UniformMapper = gateway.jvm.org.apache.ignite.ml.selection.split.mapper.SHA256UniformMapper

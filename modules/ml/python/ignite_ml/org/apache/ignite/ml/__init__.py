@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-Exportable = gateway.jvm.org.apache.ignite.ml.Exportable
-Exporter = gateway.jvm.org.apache.ignite.ml.Exporter
 FileExporter = gateway.jvm.org.apache.ignite.ml.FileExporter
+Exportable = gateway.jvm.org.apache.ignite.ml.Exportable
 IgniteModel = gateway.jvm.org.apache.ignite.ml.IgniteModel
+Exporter = gateway.jvm.org.apache.ignite.ml.Exporter

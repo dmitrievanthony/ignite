@@ -16,8 +16,8 @@
 from ignite_ml import gateway
 
 ClassifierLeafValuesComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.statistics.ClassifierLeafValuesComputer
-LeafValuesComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.statistics.LeafValuesComputer
 MeanValueStatistic = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.statistics.MeanValueStatistic
-NormalDistributionStatisticsComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.statistics.NormalDistributionStatisticsComputer
 NormalDistributionStatistics = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.statistics.NormalDistributionStatistics
+NormalDistributionStatisticsComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.statistics.NormalDistributionStatisticsComputer
 RegressionLeafValuesComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.statistics.RegressionLeafValuesComputer
+LeafValuesComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.statistics.LeafValuesComputer

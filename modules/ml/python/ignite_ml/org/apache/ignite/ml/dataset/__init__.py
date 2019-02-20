@@ -15,11 +15,11 @@
 
 from ignite_ml import gateway
 
-DatasetBuilder = gateway.jvm.org.apache.ignite.ml.dataset.DatasetBuilder
+PartitionContextBuilder = gateway.jvm.org.apache.ignite.ml.dataset.PartitionContextBuilder
+UpstreamEntry = gateway.jvm.org.apache.ignite.ml.dataset.UpstreamEntry
 DatasetFactory = gateway.jvm.org.apache.ignite.ml.dataset.DatasetFactory
 Dataset = gateway.jvm.org.apache.ignite.ml.dataset.Dataset
-PartitionContextBuilder = gateway.jvm.org.apache.ignite.ml.dataset.PartitionContextBuilder
-PartitionDataBuilder = gateway.jvm.org.apache.ignite.ml.dataset.PartitionDataBuilder
-UpstreamEntry = gateway.jvm.org.apache.ignite.ml.dataset.UpstreamEntry
-UpstreamTransformerBuilder = gateway.jvm.org.apache.ignite.ml.dataset.UpstreamTransformerBuilder
 UpstreamTransformer = gateway.jvm.org.apache.ignite.ml.dataset.UpstreamTransformer
+UpstreamTransformerBuilder = gateway.jvm.org.apache.ignite.ml.dataset.UpstreamTransformerBuilder
+PartitionDataBuilder = gateway.jvm.org.apache.ignite.ml.dataset.PartitionDataBuilder
+DatasetBuilder = gateway.jvm.org.apache.ignite.ml.dataset.DatasetBuilder

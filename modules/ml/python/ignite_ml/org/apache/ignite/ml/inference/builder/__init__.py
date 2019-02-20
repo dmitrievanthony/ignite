@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
-AsyncModelBuilder = gateway.jvm.org.apache.ignite.ml.inference.builder.AsyncModelBuilder
-IgniteDistributedModelBuilder = gateway.jvm.org.apache.ignite.ml.inference.builder.IgniteDistributedModelBuilder
-SingleModelBuilder = gateway.jvm.org.apache.ignite.ml.inference.builder.SingleModelBuilder
 SyncModelBuilder = gateway.jvm.org.apache.ignite.ml.inference.builder.SyncModelBuilder
+IgniteDistributedModelBuilder = gateway.jvm.org.apache.ignite.ml.inference.builder.IgniteDistributedModelBuilder
 ThreadedModelBuilder = gateway.jvm.org.apache.ignite.ml.inference.builder.ThreadedModelBuilder
+SingleModelBuilder = gateway.jvm.org.apache.ignite.ml.inference.builder.SingleModelBuilder
+AsyncModelBuilder = gateway.jvm.org.apache.ignite.ml.inference.builder.AsyncModelBuilder

@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-DenseMatrixStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.storage.DenseMatrixStorage
-SparseMatrixStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.storage.SparseMatrixStorage
 ViewMatrixStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.storage.ViewMatrixStorage
+SparseMatrixStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.storage.SparseMatrixStorage
+DenseMatrixStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.storage.DenseMatrixStorage

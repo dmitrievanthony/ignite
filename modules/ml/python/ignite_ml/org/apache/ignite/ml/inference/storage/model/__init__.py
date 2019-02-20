@@ -15,12 +15,12 @@
 
 from ignite_ml import gateway
 
+ModelStorageProvider = gateway.jvm.org.apache.ignite.ml.inference.storage.model.ModelStorageProvider
+File = gateway.jvm.org.apache.ignite.ml.inference.storage.model.File
+ModelStorage = gateway.jvm.org.apache.ignite.ml.inference.storage.model.ModelStorage
+FileOrDirectory = gateway.jvm.org.apache.ignite.ml.inference.storage.model.FileOrDirectory
 DefaultModelStorage = gateway.jvm.org.apache.ignite.ml.inference.storage.model.DefaultModelStorage
 Directory = gateway.jvm.org.apache.ignite.ml.inference.storage.model.Directory
-File = gateway.jvm.org.apache.ignite.ml.inference.storage.model.File
-FileOrDirectory = gateway.jvm.org.apache.ignite.ml.inference.storage.model.FileOrDirectory
-IgniteModelStorageProvider = gateway.jvm.org.apache.ignite.ml.inference.storage.model.IgniteModelStorageProvider
 LocalModelStorageProvider = gateway.jvm.org.apache.ignite.ml.inference.storage.model.LocalModelStorageProvider
 ModelStorageFactory = gateway.jvm.org.apache.ignite.ml.inference.storage.model.ModelStorageFactory
-ModelStorage = gateway.jvm.org.apache.ignite.ml.inference.storage.model.ModelStorage
-ModelStorageProvider = gateway.jvm.org.apache.ignite.ml.inference.storage.model.ModelStorageProvider
+IgniteModelStorageProvider = gateway.jvm.org.apache.ignite.ml.inference.storage.model.IgniteModelStorageProvider

@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
-BucketMeta = gateway.jvm.org.apache.ignite.ml.dataset.feature.BucketMeta
 DistributionComputer = gateway.jvm.org.apache.ignite.ml.dataset.feature.DistributionComputer
-FeatureMeta = gateway.jvm.org.apache.ignite.ml.dataset.feature.FeatureMeta
+BucketMeta = gateway.jvm.org.apache.ignite.ml.dataset.feature.BucketMeta
 Histogram = gateway.jvm.org.apache.ignite.ml.dataset.feature.Histogram
+FeatureMeta = gateway.jvm.org.apache.ignite.ml.dataset.feature.FeatureMeta
 ObjectHistogram = gateway.jvm.org.apache.ignite.ml.dataset.feature.ObjectHistogram

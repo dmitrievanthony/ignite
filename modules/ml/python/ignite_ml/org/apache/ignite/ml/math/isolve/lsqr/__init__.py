@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
+LSQRResult = gateway.jvm.org.apache.ignite.ml.math.isolve.lsqr.LSQRResult
 AbstractLSQR = gateway.jvm.org.apache.ignite.ml.math.isolve.lsqr.AbstractLSQR
 LSQROnHeap = gateway.jvm.org.apache.ignite.ml.math.isolve.lsqr.LSQROnHeap
 LSQRPartitionContext = gateway.jvm.org.apache.ignite.ml.math.isolve.lsqr.LSQRPartitionContext
-LSQRResult = gateway.jvm.org.apache.ignite.ml.math.isolve.lsqr.LSQRResult

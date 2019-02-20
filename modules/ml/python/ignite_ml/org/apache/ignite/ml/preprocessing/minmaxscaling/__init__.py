@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-MinMaxScalerPartitionData = gateway.jvm.org.apache.ignite.ml.preprocessing.minmaxscaling.MinMaxScalerPartitionData
 MinMaxScalerPreprocessor = gateway.jvm.org.apache.ignite.ml.preprocessing.minmaxscaling.MinMaxScalerPreprocessor
 MinMaxScalerTrainer = gateway.jvm.org.apache.ignite.ml.preprocessing.minmaxscaling.MinMaxScalerTrainer
+MinMaxScalerPartitionData = gateway.jvm.org.apache.ignite.ml.preprocessing.minmaxscaling.MinMaxScalerPartitionData

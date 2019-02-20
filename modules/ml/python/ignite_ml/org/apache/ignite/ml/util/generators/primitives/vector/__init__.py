@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-ParametricVectorGenerator = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.vector.ParametricVectorGenerator
-VectorGenerator = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.vector.VectorGenerator
 VectorGeneratorPrimitives = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.vector.VectorGeneratorPrimitives
+ParametricVectorGenerator = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.vector.ParametricVectorGenerator
 VectorGeneratorsFamily = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.vector.VectorGeneratorsFamily
+VectorGenerator = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.vector.VectorGenerator

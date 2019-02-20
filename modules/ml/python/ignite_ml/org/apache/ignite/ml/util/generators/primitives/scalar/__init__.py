@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
+RandomProducerWithGenerator = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.scalar.RandomProducerWithGenerator
 DiscreteRandomProducer = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.scalar.DiscreteRandomProducer
 GaussRandomProducer = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.scalar.GaussRandomProducer
-RandomProducer = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.scalar.RandomProducer
-RandomProducerWithGenerator = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.scalar.RandomProducerWithGenerator
 UniformRandomProducer = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.scalar.UniformRandomProducer
+RandomProducer = gateway.jvm.org.apache.ignite.ml.util.generators.primitives.scalar.RandomProducer

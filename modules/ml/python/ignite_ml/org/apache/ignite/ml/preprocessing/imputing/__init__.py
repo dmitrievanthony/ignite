@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-ImputerPartitionData = gateway.jvm.org.apache.ignite.ml.preprocessing.imputing.ImputerPartitionData
-ImputerPreprocessor = gateway.jvm.org.apache.ignite.ml.preprocessing.imputing.ImputerPreprocessor
 ImputerTrainer = gateway.jvm.org.apache.ignite.ml.preprocessing.imputing.ImputerTrainer
+ImputerPreprocessor = gateway.jvm.org.apache.ignite.ml.preprocessing.imputing.ImputerPreprocessor
 ImputingStrategy = gateway.jvm.org.apache.ignite.ml.preprocessing.imputing.ImputingStrategy
+ImputerPartitionData = gateway.jvm.org.apache.ignite.ml.preprocessing.imputing.ImputerPartitionData

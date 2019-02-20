@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
-EncoderPartitionData = gateway.jvm.org.apache.ignite.ml.preprocessing.encoding.EncoderPartitionData
-EncoderPreprocessor = gateway.jvm.org.apache.ignite.ml.preprocessing.encoding.EncoderPreprocessor
-EncoderSortingStrategy = gateway.jvm.org.apache.ignite.ml.preprocessing.encoding.EncoderSortingStrategy
-EncoderTrainer = gateway.jvm.org.apache.ignite.ml.preprocessing.encoding.EncoderTrainer
 EncoderType = gateway.jvm.org.apache.ignite.ml.preprocessing.encoding.EncoderType
+EncoderPreprocessor = gateway.jvm.org.apache.ignite.ml.preprocessing.encoding.EncoderPreprocessor
+EncoderTrainer = gateway.jvm.org.apache.ignite.ml.preprocessing.encoding.EncoderTrainer
+EncoderPartitionData = gateway.jvm.org.apache.ignite.ml.preprocessing.encoding.EncoderPartitionData
+EncoderSortingStrategy = gateway.jvm.org.apache.ignite.ml.preprocessing.encoding.EncoderSortingStrategy

@@ -15,17 +15,17 @@
 
 from ignite_ml import gateway
 
-Chromosome = gateway.jvm.org.apache.ignite.ml.genetic.Chromosome
-CrossOverJob = gateway.jvm.org.apache.ignite.ml.genetic.CrossOverJob
-CrossOverTask = gateway.jvm.org.apache.ignite.ml.genetic.CrossOverTask
 FitnessJob = gateway.jvm.org.apache.ignite.ml.genetic.FitnessJob
-FitnessTask = gateway.jvm.org.apache.ignite.ml.genetic.FitnessTask
-GAGrid = gateway.jvm.org.apache.ignite.ml.genetic.GAGrid
-Gene = gateway.jvm.org.apache.ignite.ml.genetic.Gene
-IFitnessFunction = gateway.jvm.org.apache.ignite.ml.genetic.IFitnessFunction
-MutateJob = gateway.jvm.org.apache.ignite.ml.genetic.MutateJob
-MutateTask = gateway.jvm.org.apache.ignite.ml.genetic.MutateTask
 RouletteWheelSelectionJob = gateway.jvm.org.apache.ignite.ml.genetic.RouletteWheelSelectionJob
-RouletteWheelSelectionTask = gateway.jvm.org.apache.ignite.ml.genetic.RouletteWheelSelectionTask
+CrossOverTask = gateway.jvm.org.apache.ignite.ml.genetic.CrossOverTask
+CrossOverJob = gateway.jvm.org.apache.ignite.ml.genetic.CrossOverJob
 TruncateSelectionJob = gateway.jvm.org.apache.ignite.ml.genetic.TruncateSelectionJob
+MutateTask = gateway.jvm.org.apache.ignite.ml.genetic.MutateTask
+RouletteWheelSelectionTask = gateway.jvm.org.apache.ignite.ml.genetic.RouletteWheelSelectionTask
+GAGrid = gateway.jvm.org.apache.ignite.ml.genetic.GAGrid
+Chromosome = gateway.jvm.org.apache.ignite.ml.genetic.Chromosome
+IFitnessFunction = gateway.jvm.org.apache.ignite.ml.genetic.IFitnessFunction
+Gene = gateway.jvm.org.apache.ignite.ml.genetic.Gene
 TruncateSelectionTask = gateway.jvm.org.apache.ignite.ml.genetic.TruncateSelectionTask
+FitnessTask = gateway.jvm.org.apache.ignite.ml.genetic.FitnessTask
+MutateJob = gateway.jvm.org.apache.ignite.ml.genetic.MutateJob

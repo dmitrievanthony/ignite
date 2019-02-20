@@ -16,7 +16,7 @@
 from ignite_ml import gateway
 
 Clusterer = gateway.jvm.org.apache.ignite.ml.clustering.kmeans.Clusterer
+KMeansTrainer = gateway.jvm.org.apache.ignite.ml.clustering.kmeans.KMeansTrainer
 ClusterizationModel = gateway.jvm.org.apache.ignite.ml.clustering.kmeans.ClusterizationModel
 KMeansModelFormat = gateway.jvm.org.apache.ignite.ml.clustering.kmeans.KMeansModelFormat
 KMeansModel = gateway.jvm.org.apache.ignite.ml.clustering.kmeans.KMeansModel
-KMeansTrainer = gateway.jvm.org.apache.ignite.ml.clustering.kmeans.KMeansTrainer

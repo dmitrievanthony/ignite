@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-ChromosomeCriteria = gateway.jvm.org.apache.ignite.ml.genetic.parameter.ChromosomeCriteria
 GAConfiguration = gateway.jvm.org.apache.ignite.ml.genetic.parameter.GAConfiguration
 GAGridConstants = gateway.jvm.org.apache.ignite.ml.genetic.parameter.GAGridConstants
 ITerminateCriteria = gateway.jvm.org.apache.ignite.ml.genetic.parameter.ITerminateCriteria
+ChromosomeCriteria = gateway.jvm.org.apache.ignite.ml.genetic.parameter.ChromosomeCriteria

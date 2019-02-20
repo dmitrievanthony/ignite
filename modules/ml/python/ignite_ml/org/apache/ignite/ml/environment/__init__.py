@@ -16,5 +16,5 @@
 from ignite_ml import gateway
 
 DefaultLearningEnvironmentBuilder = gateway.jvm.org.apache.ignite.ml.environment.DefaultLearningEnvironmentBuilder
-LearningEnvironmentBuilder = gateway.jvm.org.apache.ignite.ml.environment.LearningEnvironmentBuilder
 LearningEnvironment = gateway.jvm.org.apache.ignite.ml.environment.LearningEnvironment
+LearningEnvironmentBuilder = gateway.jvm.org.apache.ignite.ml.environment.LearningEnvironmentBuilder

@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-ParameterSetGenerator = gateway.jvm.org.apache.ignite.ml.selection.paramgrid.ParameterSetGenerator
 ParamGrid = gateway.jvm.org.apache.ignite.ml.selection.paramgrid.ParamGrid
+ParameterSetGenerator = gateway.jvm.org.apache.ignite.ml.selection.paramgrid.ParameterSetGenerator

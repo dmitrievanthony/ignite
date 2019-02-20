@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-KNNUtils = gateway.jvm.org.apache.ignite.ml.knn.KNNUtils
 NNClassificationModel = gateway.jvm.org.apache.ignite.ml.knn.NNClassificationModel
+KNNUtils = gateway.jvm.org.apache.ignite.ml.knn.KNNUtils

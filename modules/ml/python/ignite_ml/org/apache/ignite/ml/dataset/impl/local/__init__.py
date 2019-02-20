@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-LocalDatasetBuilder = gateway.jvm.org.apache.ignite.ml.dataset.impl.local.LocalDatasetBuilder
 LocalDataset = gateway.jvm.org.apache.ignite.ml.dataset.impl.local.LocalDataset
+LocalDatasetBuilder = gateway.jvm.org.apache.ignite.ml.dataset.impl.local.LocalDatasetBuilder

@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-FileSystemModelReader = gateway.jvm.org.apache.ignite.ml.inference.reader.FileSystemModelReader
-InMemoryModelReader = gateway.jvm.org.apache.ignite.ml.inference.reader.InMemoryModelReader
 ModelReader = gateway.jvm.org.apache.ignite.ml.inference.reader.ModelReader
+FileSystemModelReader = gateway.jvm.org.apache.ignite.ml.inference.reader.FileSystemModelReader
 ModelStorageModelReader = gateway.jvm.org.apache.ignite.ml.inference.reader.ModelStorageModelReader
+InMemoryModelReader = gateway.jvm.org.apache.ignite.ml.inference.reader.InMemoryModelReader

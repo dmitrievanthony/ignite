@@ -16,4 +16,5 @@
 from ignite_ml import gateway
 
 SVMLinearClassificationModel = gateway.jvm.org.apache.ignite.ml.svm.SVMLinearClassificationModel
+Deltas = gateway.jvm.org.apache.ignite.ml.svm.Deltas
 SVMLinearClassificationTrainer = gateway.jvm.org.apache.ignite.ml.svm.SVMLinearClassificationTrainer

@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-ConsoleLogger = gateway.jvm.org.apache.ignite.ml.environment.logging.ConsoleLogger
-CustomMLLogger = gateway.jvm.org.apache.ignite.ml.environment.logging.CustomMLLogger
 MLLogger = gateway.jvm.org.apache.ignite.ml.environment.logging.MLLogger
 NoOpLogger = gateway.jvm.org.apache.ignite.ml.environment.logging.NoOpLogger
+CustomMLLogger = gateway.jvm.org.apache.ignite.ml.environment.logging.CustomMLLogger
+ConsoleLogger = gateway.jvm.org.apache.ignite.ml.environment.logging.ConsoleLogger

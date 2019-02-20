@@ -16,6 +16,6 @@
 from ignite_ml import gateway
 
 BaseParametrized = gateway.jvm.org.apache.ignite.ml.optimization.BaseParametrized
-LossFunctions = gateway.jvm.org.apache.ignite.ml.optimization.LossFunctions
 Parametrized = gateway.jvm.org.apache.ignite.ml.optimization.Parametrized
+LossFunctions = gateway.jvm.org.apache.ignite.ml.optimization.LossFunctions
 SmoothParametrized = gateway.jvm.org.apache.ignite.ml.optimization.SmoothParametrized

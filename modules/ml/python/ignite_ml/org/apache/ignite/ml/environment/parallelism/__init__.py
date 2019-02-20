@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-DefaultParallelismStrategy = gateway.jvm.org.apache.ignite.ml.environment.parallelism.DefaultParallelismStrategy
-NoParallelismStrategy = gateway.jvm.org.apache.ignite.ml.environment.parallelism.NoParallelismStrategy
-ParallelismStrategy = gateway.jvm.org.apache.ignite.ml.environment.parallelism.ParallelismStrategy
 Promise = gateway.jvm.org.apache.ignite.ml.environment.parallelism.Promise
+DefaultParallelismStrategy = gateway.jvm.org.apache.ignite.ml.environment.parallelism.DefaultParallelismStrategy
+ParallelismStrategy = gateway.jvm.org.apache.ignite.ml.environment.parallelism.ParallelismStrategy
+NoParallelismStrategy = gateway.jvm.org.apache.ignite.ml.environment.parallelism.NoParallelismStrategy

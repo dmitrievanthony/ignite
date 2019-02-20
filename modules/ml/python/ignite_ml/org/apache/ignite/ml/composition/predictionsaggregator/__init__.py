@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-MeanValuePredictionsAggregator = gateway.jvm.org.apache.ignite.ml.composition.predictionsaggregator.MeanValuePredictionsAggregator
 OnMajorityPredictionsAggregator = gateway.jvm.org.apache.ignite.ml.composition.predictionsaggregator.OnMajorityPredictionsAggregator
-PredictionsAggregator = gateway.jvm.org.apache.ignite.ml.composition.predictionsaggregator.PredictionsAggregator
+MeanValuePredictionsAggregator = gateway.jvm.org.apache.ignite.ml.composition.predictionsaggregator.MeanValuePredictionsAggregator
 WeightedPredictionsAggregator = gateway.jvm.org.apache.ignite.ml.composition.predictionsaggregator.WeightedPredictionsAggregator
+PredictionsAggregator = gateway.jvm.org.apache.ignite.ml.composition.predictionsaggregator.PredictionsAggregator

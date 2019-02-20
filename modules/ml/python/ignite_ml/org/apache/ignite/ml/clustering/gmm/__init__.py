@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
-CovarianceMatricesAggregator = gateway.jvm.org.apache.ignite.ml.clustering.gmm.CovarianceMatricesAggregator
-GmmModel = gateway.jvm.org.apache.ignite.ml.clustering.gmm.GmmModel
 GmmPartitionData = gateway.jvm.org.apache.ignite.ml.clustering.gmm.GmmPartitionData
 GmmTrainer = gateway.jvm.org.apache.ignite.ml.clustering.gmm.GmmTrainer
+GmmModel = gateway.jvm.org.apache.ignite.ml.clustering.gmm.GmmModel
 MeanWithClusterProbAggregator = gateway.jvm.org.apache.ignite.ml.clustering.gmm.MeanWithClusterProbAggregator
+CovarianceMatricesAggregator = gateway.jvm.org.apache.ignite.ml.clustering.gmm.CovarianceMatricesAggregator

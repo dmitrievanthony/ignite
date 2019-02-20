@@ -15,10 +15,10 @@
 
 from ignite_ml import gateway
 
-GiniHistogram = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.GiniHistogram
-GiniHistogramsComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.GiniHistogramsComputer
-ImpurityComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.ImpurityComputer
-ImpurityHistogram = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.ImpurityHistogram
-ImpurityHistogramsComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.ImpurityHistogramsComputer
-MSEHistogramComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.MSEHistogramComputer
 MSEHistogram = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.MSEHistogram
+ImpurityHistogram = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.ImpurityHistogram
+GiniHistogram = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.GiniHistogram
+ImpurityComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.ImpurityComputer
+MSEHistogramComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.MSEHistogramComputer
+GiniHistogramsComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.GiniHistogramsComputer
+ImpurityHistogramsComputer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.impurity.ImpurityHistogramsComputer

@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
+MLPluginProvider = gateway.jvm.org.apache.ignite.ml.util.plugin.MLPluginProvider
 MLPluginConfiguration = gateway.jvm.org.apache.ignite.ml.util.plugin.MLPluginConfiguration
 MLPlugin = gateway.jvm.org.apache.ignite.ml.util.plugin.MLPlugin
-MLPluginProvider = gateway.jvm.org.apache.ignite.ml.util.plugin.MLPluginProvider

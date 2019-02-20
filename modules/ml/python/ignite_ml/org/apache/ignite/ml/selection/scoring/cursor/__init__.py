@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-CacheBasedLabelPairCursor = gateway.jvm.org.apache.ignite.ml.selection.scoring.cursor.CacheBasedLabelPairCursor
-LabelPairCursor = gateway.jvm.org.apache.ignite.ml.selection.scoring.cursor.LabelPairCursor
 LocalLabelPairCursor = gateway.jvm.org.apache.ignite.ml.selection.scoring.cursor.LocalLabelPairCursor
+LabelPairCursor = gateway.jvm.org.apache.ignite.ml.selection.scoring.cursor.LabelPairCursor
+CacheBasedLabelPairCursor = gateway.jvm.org.apache.ignite.ml.selection.scoring.cursor.CacheBasedLabelPairCursor

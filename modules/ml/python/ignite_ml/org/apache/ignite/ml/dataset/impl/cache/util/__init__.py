@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-ComputeUtils = gateway.jvm.org.apache.ignite.ml.dataset.impl.cache.util.ComputeUtils
 DatasetAffinityFunctionWrapper = gateway.jvm.org.apache.ignite.ml.dataset.impl.cache.util.DatasetAffinityFunctionWrapper
 IteratorWithConcurrentModificationChecker = gateway.jvm.org.apache.ignite.ml.dataset.impl.cache.util.IteratorWithConcurrentModificationChecker
 PartitionDataStorage = gateway.jvm.org.apache.ignite.ml.dataset.impl.cache.util.PartitionDataStorage
+ComputeUtils = gateway.jvm.org.apache.ignite.ml.dataset.impl.cache.util.ComputeUtils

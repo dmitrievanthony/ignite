@@ -15,10 +15,10 @@
 
 from ignite_ml import gateway
 
-LRUCacheExpirationListener = gateway.jvm.org.apache.ignite.ml.util.LRUCacheExpirationListener
-LRUCache = gateway.jvm.org.apache.ignite.ml.util.LRUCache
-MLSandboxDatasets = gateway.jvm.org.apache.ignite.ml.util.MLSandboxDatasets
-MnistUtils = gateway.jvm.org.apache.ignite.ml.util.MnistUtils
-ModelTrace = gateway.jvm.org.apache.ignite.ml.util.ModelTrace
 SandboxMLCache = gateway.jvm.org.apache.ignite.ml.util.SandboxMLCache
+LRUCache = gateway.jvm.org.apache.ignite.ml.util.LRUCache
+MnistUtils = gateway.jvm.org.apache.ignite.ml.util.MnistUtils
+LRUCacheExpirationListener = gateway.jvm.org.apache.ignite.ml.util.LRUCacheExpirationListener
+MLSandboxDatasets = gateway.jvm.org.apache.ignite.ml.util.MLSandboxDatasets
+ModelTrace = gateway.jvm.org.apache.ignite.ml.util.ModelTrace
 Utils = gateway.jvm.org.apache.ignite.ml.util.Utils

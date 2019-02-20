@@ -15,9 +15,9 @@
 
 from ignite_ml import gateway
 
-Dataset = gateway.jvm.org.apache.ignite.ml.structures.Dataset
 DatasetRow = gateway.jvm.org.apache.ignite.ml.structures.DatasetRow
-FeatureMetadata = gateway.jvm.org.apache.ignite.ml.structures.FeatureMetadata
 LabeledVector = gateway.jvm.org.apache.ignite.ml.structures.LabeledVector
-LabeledVectorSet = gateway.jvm.org.apache.ignite.ml.structures.LabeledVectorSet
+Dataset = gateway.jvm.org.apache.ignite.ml.structures.Dataset
 LabeledVectorSetTestTrainPair = gateway.jvm.org.apache.ignite.ml.structures.LabeledVectorSetTestTrainPair
+FeatureMetadata = gateway.jvm.org.apache.ignite.ml.structures.FeatureMetadata
+LabeledVectorSet = gateway.jvm.org.apache.ignite.ml.structures.LabeledVectorSet

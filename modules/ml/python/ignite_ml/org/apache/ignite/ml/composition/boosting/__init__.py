@@ -16,6 +16,6 @@
 from ignite_ml import gateway
 
 GDBBinaryClassifierTrainer = gateway.jvm.org.apache.ignite.ml.composition.boosting.GDBBinaryClassifierTrainer
+GDBTrainer = gateway.jvm.org.apache.ignite.ml.composition.boosting.GDBTrainer
 GDBLearningStrategy = gateway.jvm.org.apache.ignite.ml.composition.boosting.GDBLearningStrategy
 GDBRegressionTrainer = gateway.jvm.org.apache.ignite.ml.composition.boosting.GDBRegressionTrainer
-GDBTrainer = gateway.jvm.org.apache.ignite.ml.composition.boosting.GDBTrainer

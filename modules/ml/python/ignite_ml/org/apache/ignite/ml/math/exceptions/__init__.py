@@ -15,13 +15,13 @@
 
 from ignite_ml import gateway
 
-CardinalityException = gateway.jvm.org.apache.ignite.ml.math.exceptions.CardinalityException
-ColumnIndexException = gateway.jvm.org.apache.ignite.ml.math.exceptions.ColumnIndexException
 IndexException = gateway.jvm.org.apache.ignite.ml.math.exceptions.IndexException
-MathIllegalArgumentException = gateway.jvm.org.apache.ignite.ml.math.exceptions.MathIllegalArgumentException
-MathRuntimeException = gateway.jvm.org.apache.ignite.ml.math.exceptions.MathRuntimeException
-NoDataException = gateway.jvm.org.apache.ignite.ml.math.exceptions.NoDataException
 NonSquareMatrixException = gateway.jvm.org.apache.ignite.ml.math.exceptions.NonSquareMatrixException
-RowIndexException = gateway.jvm.org.apache.ignite.ml.math.exceptions.RowIndexException
-SingularMatrixException = gateway.jvm.org.apache.ignite.ml.math.exceptions.SingularMatrixException
+CardinalityException = gateway.jvm.org.apache.ignite.ml.math.exceptions.CardinalityException
 UnsupportedOperationException = gateway.jvm.org.apache.ignite.ml.math.exceptions.UnsupportedOperationException
+MathRuntimeException = gateway.jvm.org.apache.ignite.ml.math.exceptions.MathRuntimeException
+SingularMatrixException = gateway.jvm.org.apache.ignite.ml.math.exceptions.SingularMatrixException
+NoDataException = gateway.jvm.org.apache.ignite.ml.math.exceptions.NoDataException
+ColumnIndexException = gateway.jvm.org.apache.ignite.ml.math.exceptions.ColumnIndexException
+RowIndexException = gateway.jvm.org.apache.ignite.ml.math.exceptions.RowIndexException
+MathIllegalArgumentException = gateway.jvm.org.apache.ignite.ml.math.exceptions.MathIllegalArgumentException

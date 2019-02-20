@@ -16,6 +16,6 @@
 from ignite_ml import gateway
 
 IgniteModelDescriptorStorage = gateway.jvm.org.apache.ignite.ml.inference.storage.descriptor.IgniteModelDescriptorStorage
-LocalModelDescriptorStorage = gateway.jvm.org.apache.ignite.ml.inference.storage.descriptor.LocalModelDescriptorStorage
 ModelDescriptorStorageFactory = gateway.jvm.org.apache.ignite.ml.inference.storage.descriptor.ModelDescriptorStorageFactory
 ModelDescriptorStorage = gateway.jvm.org.apache.ignite.ml.inference.storage.descriptor.ModelDescriptorStorage
+LocalModelDescriptorStorage = gateway.jvm.org.apache.ignite.ml.inference.storage.descriptor.LocalModelDescriptorStorage

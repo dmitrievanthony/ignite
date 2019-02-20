@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-BaggedModel = gateway.jvm.org.apache.ignite.ml.composition.bagging.BaggedModel
 BaggedTrainer = gateway.jvm.org.apache.ignite.ml.composition.bagging.BaggedTrainer
+BaggedModel = gateway.jvm.org.apache.ignite.ml.composition.bagging.BaggedModel

@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
-FeaturesCountSelectionStrategies = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.FeaturesCountSelectionStrategies
-NodeId = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.NodeId
 NodeSplit = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.NodeSplit
 TreeNode = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.TreeNode
+FeaturesCountSelectionStrategies = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.FeaturesCountSelectionStrategies
+NodeId = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.NodeId
 TreeRoot = gateway.jvm.org.apache.ignite.ml.tree.randomforest.data.TreeRoot

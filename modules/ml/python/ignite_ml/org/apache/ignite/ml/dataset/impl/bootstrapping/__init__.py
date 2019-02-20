@@ -16,5 +16,5 @@
 from ignite_ml import gateway
 
 BootstrappedDatasetBuilder = gateway.jvm.org.apache.ignite.ml.dataset.impl.bootstrapping.BootstrappedDatasetBuilder
-BootstrappedDatasetPartition = gateway.jvm.org.apache.ignite.ml.dataset.impl.bootstrapping.BootstrappedDatasetPartition
 BootstrappedVector = gateway.jvm.org.apache.ignite.ml.dataset.impl.bootstrapping.BootstrappedVector
+BootstrappedDatasetPartition = gateway.jvm.org.apache.ignite.ml.dataset.impl.bootstrapping.BootstrappedDatasetPartition

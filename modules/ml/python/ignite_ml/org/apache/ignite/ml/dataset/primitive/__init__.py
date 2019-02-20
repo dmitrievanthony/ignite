@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
-DatasetWrapper = gateway.jvm.org.apache.ignite.ml.dataset.primitive.DatasetWrapper
-FeatureMatrixWithLabelsOnHeapDataBuilder = gateway.jvm.org.apache.ignite.ml.dataset.primitive.FeatureMatrixWithLabelsOnHeapDataBuilder
-FeatureMatrixWithLabelsOnHeapData = gateway.jvm.org.apache.ignite.ml.dataset.primitive.FeatureMatrixWithLabelsOnHeapData
-SimpleDataset = gateway.jvm.org.apache.ignite.ml.dataset.primitive.SimpleDataset
 SimpleLabeledDataset = gateway.jvm.org.apache.ignite.ml.dataset.primitive.SimpleLabeledDataset
+FeatureMatrixWithLabelsOnHeapDataBuilder = gateway.jvm.org.apache.ignite.ml.dataset.primitive.FeatureMatrixWithLabelsOnHeapDataBuilder
+DatasetWrapper = gateway.jvm.org.apache.ignite.ml.dataset.primitive.DatasetWrapper
+SimpleDataset = gateway.jvm.org.apache.ignite.ml.dataset.primitive.SimpleDataset
+FeatureMatrixWithLabelsOnHeapData = gateway.jvm.org.apache.ignite.ml.dataset.primitive.FeatureMatrixWithLabelsOnHeapData

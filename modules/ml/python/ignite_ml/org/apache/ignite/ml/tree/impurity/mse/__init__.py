@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-MSEImpurityMeasureCalculator = gateway.jvm.org.apache.ignite.ml.tree.impurity.mse.MSEImpurityMeasureCalculator
 MSEImpurityMeasure = gateway.jvm.org.apache.ignite.ml.tree.impurity.mse.MSEImpurityMeasure
+MSEImpurityMeasureCalculator = gateway.jvm.org.apache.ignite.ml.tree.impurity.mse.MSEImpurityMeasureCalculator

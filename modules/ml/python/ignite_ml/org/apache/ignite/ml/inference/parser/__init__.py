@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
-IgniteModelParser = gateway.jvm.org.apache.ignite.ml.inference.parser.IgniteModelParser
-ModelParser = gateway.jvm.org.apache.ignite.ml.inference.parser.ModelParser
-TensorFlowBaseModelParser = gateway.jvm.org.apache.ignite.ml.inference.parser.TensorFlowBaseModelParser
-TensorFlowGraphModelParser = gateway.jvm.org.apache.ignite.ml.inference.parser.TensorFlowGraphModelParser
 TensorFlowSavedModelModelParser = gateway.jvm.org.apache.ignite.ml.inference.parser.TensorFlowSavedModelModelParser
+IgniteModelParser = gateway.jvm.org.apache.ignite.ml.inference.parser.IgniteModelParser
+TensorFlowBaseModelParser = gateway.jvm.org.apache.ignite.ml.inference.parser.TensorFlowBaseModelParser
+ModelParser = gateway.jvm.org.apache.ignite.ml.inference.parser.ModelParser
+TensorFlowGraphModelParser = gateway.jvm.org.apache.ignite.ml.inference.parser.TensorFlowGraphModelParser

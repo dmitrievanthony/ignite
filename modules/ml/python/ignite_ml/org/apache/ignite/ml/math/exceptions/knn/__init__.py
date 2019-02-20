@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-EmptyFileException = gateway.jvm.org.apache.ignite.ml.math.exceptions.knn.EmptyFileException
-FileParsingException = gateway.jvm.org.apache.ignite.ml.math.exceptions.knn.FileParsingException
 NoLabelVectorException = gateway.jvm.org.apache.ignite.ml.math.exceptions.knn.NoLabelVectorException
+FileParsingException = gateway.jvm.org.apache.ignite.ml.math.exceptions.knn.FileParsingException
+EmptyFileException = gateway.jvm.org.apache.ignite.ml.math.exceptions.knn.EmptyFileException

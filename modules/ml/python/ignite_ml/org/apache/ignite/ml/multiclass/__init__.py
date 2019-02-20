@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-MultiClassModel = gateway.jvm.org.apache.ignite.ml.multiclass.MultiClassModel
 OneVsRestTrainer = gateway.jvm.org.apache.ignite.ml.multiclass.OneVsRestTrainer
+MultiClassModel = gateway.jvm.org.apache.ignite.ml.multiclass.MultiClassModel

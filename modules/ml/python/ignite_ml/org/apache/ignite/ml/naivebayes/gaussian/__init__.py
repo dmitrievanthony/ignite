@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-GaussianNaiveBayesModel = gateway.jvm.org.apache.ignite.ml.naivebayes.gaussian.GaussianNaiveBayesModel
-GaussianNaiveBayesSumsHolder = gateway.jvm.org.apache.ignite.ml.naivebayes.gaussian.GaussianNaiveBayesSumsHolder
 GaussianNaiveBayesTrainer = gateway.jvm.org.apache.ignite.ml.naivebayes.gaussian.GaussianNaiveBayesTrainer
+GaussianNaiveBayesSumsHolder = gateway.jvm.org.apache.ignite.ml.naivebayes.gaussian.GaussianNaiveBayesSumsHolder
+GaussianNaiveBayesModel = gateway.jvm.org.apache.ignite.ml.naivebayes.gaussian.GaussianNaiveBayesModel

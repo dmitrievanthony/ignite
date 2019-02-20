@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-DenseVectorStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.storage.DenseVectorStorage
 SparseVectorStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.storage.SparseVectorStorage
-VectorizedViewMatrixStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.storage.VectorizedViewMatrixStorage
+DenseVectorStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.storage.DenseVectorStorage
 VectorViewStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.storage.VectorViewStorage
+VectorizedViewMatrixStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.storage.VectorizedViewMatrixStorage

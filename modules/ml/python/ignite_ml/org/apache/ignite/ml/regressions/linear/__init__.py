@@ -16,6 +16,6 @@
 from ignite_ml import gateway
 
 FeatureExtractorWrapper = gateway.jvm.org.apache.ignite.ml.regressions.linear.FeatureExtractorWrapper
-LinearRegressionLSQRTrainer = gateway.jvm.org.apache.ignite.ml.regressions.linear.LinearRegressionLSQRTrainer
 LinearRegressionModel = gateway.jvm.org.apache.ignite.ml.regressions.linear.LinearRegressionModel
 LinearRegressionSGDTrainer = gateway.jvm.org.apache.ignite.ml.regressions.linear.LinearRegressionSGDTrainer
+LinearRegressionLSQRTrainer = gateway.jvm.org.apache.ignite.ml.regressions.linear.LinearRegressionLSQRTrainer

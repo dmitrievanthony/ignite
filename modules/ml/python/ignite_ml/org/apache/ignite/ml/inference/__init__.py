@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-IgniteModelStorageUtil = gateway.jvm.org.apache.ignite.ml.inference.IgniteModelStorageUtil
-ModelDescriptor = gateway.jvm.org.apache.ignite.ml.inference.ModelDescriptor
-Model = gateway.jvm.org.apache.ignite.ml.inference.Model
 ModelSignature = gateway.jvm.org.apache.ignite.ml.inference.ModelSignature
+IgniteModelStorageUtil = gateway.jvm.org.apache.ignite.ml.inference.IgniteModelStorageUtil
+Model = gateway.jvm.org.apache.ignite.ml.inference.Model
+ModelDescriptor = gateway.jvm.org.apache.ignite.ml.inference.ModelDescriptor

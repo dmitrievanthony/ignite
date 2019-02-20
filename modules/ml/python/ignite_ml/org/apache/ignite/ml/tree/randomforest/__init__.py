@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-RandomForestClassifierTrainer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.RandomForestClassifierTrainer
-RandomForestRegressionTrainer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.RandomForestRegressionTrainer
 RandomForestTrainer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.RandomForestTrainer
+RandomForestRegressionTrainer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.RandomForestRegressionTrainer
+RandomForestClassifierTrainer = gateway.jvm.org.apache.ignite.ml.tree.randomforest.RandomForestClassifierTrainer

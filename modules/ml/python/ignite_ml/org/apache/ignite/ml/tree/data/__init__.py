@@ -16,5 +16,5 @@
 from ignite_ml import gateway
 
 DecisionTreeDataBuilder = gateway.jvm.org.apache.ignite.ml.tree.data.DecisionTreeDataBuilder
-DecisionTreeData = gateway.jvm.org.apache.ignite.ml.tree.data.DecisionTreeData
 TreeDataIndex = gateway.jvm.org.apache.ignite.ml.tree.data.TreeDataIndex
+DecisionTreeData = gateway.jvm.org.apache.ignite.ml.tree.data.DecisionTreeData

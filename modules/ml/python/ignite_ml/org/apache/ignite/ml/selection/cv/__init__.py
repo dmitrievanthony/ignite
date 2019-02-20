@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-CrossValidation = gateway.jvm.org.apache.ignite.ml.selection.cv.CrossValidation
 CrossValidationResult = gateway.jvm.org.apache.ignite.ml.selection.cv.CrossValidationResult
+CrossValidation = gateway.jvm.org.apache.ignite.ml.selection.cv.CrossValidation

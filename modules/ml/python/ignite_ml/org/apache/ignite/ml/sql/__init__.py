@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-SqlDatasetBuilder = gateway.jvm.org.apache.ignite.ml.sql.SqlDatasetBuilder
 SQLFeatureLabelExtractor = gateway.jvm.org.apache.ignite.ml.sql.SQLFeatureLabelExtractor
 SQLFunctions = gateway.jvm.org.apache.ignite.ml.sql.SQLFunctions
+SqlDatasetBuilder = gateway.jvm.org.apache.ignite.ml.sql.SqlDatasetBuilder

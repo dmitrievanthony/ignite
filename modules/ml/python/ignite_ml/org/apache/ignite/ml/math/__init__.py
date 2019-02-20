@@ -15,9 +15,9 @@
 
 from ignite_ml import gateway
 
-Blas = gateway.jvm.org.apache.ignite.ml.math.Blas
-Destroyable = gateway.jvm.org.apache.ignite.ml.math.Destroyable
-MetaAttributes = gateway.jvm.org.apache.ignite.ml.math.MetaAttributes
 StorageConstants = gateway.jvm.org.apache.ignite.ml.math.StorageConstants
+Blas = gateway.jvm.org.apache.ignite.ml.math.Blas
+MetaAttributes = gateway.jvm.org.apache.ignite.ml.math.MetaAttributes
+Destroyable = gateway.jvm.org.apache.ignite.ml.math.Destroyable
 StorageOpsMetrics = gateway.jvm.org.apache.ignite.ml.math.StorageOpsMetrics
 Tracer = gateway.jvm.org.apache.ignite.ml.math.Tracer

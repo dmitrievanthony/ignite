@@ -15,23 +15,23 @@
 
 from ignite_ml import gateway
 
-Functions = gateway.jvm.org.apache.ignite.ml.math.functions.Functions
-IgniteBiConsumer = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteBiConsumer
-IgniteBiFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteBiFunction
-IgniteBinaryOperator = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteBinaryOperator
 IgniteConsumer = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteConsumer
-IgniteCurriedBiFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteCurriedBiFunction
-IgniteCurriedTriFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteCurriedTriFunction
-IgniteDifferentiableDoubleToDoubleFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteDifferentiableDoubleToDoubleFunction
-IgniteDifferentiableVectorToDoubleFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteDifferentiableVectorToDoubleFunction
-IgniteDoubleFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteDoubleFunction
-IgniteFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteFunction
-IgniteIntDoubleToDoubleBiFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteIntDoubleToDoubleBiFunction
-IgniteIntIntToIntBiFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteIntIntToIntBiFunction
-IgniteSupplier = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteSupplier
-IgniteToDoubleFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteToDoubleFunction
-IgniteTriConsumer = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteTriConsumer
-IgniteTriFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteTriFunction
 IntDoubleToVoidFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IntDoubleToVoidFunction
+IgniteTriFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteTriFunction
 IntIntDoubleToVoidFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IntIntDoubleToVoidFunction
+IgniteDifferentiableVectorToDoubleFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteDifferentiableVectorToDoubleFunction
+IgniteFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteFunction
+IgniteIntIntToIntBiFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteIntIntToIntBiFunction
+IgniteBiConsumer = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteBiConsumer
 IntIntToDoubleFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IntIntToDoubleFunction
+IgniteBiFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteBiFunction
+IgniteIntDoubleToDoubleBiFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteIntDoubleToDoubleBiFunction
+Functions = gateway.jvm.org.apache.ignite.ml.math.functions.Functions
+IgniteBinaryOperator = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteBinaryOperator
+IgniteCurriedTriFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteCurriedTriFunction
+IgniteToDoubleFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteToDoubleFunction
+IgniteDoubleFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteDoubleFunction
+IgniteTriConsumer = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteTriConsumer
+IgniteDifferentiableDoubleToDoubleFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteDifferentiableDoubleToDoubleFunction
+IgniteCurriedBiFunction = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteCurriedBiFunction
+IgniteSupplier = gateway.jvm.org.apache.ignite.ml.math.functions.IgniteSupplier

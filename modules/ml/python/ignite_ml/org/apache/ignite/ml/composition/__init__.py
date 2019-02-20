@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
-CompositionUtils = gateway.jvm.org.apache.ignite.ml.composition.CompositionUtils
 DatasetMapping = gateway.jvm.org.apache.ignite.ml.composition.DatasetMapping
-ModelOnFeaturesSubspace = gateway.jvm.org.apache.ignite.ml.composition.ModelOnFeaturesSubspace
-ModelsCompositionFormat = gateway.jvm.org.apache.ignite.ml.composition.ModelsCompositionFormat
 ModelsComposition = gateway.jvm.org.apache.ignite.ml.composition.ModelsComposition
+ModelOnFeaturesSubspace = gateway.jvm.org.apache.ignite.ml.composition.ModelOnFeaturesSubspace
+CompositionUtils = gateway.jvm.org.apache.ignite.ml.composition.CompositionUtils
+ModelsCompositionFormat = gateway.jvm.org.apache.ignite.ml.composition.ModelsCompositionFormat

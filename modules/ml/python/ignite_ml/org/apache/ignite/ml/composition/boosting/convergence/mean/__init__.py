@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-MeanAbsValueConvergenceCheckerFactory = gateway.jvm.org.apache.ignite.ml.composition.boosting.convergence.mean.MeanAbsValueConvergenceCheckerFactory
 MeanAbsValueConvergenceChecker = gateway.jvm.org.apache.ignite.ml.composition.boosting.convergence.mean.MeanAbsValueConvergenceChecker
+MeanAbsValueConvergenceCheckerFactory = gateway.jvm.org.apache.ignite.ml.composition.boosting.convergence.mean.MeanAbsValueConvergenceCheckerFactory

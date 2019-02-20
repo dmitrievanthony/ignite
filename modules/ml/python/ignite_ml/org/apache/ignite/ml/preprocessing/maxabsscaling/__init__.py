@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
+MaxAbsScalerTrainer = gateway.jvm.org.apache.ignite.ml.preprocessing.maxabsscaling.MaxAbsScalerTrainer
 MaxAbsScalerPartitionData = gateway.jvm.org.apache.ignite.ml.preprocessing.maxabsscaling.MaxAbsScalerPartitionData
 MaxAbsScalerPreprocessor = gateway.jvm.org.apache.ignite.ml.preprocessing.maxabsscaling.MaxAbsScalerPreprocessor
-MaxAbsScalerTrainer = gateway.jvm.org.apache.ignite.ml.preprocessing.maxabsscaling.MaxAbsScalerTrainer

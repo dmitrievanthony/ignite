@@ -16,5 +16,5 @@
 from ignite_ml import gateway
 
 GDBBinaryClassifierOnTreesTrainer = gateway.jvm.org.apache.ignite.ml.tree.boosting.GDBBinaryClassifierOnTreesTrainer
-GDBOnTreesLearningStrategy = gateway.jvm.org.apache.ignite.ml.tree.boosting.GDBOnTreesLearningStrategy
 GDBRegressionOnTreesTrainer = gateway.jvm.org.apache.ignite.ml.tree.boosting.GDBRegressionOnTreesTrainer
+GDBOnTreesLearningStrategy = gateway.jvm.org.apache.ignite.ml.tree.boosting.GDBOnTreesLearningStrategy

@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-DistanceMeasure = gateway.jvm.org.apache.ignite.ml.math.distances.DistanceMeasure
-EuclideanDistance = gateway.jvm.org.apache.ignite.ml.math.distances.EuclideanDistance
 HammingDistance = gateway.jvm.org.apache.ignite.ml.math.distances.HammingDistance
+EuclideanDistance = gateway.jvm.org.apache.ignite.ml.math.distances.EuclideanDistance
+DistanceMeasure = gateway.jvm.org.apache.ignite.ml.math.distances.DistanceMeasure
 ManhattanDistance = gateway.jvm.org.apache.ignite.ml.math.distances.ManhattanDistance

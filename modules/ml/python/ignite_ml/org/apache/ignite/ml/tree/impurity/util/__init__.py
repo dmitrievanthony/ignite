@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-SimpleStepFunctionCompressor = gateway.jvm.org.apache.ignite.ml.tree.impurity.util.SimpleStepFunctionCompressor
-StepFunctionCompressor = gateway.jvm.org.apache.ignite.ml.tree.impurity.util.StepFunctionCompressor
 StepFunction = gateway.jvm.org.apache.ignite.ml.tree.impurity.util.StepFunction
+StepFunctionCompressor = gateway.jvm.org.apache.ignite.ml.tree.impurity.util.StepFunctionCompressor
+SimpleStepFunctionCompressor = gateway.jvm.org.apache.ignite.ml.tree.impurity.util.SimpleStepFunctionCompressor

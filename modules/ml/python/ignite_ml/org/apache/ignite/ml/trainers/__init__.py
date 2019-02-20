@@ -16,9 +16,9 @@
 from ignite_ml import gateway
 
 AdaptableDatasetModel = gateway.jvm.org.apache.ignite.ml.trainers.AdaptableDatasetModel
+MultiLabelDatasetTrainer = gateway.jvm.org.apache.ignite.ml.trainers.MultiLabelDatasetTrainer
+FeatureLabelExtractor = gateway.jvm.org.apache.ignite.ml.trainers.FeatureLabelExtractor
+TrainerTransformers = gateway.jvm.org.apache.ignite.ml.trainers.TrainerTransformers
 AdaptableDatasetTrainer = gateway.jvm.org.apache.ignite.ml.trainers.AdaptableDatasetTrainer
 DatasetTrainer = gateway.jvm.org.apache.ignite.ml.trainers.DatasetTrainer
-FeatureLabelExtractor = gateway.jvm.org.apache.ignite.ml.trainers.FeatureLabelExtractor
-MultiLabelDatasetTrainer = gateway.jvm.org.apache.ignite.ml.trainers.MultiLabelDatasetTrainer
 SingleLabelDatasetTrainer = gateway.jvm.org.apache.ignite.ml.trainers.SingleLabelDatasetTrainer
-TrainerTransformers = gateway.jvm.org.apache.ignite.ml.trainers.TrainerTransformers

@@ -16,5 +16,5 @@
 from ignite_ml import gateway
 
 DecisionTreeLeafBuilder = gateway.jvm.org.apache.ignite.ml.tree.leaf.DecisionTreeLeafBuilder
-MeanDecisionTreeLeafBuilder = gateway.jvm.org.apache.ignite.ml.tree.leaf.MeanDecisionTreeLeafBuilder
 MostCommonDecisionTreeLeafBuilder = gateway.jvm.org.apache.ignite.ml.tree.leaf.MostCommonDecisionTreeLeafBuilder
+MeanDecisionTreeLeafBuilder = gateway.jvm.org.apache.ignite.ml.tree.leaf.MeanDecisionTreeLeafBuilder

@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
-AbstractVector = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.AbstractVector
+VectorUtils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils
 NamedVector = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.NamedVector
+AbstractVector = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.AbstractVector
 Vector = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.Vector
 VectorStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorStorage
-VectorUtils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils

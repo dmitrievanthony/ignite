@@ -15,10 +15,10 @@
 
 from ignite_ml import gateway
 
-DecisionTreeClassificationTrainer = gateway.jvm.org.apache.ignite.ml.tree.DecisionTreeClassificationTrainer
-DecisionTreeConditionalNode = gateway.jvm.org.apache.ignite.ml.tree.DecisionTreeConditionalNode
-DecisionTree = gateway.jvm.org.apache.ignite.ml.tree.DecisionTree
-DecisionTreeLeafNode = gateway.jvm.org.apache.ignite.ml.tree.DecisionTreeLeafNode
-DecisionTreeNode = gateway.jvm.org.apache.ignite.ml.tree.DecisionTreeNode
-DecisionTreeRegressionTrainer = gateway.jvm.org.apache.ignite.ml.tree.DecisionTreeRegressionTrainer
 TreeFilter = gateway.jvm.org.apache.ignite.ml.tree.TreeFilter
+DecisionTreeRegressionTrainer = gateway.jvm.org.apache.ignite.ml.tree.DecisionTreeRegressionTrainer
+DecisionTree = gateway.jvm.org.apache.ignite.ml.tree.DecisionTree
+DecisionTreeNode = gateway.jvm.org.apache.ignite.ml.tree.DecisionTreeNode
+DecisionTreeClassificationTrainer = gateway.jvm.org.apache.ignite.ml.tree.DecisionTreeClassificationTrainer
+DecisionTreeLeafNode = gateway.jvm.org.apache.ignite.ml.tree.DecisionTreeLeafNode
+DecisionTreeConditionalNode = gateway.jvm.org.apache.ignite.ml.tree.DecisionTreeConditionalNode

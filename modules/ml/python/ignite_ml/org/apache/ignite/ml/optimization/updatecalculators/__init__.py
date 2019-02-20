@@ -15,10 +15,10 @@
 
 from ignite_ml import gateway
 
-NesterovParameterUpdate = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.NesterovParameterUpdate
-NesterovUpdateCalculator = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.NesterovUpdateCalculator
+SimpleGDUpdateCalculator = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.SimpleGDUpdateCalculator
 ParameterUpdateCalculator = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.ParameterUpdateCalculator
+NesterovUpdateCalculator = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.NesterovUpdateCalculator
+SimpleGDParameterUpdate = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.SimpleGDParameterUpdate
 RPropParameterUpdate = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.RPropParameterUpdate
 RPropUpdateCalculator = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.RPropUpdateCalculator
-SimpleGDParameterUpdate = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.SimpleGDParameterUpdate
-SimpleGDUpdateCalculator = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.SimpleGDUpdateCalculator
+NesterovParameterUpdate = gateway.jvm.org.apache.ignite.ml.optimization.updatecalculators.NesterovParameterUpdate

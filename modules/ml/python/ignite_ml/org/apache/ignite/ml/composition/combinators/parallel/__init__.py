@@ -15,5 +15,5 @@
 
 from ignite_ml import gateway
 
-ModelsParallelComposition = gateway.jvm.org.apache.ignite.ml.composition.combinators.parallel.ModelsParallelComposition
 TrainersParallelComposition = gateway.jvm.org.apache.ignite.ml.composition.combinators.parallel.TrainersParallelComposition
+ModelsParallelComposition = gateway.jvm.org.apache.ignite.ml.composition.combinators.parallel.ModelsParallelComposition

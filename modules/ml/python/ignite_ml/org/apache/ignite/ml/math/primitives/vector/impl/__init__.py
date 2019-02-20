@@ -16,8 +16,8 @@
 from ignite_ml import gateway
 
 DelegatingNamedVector = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl.DelegatingNamedVector
-DelegatingVector = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl.DelegatingVector
 DenseVector = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl.DenseVector
 SparseVector = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl.SparseVector
-VectorizedViewMatrix = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl.VectorizedViewMatrix
+DelegatingVector = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl.DelegatingVector
 VectorView = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl.VectorView
+VectorizedViewMatrix = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl.VectorizedViewMatrix

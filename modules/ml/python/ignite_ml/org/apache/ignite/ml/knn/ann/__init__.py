@@ -16,6 +16,6 @@
 from ignite_ml import gateway
 
 ANNClassificationModel = gateway.jvm.org.apache.ignite.ml.knn.ann.ANNClassificationModel
+ProbableLabel = gateway.jvm.org.apache.ignite.ml.knn.ann.ProbableLabel
 ANNClassificationTrainer = gateway.jvm.org.apache.ignite.ml.knn.ann.ANNClassificationTrainer
 ANNModelFormat = gateway.jvm.org.apache.ignite.ml.knn.ann.ANNModelFormat
-ProbableLabel = gateway.jvm.org.apache.ignite.ml.knn.ann.ProbableLabel

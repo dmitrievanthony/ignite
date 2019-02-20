@@ -15,12 +15,12 @@
 
 from ignite_ml import gateway
 
+UnknownClassLabelException = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.UnknownClassLabelException
+Recall = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.Recall
+Precision = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.Precision
+ClassMetric = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.ClassMetric
+BinaryClassificationMetricValues = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.BinaryClassificationMetricValues
+Metric = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.Metric
+Fmeasure = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.Fmeasure
 Accuracy = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.Accuracy
 BinaryClassificationMetrics = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.BinaryClassificationMetrics
-BinaryClassificationMetricValues = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.BinaryClassificationMetricValues
-ClassMetric = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.ClassMetric
-Fmeasure = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.Fmeasure
-Metric = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.Metric
-Precision = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.Precision
-Recall = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.Recall
-UnknownClassLabelException = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.UnknownClassLabelException

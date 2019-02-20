@@ -15,7 +15,7 @@
 
 from ignite_ml import gateway
 
-KNNClassificationModel = gateway.jvm.org.apache.ignite.ml.knn.classification.KNNClassificationModel
 KNNClassificationTrainer = gateway.jvm.org.apache.ignite.ml.knn.classification.KNNClassificationTrainer
 KNNModelFormat = gateway.jvm.org.apache.ignite.ml.knn.classification.KNNModelFormat
+KNNClassificationModel = gateway.jvm.org.apache.ignite.ml.knn.classification.KNNClassificationModel
 NNStrategy = gateway.jvm.org.apache.ignite.ml.knn.classification.NNStrategy

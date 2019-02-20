@@ -15,8 +15,8 @@
 
 from ignite_ml import gateway
 
-AbstractMatrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.AbstractMatrix
-LUDecomposition = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.LUDecomposition
-Matrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.Matrix
 MatrixStorage = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.MatrixStorage
+AbstractMatrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.AbstractMatrix
 OrderedMatrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.OrderedMatrix
+Matrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.Matrix
+LUDecomposition = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.LUDecomposition

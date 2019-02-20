@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
+ViewMatrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.impl.ViewMatrix
 DenseMatrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.impl.DenseMatrix
 SparseMatrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.impl.SparseMatrix
-ViewMatrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.impl.ViewMatrix

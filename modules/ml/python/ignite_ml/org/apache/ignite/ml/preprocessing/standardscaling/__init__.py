@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-StandardScalerData = gateway.jvm.org.apache.ignite.ml.preprocessing.standardscaling.StandardScalerData
-StandardScalerPreprocessor = gateway.jvm.org.apache.ignite.ml.preprocessing.standardscaling.StandardScalerPreprocessor
 StandardScalerTrainer = gateway.jvm.org.apache.ignite.ml.preprocessing.standardscaling.StandardScalerTrainer
+StandardScalerPreprocessor = gateway.jvm.org.apache.ignite.ml.preprocessing.standardscaling.StandardScalerPreprocessor
+StandardScalerData = gateway.jvm.org.apache.ignite.ml.preprocessing.standardscaling.StandardScalerData

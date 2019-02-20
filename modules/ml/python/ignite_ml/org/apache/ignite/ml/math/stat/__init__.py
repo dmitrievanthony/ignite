@@ -15,6 +15,6 @@
 
 from ignite_ml import gateway
 
-Distribution = gateway.jvm.org.apache.ignite.ml.math.stat.Distribution
 DistributionMixture = gateway.jvm.org.apache.ignite.ml.math.stat.DistributionMixture
 MultivariateGaussianDistribution = gateway.jvm.org.apache.ignite.ml.math.stat.MultivariateGaussianDistribution
+Distribution = gateway.jvm.org.apache.ignite.ml.math.stat.Distribution

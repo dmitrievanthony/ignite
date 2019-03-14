@@ -21,7 +21,6 @@ import numpy as np
 from ..common import UnsupervisedTrainer
 from ..common import Proxy
 from ..common import Utils
-from ..common import LearningEnvironmentBuilder
 
 from ..common import gateway
 

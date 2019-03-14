@@ -16,34 +16,59 @@
 """Classification trainers.
 """
 
-import numpy as np
-
 from ..common import Proxy
 from ..common import Utils
 
 from ..common import gateway
 
-class Ignition:
+"""Ignite cache API.
+"""
 
+class Ignition:
+    """Ignition static class that allows to get Ignite instance.
+    """
     __ignite = None
 
     def ignite(cfg):
+        """Starts a new Ignite instance or returns existing one.
+        """
         if Ignition.__ignite is None:
             java_ignite = gateway.jvm.org.apache.ignite.Ignition.start(cfg)
             Ignition.__ignite = Ignite(java_ignite)
         return Ignition.__ignite
 
 class Ignite(Proxy):
-
+    """Ignite instance.
+    """
     def __init__(self, proxy):
+        """Constructs a new instance if Ignite instance.
+
+        Parameters
+        ----------
+        proxy : Proxy object.
+        """
         Proxy.__init__(self, proxy)
     
     def getCache(self, name):
+        """Returns existing cache by name.
+
+        Parameters
+        ----------
+        name : Cache name.
+        """
         java_cache = self.proxy.cache(name)
         return Cache(java_cache)
 
-    def createCache(self, name, parts=10):
-        affinity = gateway.jvm.org.apache.ignite.cache.affinity.rendezvous.RendezvousAffinityFunction(False, parts)
+    def createCache(self, name, excl_neighbors=False, parts=10):
+        """Creates a new cache.
+
+        Parameters
+        ----------
+        name : Cache name.
+        excl_neighbors : Exclude neighbours.
+        parts : Number of partitions.
+        """
+        affinity = gateway.jvm.org.apache.ignite.cache.affinity.rendezvous.RendezvousAffinityFunction(excl_neighbors, parts)
         cc = gateway.jvm.org.apache.ignite.configuration.CacheConfiguration()
         cc.setName(name)
         cc.setAffinity(affinity)
@@ -51,23 +76,39 @@ class Ignite(Proxy):
         return Cache(java_cache)
 
 class Cache(Proxy):
-
+    """Ignite cache proxy.
+    """
     def __init__(self, proxy):
+        """Constructs a new instance of Ignite cache proxy.
+
+        Parameters
+        ----------
+        proxy : Proxy object.
+        """
         Proxy.__init__(self, proxy)
 
     def get(self, key):
+        """Returns value (float array) by key.
+
+        Parameters
+        ----------
+        key : Key.
+        """
         java_array = self.proxy.get(key)
         return Utils.from_java_double_array(java_array)
 
     def put(self, key, value):
+        """Puts value (float array) by key.
+
+        Parameters
+        ----------
+        key : Key.
+        value : Value.
+        """
         value = Utils.to_java_double_array(value)
         self.proxy.put(key, value)
 
-    def getAll(self):
-        raise Exception("Not implemented yet")
-
-    def putAll(self, keys, values):
-        raise Exception("Not implemented yet")
-
     def size(self):
+        """Returns size of the cache.
+        """
         return self.proxy.size()

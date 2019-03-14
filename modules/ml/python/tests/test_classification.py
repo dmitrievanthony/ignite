@@ -18,20 +18,12 @@ import unittest
 from sklearn.metrics import accuracy_score
 from sklearn.datasets import make_classification
 
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import LinearSVC
-from sklearn.ensemble import RandomForestClassifier
-
 from ignite_ml.classification import DecisionTreeClassificationTrainer
 from ignite_ml.classification import ANNClassificationTrainer
 from ignite_ml.classification import KNNClassificationTrainer
 from ignite_ml.classification import LogRegClassificationTrainer
 from ignite_ml.classification import SVMClassificationTrainer
 from ignite_ml.classification import RandomForestClassificationTrainer
-from ignite_ml.common import MLPArchitecture
-from ignite_ml.classification import MLPClassificationTrainer
 
 class TestClassification(unittest.TestCase):
 

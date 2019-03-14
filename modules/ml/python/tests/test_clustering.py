@@ -17,12 +17,6 @@ import unittest
 
 from sklearn.datasets import make_blobs
 
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import LinearSVC
-from sklearn.ensemble import RandomForestClassifier
-
 from ignite_ml.clustering import KMeansClusteringTrainer
 from ignite_ml.clustering import GMMClusteringTrainer
 

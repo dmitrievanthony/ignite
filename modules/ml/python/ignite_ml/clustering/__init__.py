@@ -17,6 +17,7 @@
 """
 
 import numpy as np
+from numbers import Number
 
 from ..common import UnsupervisedTrainer
 from ..common import Proxy
@@ -61,7 +62,11 @@ class ClusteringModel(Proxy):
         java_vector_utils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils
         java_array = Utils.to_java_double_array(X)
 
-        return self.proxy.predict(java_vector_utils.of(java_array))
+        res = self.proxy.predict(java_vector_utils.of(java_array))
+        # This if handles 'future' response.
+        if not isinstance(res, Number):
+            res = res.get()
+        return res
 
 class ClusteringTrainer(UnsupervisedTrainer, Proxy):
     """Clustering trainer.

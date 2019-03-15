@@ -17,6 +17,7 @@
 """
 
 import numpy as np
+from numbers import Number
 
 from ..common import SupervisedTrainer
 from ..common import Proxy
@@ -76,7 +77,13 @@ class RegressionModel(Proxy):
                 java_vector_utils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils
                 # Check if model is a single model or model-per-label.
                 if isinstance(self.proxy, list):
-                    prediction = [mdl.predict(java_vector_utils.of(java_array)) for mdl in self.proxy]
+                    def parse_response(m):
+                        res = m.predict(java_vector_utils.of(java_array))
+                        # This if handles 'future' response.
+                        if not isinstance(res, Number):
+                            res = res.get()
+                        return res
+                    prediction = [parse_response(mdl) for mdl in self.proxy]
                 else:
                     prediction = [self.proxy.predict(java_vector_utils.of(java_array))]
                 predictions.append(prediction)

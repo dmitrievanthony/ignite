@@ -17,6 +17,7 @@
 """
 
 import numpy as np
+from numbers import Number
 
 from ..common import SupervisedTrainer
 from ..common import Proxy
@@ -60,7 +61,12 @@ class ClassificationModel(Proxy):
     def __predict(self, X):
         java_array = Utils.to_java_double_array(X)
         java_vector_utils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils
-        return self.proxy.predict(java_vector_utils.of(java_array))
+
+        res = self.proxy.predict(java_vector_utils.of(java_array))
+        # This if handles 'future' response.
+        if not isinstance(res, Number):
+            res = res.get()
+        return res
 
 class ClassificationTrainer(SupervisedTrainer, Proxy):
     """Classification trainer.

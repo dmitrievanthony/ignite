@@ -23,31 +23,41 @@ import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.IgniteModel;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
+import org.apache.ignite.ml.math.primitives.vector.VectorUtils;
 import org.apache.ignite.ml.selection.scoring.evaluator.Evaluator;
 import org.apache.ignite.ml.selection.scoring.metric.Metric;
 import org.apache.ignite.ml.selection.scoring.metric.classification.Accuracy;
-import org.apache.ignite.ml.trainers.FeatureLabelExtractor;
+import org.apache.ignite.ml.selection.scoring.metric.regression.RegressionMetrics;
 
 public class PythonEvaluator {
 
-//    public static double accuracy(IgniteCache<Integer, double[]> cache, IgniteBiPredicate<Integer, double[]> filter,
-//        IgniteModel<Vector, Double> mdl, IgniteBiFunction<Integer, double[], Vector> preprocessor) {
-//        return calculate(cache, filter, mdl)
-//    }
-//
-//    private static <L> L calculate(IgniteCache<Integer, double[]> cache, IgniteBiPredicate<Integer, double[]> filter,
-//        IgniteModel<Vector, Double> mdl, IgniteBiFunction<Integer, double[], Vector> preprocessor, Metric<L> metric) {
-//        return Evaluator.evaluate(
-//            cache,
-//            mdl,
-//            (k, v) -> preprocessor.apply(k, Arrays.copyOfRange(v, 0, v.length - 1)),
-//            (k, v) -> v[v.length - 1],
-//            new Accuracy<>()
-//        );
-//    }
-//
-//    private static <L> L calculate(IgniteCache<Integer, double[]> cache, IgniteBiPredicate<Integer, double[]> filter,
-//        IgniteModel<Vector, Double> mdl, FeatureLabelExtractor<Integer, double[], Double> featureLbExtractor) {
-//
-//    }
+    public static double accuracy(IgniteCache<Integer, double[]> cache, IgniteBiPredicate<Integer, double[]> filter,
+        IgniteModel<Vector, Double> mdl, IgniteBiFunction<Integer, double[], Vector> preprocessor) {
+        return calculate(cache, filter, mdl, preprocessor, new Accuracy<>());
+    }
+
+    public static double rmse(IgniteCache<Integer, double[]> cache, IgniteBiPredicate<Integer, double[]> filter,
+        IgniteModel<Vector, Double> mdl, IgniteBiFunction<Integer, double[], Vector> preprocessor) {
+        return calculate(cache, filter, mdl, preprocessor, new RegressionMetrics());
+    }
+
+    private static double calculate(IgniteCache<Integer, double[]> cache, IgniteBiPredicate<Integer, double[]> filter,
+        IgniteModel<Vector, Double> mdl, IgniteBiFunction<Integer, double[], Vector> preprocessor, Metric<Double> metric) {
+
+        IgniteBiFunction<Integer, double[], Vector> featureExtractor;
+
+        if (preprocessor != null)
+            featureExtractor = (k, v) -> preprocessor.apply(k, Arrays.copyOfRange(v, 0, v.length - 1));
+        else
+            featureExtractor = (k, v) -> VectorUtils.of(Arrays.copyOfRange(v, 0, v.length - 1));
+
+        return Evaluator.evaluate(
+            cache,
+            filter != null ? filter : (k, v) -> true,
+            mdl,
+            featureExtractor,
+            (Integer k, double[] v) -> v[v.length - 1],
+            metric
+        );
+    }
 }

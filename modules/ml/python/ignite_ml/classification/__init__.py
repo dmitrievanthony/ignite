@@ -25,6 +25,8 @@ from ..common import Utils
 from ..common import LearningEnvironmentBuilder
 
 from ..common import gateway
+from ..core import Cache
+from ..model_selection import CacheView
 
 class ClassificationModel(Proxy):
     """Classification model.
@@ -85,7 +87,12 @@ class ClassificationTrainer(SupervisedTrainer, Proxy):
         return ClassificationModel(java_model)
 
     def fit_on_cache(self, cache, preprocessor=None):
-        java_model = self.proxy.fitOnCache(cache.proxy, Proxy.proxy_or_none(preprocessor))
+        if isinstance(cache, Cache):
+            java_model = self.proxy.fitOnCache(cache.proxy, None, Proxy.proxy_or_none(preprocessor))
+        elif isinstance(cache, CacheView):
+            java_model = self.proxy.fitOnCache(cache.cache.proxy, cache.cache_filter, Proxy.proxy_or_none(preprocessor))
+        else:
+            raise Exception("Cache type is unknown, it should be Cache or CacheView.")
 
         return ClassificationModel(java_model)
 

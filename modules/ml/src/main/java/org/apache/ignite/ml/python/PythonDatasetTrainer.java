@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
+import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.IgniteModel;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
@@ -72,23 +73,42 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
      *
      * @param cache Ignite cache.
      * @param preprocessor Preprocessor.
-     * @return MOdel.
+     * @return Model.
      */
-    public M fitOnCache(IgniteCache<Integer, double[]> cache,
+    public M fitOnCache(IgniteCache<Integer, double[]> cache, IgniteBiPredicate<Integer, double[]> filter,
         IgniteBiFunction<Integer, double[], Vector> preprocessor) {
         if (preprocessor != null)
-            return delegate.fit(
-                Ignition.ignite(),
+            return fitOnCache(
                 cache,
+                filter,
                 (k, v) -> preprocessor.apply(k, Arrays.copyOfRange(v, 0, v.length - 1)),
                 (k, v) -> v[v.length - 1]
             );
 
-        return delegate.fit(
-            Ignition.ignite(),
+        return fitOnCache(
             cache,
+            filter,
             (k, v) -> VectorUtils.of(Arrays.copyOfRange(v, 0, v.length - 1)),
             (k, v) -> v[v.length - 1]
         );
+    }
+
+    /**
+     * Trains model of cached data.
+     *
+     * @param cache Ignite cache.
+     * @param filter Filter.
+     * @param featureExtractor Feature extractor.
+     * @param lbExtractor Label extractor.
+     * @return Model.
+     */
+    private M fitOnCache(IgniteCache<Integer, double[]> cache,
+        IgniteBiPredicate<Integer, double[]> filter,
+        IgniteBiFunction<Integer, double[], Vector> featureExtractor,
+        IgniteBiFunction<Integer, double[], Double> lbExtractor) {
+        if (filter == null)
+            return delegate.fit(Ignition.ignite(), cache, featureExtractor, lbExtractor);
+
+        return delegate.fit(Ignition.ignite(), cache, filter, featureExtractor, lbExtractor);
     }
 }

@@ -24,6 +24,9 @@ from ..common import Proxy
 from ..common import Utils
 from ..common import LearningEnvironmentBuilder
 
+from ..core import Cache
+from ..model_selection import CacheView
+
 from ..common import gateway
 
 class RegressionModel(Proxy):
@@ -136,7 +139,12 @@ class RegressionTrainer(SupervisedTrainer, Proxy):
             return RegressionModel(java_models, self.accepts_matrix)
 
     def fit_on_cache(self, cache, preprocessor=None):
-        java_model = self.proxy.fitOnCache(cache.proxy, Proxy.proxy_or_none(preprocessor))
+        if isinstance(cache, Cache):
+            java_model = self.proxy.fitOnCache(cache.proxy, None, Proxy.proxy_or_none(preprocessor))
+        elif isinstance(cache, CacheView):
+            java_model = self.proxy.fitOnCache(cache.cache.proxy, cache.cache_filter, Proxy.proxy_or_none(preprocessor))
+        else:
+            raise Exception("Cache type is unknown, it should be Cache or CacheView.")
 
         return RegressionModel(java_model, self.accepts_matrix)
 

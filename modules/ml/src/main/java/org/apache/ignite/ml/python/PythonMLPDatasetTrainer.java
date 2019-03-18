@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
+import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.functions.IgniteDifferentiableVectorToDoubleFunction;
 import org.apache.ignite.ml.math.functions.IgniteFunction;
@@ -113,24 +114,49 @@ public class PythonMLPDatasetTrainer {
      * @return Model.
      */
     public MultilayerPerceptron fitOnCache(IgniteCache<Integer, double[]> cache,
-        IgniteBiFunction<Integer, double[], Vector> preprocessor) {
+        IgniteBiPredicate<Integer, double[]> filter, IgniteBiFunction<Integer, double[], Vector> preprocessor) {
         if (preprocessor != null)
+            return fitOnCache(cache, filter, new FeatureLabelExtractor<Integer, double[], double[]>() {
+
+                @Override public LabeledVector<double[]> extract(Integer k, double[] v) {
+                    return new LabeledVector<>(
+                        preprocessor.apply(k, Arrays.copyOfRange(v, 0, v.length - 1)),
+                        new double[] {v[v.length - 1]}
+                    );
+                }
+            });
+
+        return fitOnCache(cache, filter, new FeatureLabelExtractor<Integer, double[], double[]>() {
+
+            @Override public LabeledVector<double[]> extract(Integer k, double[] v) {
+                return new LabeledVector<>(
+                    VectorUtils.of(Arrays.copyOfRange(v, 0, v.length - 1)),
+                    new double[] {v[v.length - 1]}
+                );
+            }
+        });
+    }
+
+    /**
+     * Trains model of cached data.
+     *
+     * @param cache Ignite cache.
+     * @param filter Filter.
+     * @param featureLbExtractor Feature label extractor.
+     * @return Model.
+     */
+    private MultilayerPerceptron fitOnCache(IgniteCache<Integer, double[]> cache,
+        IgniteBiPredicate<Integer, double[]> filter,
+        FeatureLabelExtractor<Integer, double[], double[]> featureLbExtractor) {
+        if (filter != null)
             return delegate.fit(
                 Ignition.ignite(),
                 cache,
-                (k, v) -> new LabeledVector<>(
-                    VectorUtils.of(Arrays.copyOfRange(v, 0, v.length - 1)),
-                    new double[] {v[v.length - 1]}
-                )
+                filter,
+                featureLbExtractor::extractFeatures,
+                featureLbExtractor::extractLabel
             );
 
-        return delegate.fit(
-            Ignition.ignite(),
-            cache,
-            (k, v) -> new LabeledVector<>(
-                VectorUtils.of(Arrays.copyOfRange(v, 0, v.length - 1)),
-                new double[] {v[v.length - 1]}
-            )
-        );
+        return delegate.fit(Ignition.ignite(), cache, featureLbExtractor);
     }
 }

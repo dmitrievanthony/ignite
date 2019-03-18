@@ -195,13 +195,14 @@ class LinearRegressionTrainer(RegressionTrainer):
 class RandomForestRegressionTrainer(RegressionTrainer):
     """RandomForest classification trainer.
     """
-    def __init__(self, env_builder=LearningEnvironmentBuilder(),
+    def __init__(self, features, env_builder=LearningEnvironmentBuilder(),
                  trees=1, sub_sample_size=1.0, max_depth=5,
                  min_impurity_delta=0.0, seed=None):
         """Constructs a new instance of RandomForest classification trainer.
 
         Parameters
         ----------
+        features : Number of features.
         env_builder : Environment builder.
         trees : Number of trees.
         sub_sample_size : Sub sample size.
@@ -209,36 +210,21 @@ class RandomForestRegressionTrainer(RegressionTrainer):
         min_impurity_delta : Min impurity delta.
         seed : Seed.
         """
-        self.env_builder = env_builder
-        self.trees = trees
-        self.sub_sample_size = sub_sample_size
-        self.max_depth = max_depth
-        self.min_impurity_delta = min_impurity_delta
-        self.seed = seed
-
-        RegressionTrainer.__init__(self, None)
-
-    def fit(self, X, y):
         metas = gateway.jvm.java.util.ArrayList()
-        for i in range(len(X[0])):
+        for i in range(features):
             meta = gateway.jvm.org.apache.ignite.ml.dataset.feature.FeatureMeta(None, i, False)
             metas.add(meta)
 
-        self.proxy = gateway.jvm.org.apache.ignite.ml.tree.randomforest.RandomForestRegressionTrainer(metas)
-        self.proxy.withEnvironmentBuilder(self.env_builder.proxy)
-        self.proxy.withAmountOfTrees(self.trees)
-        self.proxy.withSubSampleSize(self.sub_sample_size)
-        self.proxy.withMaxDepth(self.max_depth)
-        self.proxy.withMinImpurityDelta(self.min_impurity_delta)
-        if self.seed is not None:
-            self.proxy.withSeed(self.seed)
+        proxy = gateway.jvm.org.apache.ignite.ml.tree.randomforest.RandomForestClassifierTrainer(metas)
+        proxy.withEnvironmentBuilder(env_builder.proxy)
+        proxy.withAmountOfTrees(trees)
+        proxy.withSubSampleSize(sub_sample_size)
+        proxy.withMaxDepth(max_depth)
+        proxy.withMinImpurityDelta(min_impurity_delta)
+        if seed is not None:
+            proxy.withSeed(seed)
 
-        self.proxy = gateway.jvm.org.apache.ignite.ml.python.PythonDatasetTrainer(self.proxy)
-
-        return super(RandomForestRegressionTrainer, self).fit(X, y)
-
-    def fit_on_cache(self, cache, preprocessor=None):
-        raise Exception("Not implemented")
+        RegressionTrainer.__init__(self, gateway.jvm.org.apache.ignite.ml.python.PythonDatasetTrainer(proxy))
 
 class MLPRegressionTrainer(RegressionTrainer):
     """MLP regression trainer.

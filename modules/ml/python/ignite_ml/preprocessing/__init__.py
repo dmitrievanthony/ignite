@@ -64,9 +64,12 @@ class PreprocessingTrainer(UnsupervisedTrainer):
         """
         Proxy.__init__(self, proxy)
 
-    def fit(self, X, preprocessing=None):
+    def fit(self, X):
+        if isinstance(X, Cache):
+            return self.fit_on_cache(X)
+
         X_java = Utils.to_java_double_array(X)
-        java_model = self.proxy.fit(X_java, preprocessing)
+        java_model = self.proxy.fit(X_java, None)
 
         return PreprocessingModel(java_model)
 

@@ -129,31 +129,28 @@ class SupervisedTrainer:
     """Supervised trainer.
     """
     @abstractmethod
-    def fit(self, X, y, preprocessor=None):
+    def fit(self, X, y=None):
         """Trains model based on data.
 
         Parameters
         ----------
         X : x.
         y : y.
-        preprocessor : Preprocessor.
         """
         raise Exception("Not implemented")
 
     @abstractmethod
-    def fit_on_cache(self, cache, columns, preprocessor=None):
+    def fit_on_cache(self, cache):
         """Trains model based on data.
 
         Parameters
         ----------
         cache : Apache Ignite cache.
-        columns : List of columns.
-        preprocessor : Preprocessor.
         """
         raise Exception("Not implemented")
 
     @abstractmethod
-    def update(self, mdl, X, y, preprocessor=None):
+    def update(self, mdl, X, y=None):
         """Updates the model.
 
         Parameters
@@ -161,20 +158,17 @@ class SupervisedTrainer:
         mdl : Model.
         X : x.
         y : y.
-        preprocessor : Preprocessor.
         """
         raise Exception("Not implemented")
 
     @abstractmethod
-    def update_on_cache(self, mdl, cache, columns, preprocessor=None):
+    def update_on_cache(self, mdl, cache):
         """Updates the model.
 
         Parameters
         ----------
         mdl : Model.
         cache : Apache Ignite cache.
-        columns : List of columns.
-        preprocessor : Preprocessor.
         """
         raise Exception("Not implemented")
 
@@ -182,49 +176,45 @@ class UnsupervisedTrainer:
     """Unsupervised trainer.
     """
     @abstractmethod
-    def fit(self, X, preprocessor=None):
+    def fit(self, X):
         """Trains model based on data.
 
         Parameters
         ----------
         X : x.
-        preprocessor : Preprocessor.
         """
         raise Exception("Not implemented")
 
     @abstractmethod
-    def fit_on_cache(self, data, columns, preprocessor=None):
+    def fit_on_cache(self, cache):
         """Trains model based on data.
 
         Parameters
         ----------
-        data : Apache Ignite cache.
+        cache : Apache Ignite cache.
         columns : List of columns.
         preprocessor : Preprocessor.
         """
         raise Exception("Not implemented")
 
     @abstractmethod
-    def update(self, mdl, X, preprocessor=None):
+    def update(self, mdl, X):
         """Updates the model.
 
         Parameters
         ----------
         mdl : Model.
         X : x.
-        preprocessor : Preprocessor.
         """
         raise Exception("Not implemented")
 
     @abstractmethod
-    def update_on_cache(self, mdl, cache, columns, preprocessor=None):
+    def update_on_cache(self, mdl, cache):
         """Updates the model.
 
         Parameters
         ----------
         mdl : Model.
         cache : Apache Ignite cache.
-        columns : List of columns.
-        preprocessor : Preprocessor.
         """
         raise Exception("Not implemented")

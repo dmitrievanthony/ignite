@@ -77,11 +77,14 @@ class ClusteringTrainer(UnsupervisedTrainer, Proxy):
         """
         Proxy.__init__(self, proxy)
 
-    def fit(self, X, preprocessing=None):
+    def fit(self, X):
+        if isinstance(X, Cache):
+            return self.fit_on_cache(X)
+
         X_java = Utils.to_java_double_array(X)
         y_java = Utils.to_java_double_array(np.zeros(X.shape[0]))
 
-        java_model = self.proxy.fit(X_java, y_java, Proxy.proxy_or_none(preprocessing))
+        java_model = self.proxy.fit(X_java, y_java, None)
 
         return ClusteringModel(java_model)
     

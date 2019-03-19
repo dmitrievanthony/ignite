@@ -77,11 +77,16 @@ class ClassificationTrainer(SupervisedTrainer, Proxy):
         """
         Proxy.__init__(self, proxy)
 
-    def fit(self, X, y, preprocessor=None):
+    def fit(self, X, y=None):
+        if isinstance(X, Cache):
+            if y is not None:
+                raise Exception("Second argument (y) is unexpected in case the first parameters is cache.")
+            return self.fit_on_cache(X)
+
         X_java = Utils.to_java_double_array(X)
         y_java = Utils.to_java_double_array(y)
 
-        java_model = self.proxy.fit(X_java, y_java, Proxy.proxy_or_none(preprocessor))
+        java_model = self.proxy.fit(X_java, y_java, None)
 
         return ClassificationModel(java_model)
 

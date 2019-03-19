@@ -106,7 +106,12 @@ class RegressionTrainer(SupervisedTrainer, Proxy):
         self.accepts_matrix = accepts_matrix
         Proxy.__init__(self, proxy)
 
-    def fit(self, X, y, preprocessor=None):
+    def fit(self, X, y=None):
+        if isinstance(X, Cache):
+            if y is not None:
+                raise Exception("Second argument (y) is unexpected in case the first parameters is cache.")
+            return self.fit_on_cache(X)
+
         X = np.array(X)
         y = np.array(y)
 
@@ -126,14 +131,14 @@ class RegressionTrainer(SupervisedTrainer, Proxy):
         # We have two types of models: first type can accept multiple labels, second can't.
         if self.multiple_labels:        
             y_java = Utils.to_java_double_array(y)
-            java_model = self.proxy.fit(X_java, y_java, Proxy.proxy_or_none(preprocessor))
+            java_model = self.proxy.fit(X_java, y_java, None)
             return RegressionModel(java_model, self.accepts_matrix)
         else:
             java_models = []
             # Here we need to prepare a model for each y column.
             for i in range(y.shape[1]):
                 y_java = Utils.to_java_double_array(y[:,i])
-                java_model = self.proxy.fit(X_java, y_java, Proxy.proxy_or_none(preprocessor))
+                java_model = self.proxy.fit(X_java, y_java, None)
                 java_models.append(java_model)
             return RegressionModel(java_models, self.accepts_matrix)
 

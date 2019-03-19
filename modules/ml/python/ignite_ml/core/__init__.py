@@ -21,6 +21,9 @@ from ..common import Utils
 
 from ..common import gateway
 
+import pandas as pd
+import numpy as np
+
 class Ignite:
  
     def __init__(self, cfg=None):
@@ -32,7 +35,7 @@ class Ignite:
         """
         self.cfg = cfg
    
-    def getCache(self, name):
+    def get_cache(self, name):
         """Returns existing cache by name.
 
         Parameters
@@ -44,7 +47,7 @@ class Ignite:
         java_cache = self.ignite.cache(name)
         return Cache(java_cache)
 
-    def createCache(self, name, excl_neighbors=False, parts=10):
+    def create_cache(self, name, excl_neighbors=False, parts=10):
         """Creates a new cache.
 
         Parameters
@@ -76,14 +79,19 @@ class Ignite:
 class Cache(Proxy):
     """Ignite cache proxy.
     """
-    def __init__(self, proxy):
+    def __init__(self, proxy, cache_filter=None, preprocessor=None):
         """Constructs a new instance of Ignite cache proxy.
 
         Parameters
         ----------
-        proxy : Proxy object.
+        proxy : Cache (proxy object).
+        cache_filter : Cache filter.
+        preprocessor : Preprocessor.
         """
         Proxy.__init__(self, proxy)
+
+        self.cache_filter = cache_filter
+        self.preprocessor = preprocessor
 
     def get(self, key):
         """Returns value (float array) by key.
@@ -105,6 +113,41 @@ class Cache(Proxy):
         """
         value = Utils.to_java_double_array(value)
         self.proxy.put(key, value)
+
+    def head(self, n=5):
+        scan_query = gateway.jvm.org.apache.ignite.cache.query.ScanQuery()
+        
+        if self.cache_filter is not None:
+            scan_query.setFilter(self.cache_filter)
+
+        cursor = self.proxy.query(scan_query)
+        iterator = cursor.iterator()
+        
+        data = []
+        while iterator.hasNext() and n != 0:
+            entry = iterator.next()
+            key = entry.getKey()
+            value = entry.getValue()
+
+            if self.preprocessor is not None:
+                initial_array = Utils.from_java_double_array(value)
+                preprocessed_value = self.preprocessor.proxy.apply(key, value)
+                value = preprocessed_value.asArray()
+                array = Utils.from_java_double_array(value)
+                array = np.hstack((array, initial_array[-1]))
+            else:
+                array = Utils.from_java_double_array(value)
+    
+            data.append(array)
+            n = n - 1
+
+        return pd.DataFrame(data)
+
+    def transform(self, preprocessor):
+        return Cache(self.proxy, self.cache_filter, preprocessor)
+
+    def filter(self, cache_filter):
+        return Cache(self.proxy, cache_filter, self.preprocessor)
 
     def size(self):
         """Returns size of the cache.

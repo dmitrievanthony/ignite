@@ -24,12 +24,23 @@ from ..common import LearningEnvironmentBuilder
 from ..common import gateway
 
 from ..core import Cache
-from ..model_selection import CacheView
 
 __evaluator = gateway.jvm.org.apache.ignite.ml.python.PythonEvaluator
 
+def __evaluate_regression(cache, mdl, preprocessor=None):
+    if not isinstance(cache, Cache):
+        raise Exception("Unexpected type of cache (%s)." % type(cache))
+
+    return __evaluator.evaluateRegression(cache.proxy, None, mdl.proxy, preprocessor)
+
+def __evaluate_classification(cache, mdl, preprocessor=None):
+    if not isinstance(cache, Cache):
+        raise Exception("Unexpected type of cache (%s)." % type(cache))
+
+    return __evaluator.evaluateClassification(cache.proxy, None, mdl.proxy, preprocessor)
+
 def accuracy_score(cache, mdl, preprocessor=None):
-    """Calculate accuracy score.
+    """Calculate accuracy score (classification metric).
 
     Parameters
     ----------
@@ -37,17 +48,101 @@ def accuracy_score(cache, mdl, preprocessor=None):
     mdl : Model.
     preprocessor : Preprocessor.
     """
-    if isinstance(cache, Cache):
-        return __evaluator.accuracy(cache.proxy, None, mdl.proxy, preprocessor)
-    elif isinstance(cache, CacheView):
-        return __evaluator.accuracy(cache.cache.proxy, cache.cache_filter, mdl.proxy, preprocessor)
-    else:
-        raise Exception("Cache type is unknown, it should be Cache or CacheView.")
+    classification_metrics = __evaluate_classification(cache, mdl, preprocessor)
+    return classification_metrics.accuracy()
 
-def rmse(cache, mdl, preprocessor=None):
-    if isinstance(cache, Cache):
-        return __evaluator.rmse(cache.proxy, None, mdl.proxy, preprocessor)
-    elif isinstance(cache, CacheView):
-        return __evaluator.rmse(cache.cache.proxy, cache.cache_filter, mdl.proxy, preprocessor)
-    else:
-        raise Exception("Cache type is unknown, it should be Cache or CacheView.")
+def balanced_accuracy_score(cache, mdl, preprocessor=None):
+    """Calculate balanced accuracy score (classification metric).
+
+    Parameters
+    ----------
+    cache : Cache or cache view (cache with filter).
+    mdl : Model.
+    preprocessor : Preprocessor.
+    """
+    classification_metrics = __evaluate_classification(cache, mdl, preprocessor)
+    return classification_metrics.balancedAccuracy()
+
+def precision_score(cache, mdl, preprocessor=None):
+    """Calculate precision score (classification metric).
+
+    Parameters
+    ----------
+    cache : Cache or cache view (cache with filter).
+    mdl : Model.
+    preprocessor : Preprocessor.
+    """
+    classification_metrics = __evaluate_classification(cache, mdl, preprocessor)
+    return classification_metrics.precision()
+
+def recall_score(cache, mdl, preprocessor=None):
+    """Calculate recall score (classification metric).
+
+    Parameters
+    ----------
+    cache : Cache or cache view (cache with filter).
+    mdl : Model.
+    preprocessor : Preprocessor.
+    """
+    classification_metrics = __evaluate_classification(cache, mdl, preprocessor)
+    return classification_metrics.recall()
+
+def f1_score(cache, mdl, preprocessor=None):
+    """Calculate f1 score (classification metric).
+
+    Parameters
+    ----------
+    cache : Cache or cache view (cache with filter).
+    mdl : Model.
+    preprocessor : Preprocessor.
+    """
+    classification_metrics = __evaluate_classification(cache, mdl, preprocessor)
+    return classification_metrics.f1Score()
+
+def mae_score(cache, mdl, preprocessor=None):
+    """Calculate mean absolute error score (regression metric).
+
+    Parameters
+    ----------
+    cache : Cache or cache view (cache with filter).
+    mdl : Model.
+    preprocessor : Preprocessor.
+    """
+    regression_metrics = __evaluate_regression(cache, mdl, preprocessor)
+    return regression_metrics.mae()
+
+def mse_score(cache, mdl, preprocessor=None):
+    """Calculate mean squared error score (regression metric).
+
+    Parameters
+    ----------
+    cache : Cache or cache view (cache with filter).
+    mdl : Model.
+    preprocessor : Preprocessor.
+    """
+    regression_metrics = __evaluate_regression(cache, mdl, preprocessor)
+    return regression_metrics.mse()
+
+def rss_score(cache, mdl, preprocessor=None):
+    """Calculate residual sum of squares score (regression metric).
+
+    Parameters
+    ----------
+    cache : Cache or cache view (cache with filter).
+    mdl : Model.
+    preprocessor : Preprocessor.
+    """
+    regression_metrics = __evaluate_regression(cache, mdl, preprocessor)
+    return regression_metrics.rss()
+
+def rmse_score(cache, mdl, preprocessor=None):
+    """Calculate root mean squared error score (regression metric).
+
+    Parameters
+    ----------
+    cache : Cache or cache view (cache with filter).
+    mdl : Model.
+    preprocessor : Preprocessor.
+    """
+    regression_metrics = __evaluate_regression(cache, mdl, preprocessor)
+    return regression_metrics.rmse()

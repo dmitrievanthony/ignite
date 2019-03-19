@@ -70,8 +70,8 @@ class PreprocessingTrainer(UnsupervisedTrainer):
 
         return PreprocessingModel(java_model)
 
-    def fit_on_cache(self, cache, preprocessing=None):
-        java_model = self.proxy.fitOnCache(cache.proxy, Proxy.proxy_or_none(preprocessing))
+    def fit_on_cache(self, cache):
+        java_model = self.proxy.fitOnCache(cache.proxy, Proxy.proxy_or_none(cache.preprocessor))
 
         return PreprocessingModel(java_model)
 

@@ -25,8 +25,6 @@ from ..common import Utils
 from ..common import LearningEnvironmentBuilder
 
 from ..core import Cache
-from ..model_selection import CacheView
-
 from ..common import gateway
 
 class ClusteringModel(Proxy):
@@ -87,14 +85,11 @@ class ClusteringTrainer(UnsupervisedTrainer, Proxy):
 
         return ClusteringModel(java_model)
     
-    def fit_on_cache(self, cache, preprocessor=None):
-        if isinstance(cache, Cache):
-            java_model = self.proxy.fitOnCache(cache.proxy, None, Proxy.proxy_or_none(preprocessor))
-        elif isinstance(cache, CacheView):
-            java_model = self.proxy.fitOnCache(cache.cache.proxy, cache.cache_filter, Proxy.proxy_or_none(preprocessor))
-        else:
-            raise Exception("Cache type is unknown, it should be Cache or CacheView.")
+    def fit_on_cache(self, cache):
+        if not isinstance(cache, Cache):
+            raise Exception("Unexpected type of cache (%s)." % type(cache))
 
+        java_model = self.proxy.fitOnCache(cache.proxy, cache.cache_filter, Proxy.proxy_or_none(cache.preprocessor))
         return ClusteringModel(java_model)
 
 class GMMClusteringTrainer(ClusteringTrainer):

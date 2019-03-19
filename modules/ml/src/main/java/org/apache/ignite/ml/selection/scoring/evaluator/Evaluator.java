@@ -25,11 +25,15 @@ import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.selection.scoring.cursor.CacheBasedLabelPairCursor;
 import org.apache.ignite.ml.selection.scoring.cursor.LabelPairCursor;
 import org.apache.ignite.ml.selection.scoring.cursor.LocalLabelPairCursor;
+import org.apache.ignite.ml.selection.scoring.metric.AbstractMetrics;
 import org.apache.ignite.ml.selection.scoring.metric.Metric;
+import org.apache.ignite.ml.selection.scoring.metric.MetricValues;
 import org.apache.ignite.ml.selection.scoring.metric.classification.BinaryClassificationMetricValues;
 import org.apache.ignite.ml.selection.scoring.metric.classification.BinaryClassificationMetrics;
 
 import java.util.Map;
+import org.apache.ignite.ml.selection.scoring.metric.regression.RegressionMetricValues;
+import org.apache.ignite.ml.selection.scoring.metric.regression.RegressionMetrics;
 
 /**
  * Evaluator that computes metrics from predictions and ground truth values.
@@ -52,6 +56,7 @@ public class Evaluator {
         IgniteBiFunction<K, V, Vector> featureExtractor,
         IgniteBiFunction<K, V, L> lbExtractor,
         Metric<L> metric) {
+
         return calculateMetric(dataCache, null, mdl, featureExtractor, lbExtractor, metric);
     }
 
@@ -72,6 +77,7 @@ public class Evaluator {
         IgniteBiFunction<K, V, Vector> featureExtractor,
         IgniteBiFunction<K, V, L> lbExtractor,
         Metric<L> metric) {
+
         return calculateMetric(dataCache, null, mdl, featureExtractor, lbExtractor, metric);
     }
 
@@ -94,6 +100,7 @@ public class Evaluator {
         IgniteBiFunction<K, V, Vector> featureExtractor,
         IgniteBiFunction<K, V, L> lbExtractor,
         Metric<L> metric) {
+
         return calculateMetric(dataCache, filter, mdl, featureExtractor, lbExtractor, metric);
     }
 
@@ -116,6 +123,7 @@ public class Evaluator {
         IgniteBiFunction<K, V, Vector> featureExtractor,
         IgniteBiFunction<K, V, L> lbExtractor,
         Metric<L> metric) {
+
         return calculateMetric(dataCache, filter, mdl, featureExtractor, lbExtractor, metric);
     }
 
@@ -134,7 +142,8 @@ public class Evaluator {
         IgniteModel<Vector, Double> mdl,
         IgniteBiFunction<K, V, Vector> featureExtractor,
         IgniteBiFunction<K, V, Double> lbExtractor) {
-        return calcMetricValues(dataCache, null, mdl, featureExtractor, lbExtractor);
+
+        return calcClassificationMetricValues(dataCache, null, mdl, featureExtractor, lbExtractor);
     }
 
     /**
@@ -152,11 +161,12 @@ public class Evaluator {
         IgniteModel<Vector, Double> mdl,
         IgniteBiFunction<K, V, Vector> featureExtractor,
         IgniteBiFunction<K, V, Double> lbExtractor) {
+
         return calcMetricValues(dataCache, null, mdl, featureExtractor, lbExtractor);
     }
 
     /**
-     * Computes the given metrics on the given cache.
+     * Computes the classification metrics on the given cache.
      *
      * @param dataCache The given cache.
      * @param filter The given filter.
@@ -172,7 +182,29 @@ public class Evaluator {
         IgniteModel<Vector, Double> mdl,
         IgniteBiFunction<K, V, Vector> featureExtractor,
         IgniteBiFunction<K, V, Double> lbExtractor) {
-        return calcMetricValues(dataCache, filter, mdl, featureExtractor, lbExtractor);
+
+        return calcClassificationMetricValues(dataCache, filter, mdl, featureExtractor, lbExtractor);
+    }
+
+    /**
+     * Computes the regression metrics on the given cache.
+     *
+     * @param dataCache The given cache.
+     * @param filter The given filter.
+     * @param mdl The model.
+     * @param featureExtractor The feature extractor.
+     * @param lbExtractor The label extractor.
+     * @param <K> The type of cache entry key.
+     * @param <V> The type of cache entry value.
+     * @return Computed metric.
+     */
+    public static <K, V> RegressionMetricValues evaluateRegression(IgniteCache<K, V> dataCache,
+        IgniteBiPredicate<K, V> filter,
+        IgniteModel<Vector, Double> mdl,
+        IgniteBiFunction<K, V, Vector> featureExtractor,
+        IgniteBiFunction<K, V, Double> lbExtractor) {
+
+        return calcRegressionMetricValues(dataCache, filter, mdl, featureExtractor, lbExtractor);
     }
 
     /**
@@ -191,11 +223,12 @@ public class Evaluator {
         IgniteModel<Vector, Double> mdl,
         IgniteBiFunction<K, V, Vector> featureExtractor,
         IgniteBiFunction<K, V, Double> lbExtractor) {
+
         return calcMetricValues(dataCache, filter, mdl, featureExtractor, lbExtractor);
     }
 
     /**
-     * Computes the given metrics on the given cache.
+     * Computes classification metrics on the given cache.
      *
      * @param dataCache The given cache.
      * @param filter The given filter.
@@ -206,13 +239,54 @@ public class Evaluator {
      * @param <V> The type of cache entry value.
      * @return Computed metric.
      */
-    private static <K, V> BinaryClassificationMetricValues calcMetricValues(IgniteCache<K, V> dataCache,
+    private static <K, V> BinaryClassificationMetricValues calcClassificationMetricValues(IgniteCache<K, V> dataCache,
         IgniteBiPredicate<K, V> filter,
         IgniteModel<Vector, Double> mdl,
         IgniteBiFunction<K, V, Vector> featureExtractor,
         IgniteBiFunction<K, V, Double> lbExtractor) {
-        BinaryClassificationMetricValues metricValues;
-        BinaryClassificationMetrics binaryMetrics = new BinaryClassificationMetrics();
+
+        return calcMetricValues(dataCache, filter, mdl, featureExtractor, lbExtractor, new BinaryClassificationMetrics());
+    }
+
+    /**
+     * Computes regression metrics on the given cache.
+     *
+     * @param dataCache The given cache.
+     * @param filter The given filter.
+     * @param mdl The model.
+     * @param featureExtractor The feature extractor.
+     * @param lbExtractor The label extractor.
+     * @param <K> The type of cache entry key.
+     * @param <V> The type of cache entry value.
+     * @return Computed metric.
+     */
+    private static <K, V> RegressionMetricValues calcRegressionMetricValues(IgniteCache<K, V> dataCache,
+        IgniteBiPredicate<K, V> filter,
+        IgniteModel<Vector, Double> mdl,
+        IgniteBiFunction<K, V, Vector> featureExtractor,
+        IgniteBiFunction<K, V, Double> lbExtractor) {
+
+        return calcMetricValues(dataCache, filter, mdl, featureExtractor, lbExtractor, new RegressionMetrics());
+    }
+
+    /**
+     * @param dataCache The given cache.
+     * @param filter The given filter.
+     * @param mdl The model.
+     * @param featureExtractor The feature extractor.
+     * @param lbExtractor The label extractor.
+     * @param metrics Metrics.
+     * @param <K> The type of cache entry key.
+     * @param <V> The type of cache entry value.
+     * @param <M> The type of metrics.
+     * @return Computed metric.
+     */
+    private static <K, V, M extends MetricValues> M calcMetricValues(IgniteCache<K, V> dataCache,
+        IgniteBiPredicate<K, V> filter,
+        IgniteModel<Vector, Double> mdl,
+        IgniteBiFunction<K, V, Vector> featureExtractor,
+        IgniteBiFunction<K, V, Double> lbExtractor,
+        AbstractMetrics<M> metrics) {
 
         try (LabelPairCursor<Double> cursor = new CacheBasedLabelPairCursor<>(
             dataCache,
@@ -221,13 +295,11 @@ public class Evaluator {
             lbExtractor,
             mdl
         )) {
-            metricValues = binaryMetrics.scoreAll(cursor.iterator());
+            return metrics.scoreAll(cursor.iterator());
         }
         catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return metricValues;
     }
 
     /**

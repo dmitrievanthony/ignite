@@ -13,38 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 
-import numpy as np
-from numbers import Number
-
 from ..core import Cache
-
-from ..common import SupervisedTrainer
-from ..common import Proxy
-from ..common import Utils
-from ..common import LearningEnvironmentBuilder
-
 from ..common import gateway
 
-class CacheView:
-    """Cache view (cache with filter).
-    """
-    def __init__(self, cache, cache_filter):
-        """Constructs a new instance of cache view.
-
-        Parameters
-        ----------
-        cache : Cache or cache view (cache with filter).
-        cache_filter : Cache filter.
-        """
-        self.cache = cache
-        self.cache_filter = cache_filter
-
 def train_test_split(cache, test_size=0.25, train_size=0.75, random_state=None):
+    if not isinstance(cache, Cache):
+        raise Exception("Unexpected type of cache (%s)." % type(cache))    
+
     split = gateway.jvm.org.apache.ignite.ml.selection.split.TrainTestDatasetSplitter().split(train_size, test_size)
     train_filter = split.getTrainFilter()
     test_filter = split.getTestFilter()
-    
-    if isinstance(cache, Cache):
-        return (CacheView(cache, train_filter), CacheView(cache, test_filter))
-    else:
-        raise Exception("Not implemented")
+    return (cache.filter(train_filter), cache.filter(test_filter))

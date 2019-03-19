@@ -17,6 +17,7 @@
 
 package org.apache.ignite.ml.python;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.ignite.IgniteCache;
@@ -67,6 +68,6 @@ public class PythonPreprocessingTrainer {
      */
     public IgniteBiFunction<Integer, double[], Vector> fitOnCache(IgniteCache<Integer, double[]> cache,
         IgniteBiFunction<Integer, double[], Vector> preprocessor) {
-        return delegate.fit(Ignition.ignite(), cache, preprocessor == null ? (k, v) -> VectorUtils.of(v) : preprocessor);
+        return delegate.fit(Ignition.ignite(), cache, preprocessor == null ? (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)) : preprocessor);
     }
 }

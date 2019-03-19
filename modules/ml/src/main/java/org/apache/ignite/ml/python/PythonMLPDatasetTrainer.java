@@ -120,7 +120,7 @@ public class PythonMLPDatasetTrainer {
 
                 @Override public LabeledVector<double[]> extract(Integer k, double[] v) {
                     return new LabeledVector<>(
-                        preprocessor.apply(k, Arrays.copyOfRange(v, 0, v.length - 1)),
+                        preprocessor.apply(k, Arrays.copyOf(v, v.length - 1)),
                         new double[] {v[v.length - 1]}
                     );
                 }
@@ -130,7 +130,7 @@ public class PythonMLPDatasetTrainer {
 
             @Override public LabeledVector<double[]> extract(Integer k, double[] v) {
                 return new LabeledVector<>(
-                    VectorUtils.of(Arrays.copyOfRange(v, 0, v.length - 1)),
+                    VectorUtils.of(Arrays.copyOf(v, v.length - 1)),
                     new double[] {v[v.length - 1]}
                 );
             }

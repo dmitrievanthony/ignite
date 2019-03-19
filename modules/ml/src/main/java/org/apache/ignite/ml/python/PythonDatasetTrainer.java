@@ -81,14 +81,14 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
             return fitOnCache(
                 cache,
                 filter,
-                (k, v) -> preprocessor.apply(k, Arrays.copyOfRange(v, 0, v.length - 1)),
+                (k, v) -> preprocessor.apply(k, Arrays.copyOf(v, v.length - 1)),
                 (k, v) -> v[v.length - 1]
             );
 
         return fitOnCache(
             cache,
             filter,
-            (k, v) -> VectorUtils.of(Arrays.copyOfRange(v, 0, v.length - 1)),
+            (k, v) -> VectorUtils.of(Arrays.copyOf(v,v.length - 1)),
             (k, v) -> v[v.length - 1]
         );
     }

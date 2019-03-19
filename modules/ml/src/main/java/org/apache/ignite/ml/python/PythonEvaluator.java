@@ -29,6 +29,9 @@ import org.apache.ignite.ml.selection.scoring.metric.Metric;
 import org.apache.ignite.ml.selection.scoring.metric.classification.Accuracy;
 import org.apache.ignite.ml.selection.scoring.metric.regression.RegressionMetrics;
 
+/**
+ * Python wrapper for {@link Evaluator}.
+ */
 public class PythonEvaluator {
 
     public static double accuracy(IgniteCache<Integer, double[]> cache, IgniteBiPredicate<Integer, double[]> filter,

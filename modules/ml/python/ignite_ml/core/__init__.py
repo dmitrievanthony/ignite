@@ -93,6 +93,24 @@ class Cache(Proxy):
         self.cache_filter = cache_filter
         self.preprocessor = preprocessor
 
+    def __delitem__(self, key):
+        raise Exception("Not implemented!")
+
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            return self.get(key)
+        elif isinstance(key, slice):
+            result = []
+            length = len(self)
+            for k in range(*key.indices(length)):
+                result.append(self.get(k))
+            return np.array(result)
+        else:
+            raise Exception("Unexpected type of key (%s)." % type(key))
+
+    def __setitem__(self, key, value):
+        raise Exception("Not implemented!")
+
     def get(self, key):
         """Returns value (float array) by key.
 
@@ -149,7 +167,5 @@ class Cache(Proxy):
     def filter(self, cache_filter):
         return Cache(self.proxy, cache_filter, self.preprocessor)
 
-    def size(self):
-        """Returns size of the cache.
-        """
-        return self.proxy.size()
+    def __len__(self):
+        return self.proxy.size(gateway.new_array(gateway.jvm.org.apache.ignite.cache.CachePeekMode, 0))

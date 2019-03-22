@@ -187,6 +187,8 @@ public class IgniteDistributedModelBuilder implements AsyncModelBuilder {
             }
 
             reqQueue.put(input);
+            System.out.println("Request put from queue: " + input);
+
             return fut;
         }
 
@@ -225,6 +227,7 @@ public class IgniteDistributedModelBuilder implements AsyncModelBuilder {
                         O res;
                         try {
                             res = resQueue.take();
+                            System.out.println("Response taken from queue: " + res);
                         }
                         catch (IllegalStateException e) {
                             if (!resQueue.removed())
@@ -347,7 +350,15 @@ public class IgniteDistributedModelBuilder implements AsyncModelBuilder {
                     continue;
                 }
 
-                O res = mdl.predict(req);
+                O res;
+
+                try {
+                    res = mdl.predict(req);
+                }
+                catch (RuntimeException e) {
+                    e.printStackTrace(System.out);
+                    throw e;
+                }
 
                 try {
                     resQueue.put(res);

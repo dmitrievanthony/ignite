@@ -110,7 +110,7 @@ class XGBoostModel(ClassificationModel):
         java_array = Utils.to_java_double_array(data)
         java_vector_utils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils
 
-        X = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl. DelegatingNamedVector(java_vector_utils.of(java_array), keys)
+        X = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl.DelegatingNamedVector(java_vector_utils.of(java_array), keys)
  
         res = self.proxy.predict(X)
         # This if handles 'future' response.

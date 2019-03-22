@@ -45,13 +45,19 @@ classpath = ':'.join(libs_jar + optional_libs_jar)
 gateway = JavaGateway.launch_gateway(classpath=classpath, die_on_exit=True)
 
 class Utils:
+    """Util class.
+    """
     def to_java_double_array(array):
+        """Converts python array into java double array.
+        """
         array = np.array(array)
         java_array = gateway.new_array(gateway.jvm.double, *array.shape)
         Utils.__to_java_double_array_backtrack(array, java_array)
         return java_array
 
     def from_java_double_array(java_array):
+        """Converts java double array into python array.
+        """
         array = np.zeros(len(java_array))
         for i in range(len(java_array)):
             array[i] = java_array[i]
@@ -79,50 +85,19 @@ class Proxy:
         self.proxy = proxy
 
     def proxy_or_none(proxy):
+        """Returns proxy of the given object or None of object is None itself.
+        """
         if proxy:
             return proxy.proxy
         else:
             return None
 
-class MLPArchitecture(Proxy):
-    """MLP architecture.
-    """
-    def __init__(self, input_size):
-        """Constructs a new instance of MLP architecture.
-
-        Parameters
-        ----------
-        input_size : Input size.
-        """
-        proxy = gateway.jvm.org.apache.ignite.ml.nn.architecture.MLPArchitecture(input_size)
-        Proxy.__init__(self, proxy)
-
-    def with_layer(self, neurons, has_bias=True, activator='sigmoid'):
-        """Add layer.
-
-        Parameters
-        ----------
-        neurons : Number of neurons.
-        has_bias : Has bias or not (default value is True).
-        activator : Activation function ('sigmoid', 'relu' or 'linear', default value is 'sigmoid')
-        """
-        java_activator = None
-        if activator == 'sigmoid':
-            java_activator = gateway.jvm.org.apache.ignite.ml.nn.Activators.SIGMOID
-        elif activator == 'relu':
-            java_activator = gateway.jvm.org.apache.ignite.ml.nn.Activators.RELU
-        elif activator == 'linear':
-            java_activator = gateway.jvm.org.apache.ignite.ml.nn.Activators.LINEAR
-        else:
-            raise Exception("Unknown activator: %s" % activator)
-
-        self.proxy = self.proxy.withAddedLayer(neurons, has_bias, java_activator)
-
-        return self
-
 class LearningEnvironmentBuilder(Proxy):
-
+    """Learning environment builder.
+    """
     def __init__(self):
+        """Constructs a new instance of learning environemtn builder.
+        """
         java_proxy = gateway.jvm.org.apache.ignite.ml.environment.LearningEnvironmentBuilder.defaultBuilder()
         Proxy.__init__(self, java_proxy)
 
@@ -150,29 +125,6 @@ class SupervisedTrainer:
         """
         raise Exception("Not implemented")
 
-    @abstractmethod
-    def update(self, mdl, X, y=None):
-        """Updates the model.
-
-        Parameters
-        ----------
-        mdl : Model.
-        X : x.
-        y : y.
-        """
-        raise Exception("Not implemented")
-
-    @abstractmethod
-    def update_on_cache(self, mdl, cache):
-        """Updates the model.
-
-        Parameters
-        ----------
-        mdl : Model.
-        cache : Apache Ignite cache.
-        """
-        raise Exception("Not implemented")
-
 class UnsupervisedTrainer:
     """Unsupervised trainer.
     """
@@ -192,30 +144,6 @@ class UnsupervisedTrainer:
 
         Parameters
         ----------
-        cache : Apache Ignite cache.
-        columns : List of columns.
-        preprocessor : Preprocessor.
-        """
-        raise Exception("Not implemented")
-
-    @abstractmethod
-    def update(self, mdl, X):
-        """Updates the model.
-
-        Parameters
-        ----------
-        mdl : Model.
-        X : x.
-        """
-        raise Exception("Not implemented")
-
-    @abstractmethod
-    def update_on_cache(self, mdl, cache):
-        """Updates the model.
-
-        Parameters
-        ----------
-        mdl : Model.
         cache : Apache Ignite cache.
         """
         raise Exception("Not implemented")

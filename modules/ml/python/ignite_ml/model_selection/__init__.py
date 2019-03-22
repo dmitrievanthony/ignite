@@ -17,6 +17,8 @@ from ..core import Cache
 from ..common import gateway
 
 def train_test_split(cache, test_size=0.25, train_size=0.75, random_state=None):
+	"""Splits given cache on two parts: test and train with given sizes.
+	"""
     if not isinstance(cache, Cache):
         raise Exception("Unexpected type of cache (%s)." % type(cache))    
 

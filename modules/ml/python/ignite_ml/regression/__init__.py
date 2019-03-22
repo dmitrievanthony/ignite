@@ -235,6 +235,42 @@ class RandomForestRegressionTrainer(RegressionTrainer):
 
         RegressionTrainer.__init__(self, gateway.jvm.org.apache.ignite.ml.python.PythonDatasetTrainer(proxy))
 
+class MLPArchitecture(Proxy):
+    """MLP architecture.
+    """
+    def __init__(self, input_size):
+        """Constructs a new instance of MLP architecture.
+
+        Parameters
+        ----------
+        input_size : Input size.
+        """
+        proxy = gateway.jvm.org.apache.ignite.ml.nn.architecture.MLPArchitecture(input_size)
+        Proxy.__init__(self, proxy)
+
+    def with_layer(self, neurons, has_bias=True, activator='sigmoid'):
+        """Add layer.
+
+        Parameters
+        ----------
+        neurons : Number of neurons.
+        has_bias : Has bias or not (default value is True).
+        activator : Activation function ('sigmoid', 'relu' or 'linear', default value is 'sigmoid')
+        """
+        java_activator = None
+        if activator == 'sigmoid':
+            java_activator = gateway.jvm.org.apache.ignite.ml.nn.Activators.SIGMOID
+        elif activator == 'relu':
+            java_activator = gateway.jvm.org.apache.ignite.ml.nn.Activators.RELU
+        elif activator == 'linear':
+            java_activator = gateway.jvm.org.apache.ignite.ml.nn.Activators.LINEAR
+        else:
+            raise Exception("Unknown activator: %s" % activator)
+
+        self.proxy = self.proxy.withAddedLayer(neurons, has_bias, java_activator)
+
+        return self
+
 class MLPRegressionTrainer(RegressionTrainer):
     """MLP regression trainer.
     """

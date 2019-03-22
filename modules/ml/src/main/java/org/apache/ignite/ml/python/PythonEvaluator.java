@@ -18,11 +18,7 @@
 package org.apache.ignite.ml.python;
 
 import java.util.Arrays;
-import java.util.Iterator;
-import javax.cache.Cache;
 import org.apache.ignite.IgniteCache;
-import org.apache.ignite.cache.query.QueryCursor;
-import org.apache.ignite.cache.query.ScanQuery;
 import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.IgniteModel;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
@@ -31,30 +27,20 @@ import org.apache.ignite.ml.math.primitives.vector.VectorUtils;
 import org.apache.ignite.ml.selection.scoring.evaluator.Evaluator;
 import org.apache.ignite.ml.selection.scoring.metric.classification.BinaryClassificationMetricValues;
 import org.apache.ignite.ml.selection.scoring.metric.regression.RegressionMetricValues;
-import org.apache.ignite.ml.selection.split.TrainTestDatasetSplitter;
-import org.apache.ignite.ml.selection.split.TrainTestSplit;
 
 /**
  * Python wrapper for {@link Evaluator}.
  */
 public class PythonEvaluator {
-
-    public static void test() {
-        IgniteCache<Integer, double[]> cache = null;
-        QueryCursor<Cache.Entry<Integer, double[]>> cursor = cache.query(new ScanQuery<>());
-        Iterator<Cache.Entry<Integer, double[]>> iterator = cursor.iterator();
-
-        TrainTestDatasetSplitter<Integer, double[]> splitter = new TrainTestDatasetSplitter<>();
-        TrainTestSplit<Integer, double[]> split = splitter.split(0.75);
-
-
-
-        while (iterator.hasNext()) {
-            Cache.Entry<Integer, double[]> entry = iterator.next();
-            double[] value = entry.getValue();
-        }
-    }
-
+    /**
+     * Evaluate regression metrics.
+     *
+     * @param cache Ignite cache.
+     * @param filter Filter.
+     * @param mdl Model.
+     * @param preprocessor Preprocessor.
+     * @return Regression metrics.
+     */
     public static RegressionMetricValues evaluateRegression(IgniteCache<Integer, double[]> cache,
         IgniteBiPredicate<Integer, double[]> filter,
         IgniteModel<Vector, Double> mdl, IgniteBiFunction<Integer, double[], Vector> preprocessor) {
@@ -68,6 +54,15 @@ public class PythonEvaluator {
         );
     }
 
+    /**
+     * Evaluate classification metrics.
+     *
+     * @param cache Ignite cache.
+     * @param filter Filter.
+     * @param mdl Model.
+     * @param preprocessor Preprocessor.
+     * @return Classification metrics.
+     */
     public static BinaryClassificationMetricValues evaluateClassification(IgniteCache<Integer, double[]> cache,
         IgniteBiPredicate<Integer, double[]> filter,
         IgniteModel<Vector, Double> mdl, IgniteBiFunction<Integer, double[], Vector> preprocessor) {
@@ -81,6 +76,12 @@ public class PythonEvaluator {
         );
     }
 
+    /**
+     * Builds feature extractor based on preprocessor.
+     *
+     * @param preprocessor Preprocessor.
+     * @return Feature extractor.
+     */
     private static IgniteBiFunction<Integer, double[], Vector> getFeatureExtractor(
         IgniteBiFunction<Integer, double[], Vector> preprocessor) {
         if (preprocessor != null)

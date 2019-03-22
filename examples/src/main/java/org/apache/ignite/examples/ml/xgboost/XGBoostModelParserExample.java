@@ -85,7 +85,7 @@ public class XGBoostModelParserExample {
                         String[] keyVal = keyValueString.split(":");
 
                         if (keyVal.length == 2)
-                            testObj.put("f" + keyVal[0], Double.parseDouble(keyVal[1]));
+                            testObj.put(keyVal[0], Double.parseDouble(keyVal[1]));
                     }
 
                     double prediction = mdl.predict(VectorUtils.of(testObj)).get();

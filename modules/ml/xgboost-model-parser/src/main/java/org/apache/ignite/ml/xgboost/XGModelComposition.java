@@ -86,7 +86,7 @@ public class XGModelComposition implements IgniteModel<NamedVector, Double> {
             inputVector.set(i, Double.NaN);
 
         for (String key : vector.getKeys()) {
-            Integer idx = dict.get(key);
+            Integer idx = dict.get("f" + key);
 
             if (idx != null)
                 inputVector.set(idx, vector.get(key));

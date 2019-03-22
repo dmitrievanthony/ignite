@@ -18,9 +18,10 @@
 
 from ..common import Proxy
 from ..common import Utils
-
+from ..classification import ClassificationModel
 from ..common import gateway
 from copy import copy
+from numbers import Number
 
 class IgniteModel:
     """Constructs a new instance of Ignite model (local).
@@ -41,36 +42,23 @@ class IgniteModel:
         """
         return self.mdl.predict(X)
 
-class IgniteDistributedModel:
-    """Ignite distributed model.
-
-    Parameters
-    ----------
-    ignite : Ignite instance.
-    mdl : Model.
-    instances : Number of instances.
-    max_per_node : Max number of instance per node.
-    """
-    def __init__(self, ignite, mdl, instances=1, max_per_node=1):
-        """Constructs a new instance of Ignite distributed model.
+class DistributedModel:
+    def __init__(self, ignite, reader, parser, mdl, instances=1, max_per_node=1):
+        """Constructs a new instance of distributed model.
 
         Parameters
         ----------
         ignite : Ignite instance.
         reader : Model reader.
         parser : Model parser.
+        mdl : Model.
         instances : Number of worker instances.
-        max_per_node : Max number of worker instances per ignite node.
+        max_per_node : Max number of worker per node.
         """
         self.ignite = ignite
+        self.reader = reader
+        self.parser = parser
         self.mdl = mdl
-
-        if isinstance(mdl.proxy, list):
-            self.reader = [gateway.jvm.org.apache.ignite.ml.inference.reader.InMemoryModelReader(p) for p in mdl.proxy]
-        else:
-            self.reader = [gateway.jvm.org.apache.ignite.ml.inference.reader.InMemoryModelReader(mdl.proxy)]
-
-        self.parser = gateway.jvm.org.apache.ignite.ml.inference.parser.IgniteModelParser()
         self.instances = instances
         self.max_per_node = max_per_node
 
@@ -92,8 +80,8 @@ class IgniteDistributedModel:
 
     def __enter__(self):
         self.proxy = [gateway.jvm.org.apache.ignite.ml.inference.builder.IgniteDistributedModelBuilder(
-            self.ignite.ignite, 
-            self.instances, 
+            self.ignite.ignite,
+            self.instances,
             self.max_per_node
         ).build(r, self.parser) for r in self.reader]
         return self
@@ -104,3 +92,66 @@ class IgniteDistributedModel:
                 p.close()
             self.proxy = None
         return False
+
+class XGBoostModel(ClassificationModel):
+    def __init__(self):
+        super(XGBoostModel, self).__init__(None)
+
+    def predict(self, X):
+        keys = gateway.jvm.java.util.HashMap()
+        data = []
+        
+        idx = 0
+        for key in X:
+            keys[key] = idx
+            idx = idx + 1
+            data.append(X[key])
+
+        java_array = Utils.to_java_double_array(data)
+        java_vector_utils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils
+
+        X = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl. DelegatingNamedVector(java_vector_utils.of(java_array), keys)
+ 
+        res = self.proxy.predict(X)
+        # This if handles 'future' response.
+        if not isinstance(res, Number):
+            res = res.get()
+        return res   
+
+class XGBoostDistributedModel(DistributedModel):
+    def __init__(self, ignite, mdl, instances=1, max_per_node=1):
+        reader = [gateway.jvm.org.apache.ignite.ml.inference.reader.FileSystemModelReader(mdl)]
+        parser = gateway.jvm.org.apache.ignite.ml.xgboost.parser.XGModelParser()
+        
+        mdl_wrapper = XGBoostModel()
+        super(XGBoostDistributedModel, self).__init__(ignite, reader, parser, mdl_wrapper, instances, max_per_node)
+
+class IgniteDistributedModel(DistributedModel):
+    """Ignite distributed model.
+
+    Parameters
+    ----------
+    ignite : Ignite instance.
+    mdl : Model.
+    instances : Number of instances.
+    max_per_node : Max number of instance per node.
+    """
+    def __init__(self, ignite, mdl, instances=1, max_per_node=1):
+        """Constructs a new instance of Ignite distributed model.
+
+        Parameters
+        ----------
+        ignite : Ignite instance.
+        reader : Model reader.
+        parser : Model parser.
+        instances : Number of worker instances.
+        max_per_node : Max number of worker instances per ignite node.
+        """
+        if isinstance(mdl.proxy, list):
+            reader = [gateway.jvm.org.apache.ignite.ml.inference.reader.InMemoryModelReader(p) for p in mdl.proxy]
+        else:
+            reader = [gateway.jvm.org.apache.ignite.ml.inference.reader.InMemoryModelReader(mdl.proxy)]
+
+        parser = gateway.jvm.org.apache.ignite.ml.inference.parser.IgniteModelParser()
+
+        super(IgniteDistributedModel, self).__init__(ignite, reader, parser, mdl, instances, max_per_node)

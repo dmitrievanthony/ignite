@@ -59,7 +59,7 @@ public class XGBoostModelParserExample {
             if (mdlRsrc == null)
                 throw new IllegalArgumentException("File not found [resource_path=" + TEST_MODEL_RES + "]");
 
-            ModelReader reader = new FileSystemModelReader(mdlRsrc.getPath());
+            ModelReader reader = new FileSystemModelReader(mdlRsrc.getAbsolutePath());
 
             AsyncModelBuilder mdlBuilder = new IgniteDistributedModelBuilder(ignite, 4, 4);
 

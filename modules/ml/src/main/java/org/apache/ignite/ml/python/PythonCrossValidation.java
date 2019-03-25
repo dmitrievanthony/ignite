@@ -33,7 +33,7 @@ public class PythonCrossValidation {
         IgniteCache<Integer, double[]> cache, int cv) {
         CrossValidation<M, Double, Integer, double[]> crossValidation = new CrossValidation<>();
 
-        double[] res = crossValidation.score(
+        return crossValidation.score(
             trainer,
             metric,
             Ignition.ignite(),
@@ -42,9 +42,5 @@ public class PythonCrossValidation {
             (Integer k, double[] v) -> v[v.length - 1],
             cv
         );
-
-        System.out.println("Res : " + Arrays.toString(res));
-
-        return res;
     }
 }

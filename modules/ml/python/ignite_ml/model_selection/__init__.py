@@ -48,7 +48,10 @@ def cross_val_score(trainer, cache, cv=5, scoring='accuracy'):
     if not isinstance(cache, Cache):
         raise Exception("Unexpected type of cache (%s)." % type(cache))
 
-    metric = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.classification.Accuracy()
+    if scoring == 'accuracy':
+        metric = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.classification.Accuracy()
+    else:
+        raise Exception("Unsupported type of scoring metric: %s" % scoring)
 
     res = gateway.jvm.org.apache.ignite.ml.python.PythonCrossValidation.score(trainer.proxy.getDelegate(), metric, cache.proxy, cv)
 

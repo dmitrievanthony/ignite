@@ -111,4 +111,8 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
 
         return delegate.fit(Ignition.ignite(), cache, filter, featureExtractor, lbExtractor);
     }
+
+    public SingleLabelDatasetTrainer<M> getDelegate() {
+        return delegate;
+    }
 }

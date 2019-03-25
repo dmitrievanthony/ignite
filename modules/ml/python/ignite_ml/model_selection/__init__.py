@@ -15,10 +15,18 @@
 
 from ..core import Cache
 from ..common import gateway
+from ..common import Utils
 
 def train_test_split(cache, test_size=0.25, train_size=0.75, random_state=None):
-	"""Splits given cache on two parts: test and train with given sizes.
-	"""
+    """Splits given cache on two parts: test and train with given sizes.
+
+    Parameters
+    ----------
+    cache : Ignite cache.
+    test_size : Test size.
+    train_size : Train size.
+    random_state : Random state.
+    """
     if not isinstance(cache, Cache):
         raise Exception("Unexpected type of cache (%s)." % type(cache))    
 
@@ -26,3 +34,22 @@ def train_test_split(cache, test_size=0.25, train_size=0.75, random_state=None):
     train_filter = split.getTrainFilter()
     test_filter = split.getTestFilter()
     return (cache.filter(train_filter), cache.filter(test_filter))
+
+def cross_val_score(trainer, cache, cv=5, scoring='accuracy'):
+    """Makes cross validation for given trainer, cache and scoring.
+
+    Parameters
+    ----------
+    trainer : Trainer.
+    cache : Cache.
+    cv : Number of folds.
+    scoring : Metric to be scored.
+    """
+    if not isinstance(cache, Cache):
+        raise Exception("Unexpected type of cache (%s)." % type(cache))
+
+    metric = gateway.jvm.org.apache.ignite.ml.selection.scoring.metric.classification.Accuracy()
+
+    res = gateway.jvm.org.apache.ignite.ml.python.PythonCrossValidation.score(trainer.proxy.getDelegate(), metric, cache.proxy, cv)
+
+    return Utils.from_java_double_array(res)

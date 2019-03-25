@@ -27,8 +27,20 @@ import org.apache.ignite.ml.selection.cv.CrossValidation;
 import org.apache.ignite.ml.selection.scoring.metric.Metric;
 import org.apache.ignite.ml.trainers.SingleLabelDatasetTrainer;
 
+/**
+ * Python wrapper for {@link CrossValidation}.
+ */
 public class PythonCrossValidation {
-
+    /**
+     * Performs k-fold cross validation.
+     *
+     * @param trainer Trainer.
+     * @param metric Metric.
+     * @param cache Ignite cache.
+     * @param cv Number of folds.
+     * @param <M> Type of a model.
+     * @return Cross validation scores.
+     */
     public static <M extends IgniteModel<Vector, Double>> double[] score(SingleLabelDatasetTrainer<M> trainer, Metric<Double> metric,
         IgniteCache<Integer, double[]> cache, int cv) {
         CrossValidation<M, Double, Integer, double[]> crossValidation = new CrossValidation<>();

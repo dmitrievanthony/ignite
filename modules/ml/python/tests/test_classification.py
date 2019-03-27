@@ -59,7 +59,7 @@ class TestClassification(unittest.TestCase):
 
     def test_random_forest_classification(self):
         train_x, test_x, train_y, test_y = self.__generate_dataset()
-        trainer = RandomForestClassificationTrainer()
+        trainer = RandomForestClassificationTrainer(20)
         model = trainer.fit(train_x, train_y)
         self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.5)
 

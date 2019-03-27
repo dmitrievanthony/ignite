@@ -22,7 +22,7 @@ from ignite_ml.regression import LinearRegressionTrainer
 from ignite_ml.regression import DecisionTreeRegressionTrainer
 from ignite_ml.regression import KNNRegressionTrainer
 from ignite_ml.regression import RandomForestRegressionTrainer
-from ignite_ml.common import MLPArchitecture
+from ignite_ml.regression import MLPArchitecture
 from ignite_ml.regression import MLPRegressionTrainer
 
 class TestRegressions(unittest.TestCase):
@@ -47,7 +47,7 @@ class TestRegressions(unittest.TestCase):
 
     def test_random_forest_regression(self):
         x_train, x_test, y_train, y_test = self.__generate_dataset()
-        trainer = RandomForestRegressionTrainer(trees=10, max_depth=100)
+        trainer = RandomForestRegressionTrainer(20, trees=10, max_depth=100)
         model = trainer.fit(x_train, y_train)
         self.assertTrue(r2_score(y_test, model.predict(x_test)) > 0.5)
 

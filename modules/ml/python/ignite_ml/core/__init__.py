@@ -27,20 +27,20 @@ import numpy as np
 class Ignite:
  
     def __init__(self, cfg=None):
-        """Constructs a new instance of Ignite.
+        """
+        Constructs a new instance of Ignite that is required to work with Cache, IGFS storage and
+        distributed inference.
 
-        Parameters
-        ----------
-        cfg : Configuration.
+        :param cfg: Path to Apache Ignite configuration file.
         """
         self.cfg = cfg
    
     def get_cache(self, name):
-        """Returns existing cache by name.
+        """
+        Returns existing Apache Ignite Cache by name. This module is built with assumption that Ignite
+        Cache contains integer keys and double[] values.
 
-        Parameters
-        ----------
-        name : Cache name.
+        :param name: Name of the Apache Ignite cache.
         """
         if self.ignite is None:
             raise Exception("Use Ignite() inside with.. as.. command.")
@@ -48,13 +48,13 @@ class Ignite:
         return Cache(java_cache)
 
     def create_cache(self, name, excl_neighbors=False, parts=10):
-        """Creates a new cache.
+        """
+        Creates a new Apache Ignite Cache using specified name and configuration. This module is built with
+        assumption that Ignite Cache contains integer keys and double[] values.
 
-        Parameters
-        ----------
-        name : Cache name.
-        excl_neighbors : Exclude neighbours.
-        parts : Number of partitions.
+        :param name: Name of the Apache Ignite cache,
+        :param excl_neighbors: (optional, False by default) exclude neighbours,
+        :param parts: (optional, 10 by default) number of partitions.
         """
         if self.ignite is None:
             raise Exception("Use Ignite() inside with.. as.. command.")
@@ -77,16 +77,17 @@ class Ignite:
             self.ignite.close()
 
 class Cache(Proxy):
-    """Ignite cache proxy.
+    """Internal constructor that creates a wrapper of Apache Ignite cache. User is expected to use Ignite
+    object to create cache instead of this constructor.
     """
     def __init__(self, proxy, cache_filter=None, preprocessor=None):
-        """Constructs a new instance of Ignite cache proxy.
+        """
+        Constructs a wrapper of Apache Ignite cache. It's internal method, user is expected to use Ignite
+        methods to create or get cache.
 
-        Parameters
-        ----------
-        proxy : Cache (proxy object).
-        cache_filter : Cache filter.
-        preprocessor : Preprocessor.
+        :param proxy: Py4J proxy that represents Apache Ignite Cache,
+        :param cache_filter: Py4J proxy that represents filter,
+        :param preprocessor: Py4J proxy that represents preprocessor.
         """
         Proxy.__init__(self, proxy)
 
@@ -112,27 +113,30 @@ class Cache(Proxy):
         raise Exception("Not implemented!")
 
     def get(self, key):
-        """Returns value (float array) by key.
+        """
+        Returns value (float array) by the specified key.
 
-        Parameters
-        ----------
-        key : Key.
+        :param key: Key to be taken from cache.
         """
         java_array = self.proxy.get(key)
         return Utils.from_java_double_array(java_array)
 
     def put(self, key, value):
-        """Puts value (float array) by key.
+        """
+        Puts value (float array) by the specified key.
 
-        Parameters
-        ----------
-        key : Key.
-        value : Value.
+        :param key: Key to be put into cache,
+        :param value: value to be taken from cache.
         """
         value = Utils.to_java_double_array(value)
         self.proxy.put(key, value)
 
     def head(self, n=5):
+        """
+        Returns top N elements represented as a pandas dataset.
+
+        :param n: Number of rows to be returned.
+        """
         scan_query = gateway.jvm.org.apache.ignite.cache.query.ScanQuery()
         
         if self.cache_filter is not None:
@@ -162,9 +166,19 @@ class Cache(Proxy):
         return pd.DataFrame(data)
 
     def transform(self, preprocessor):
+        """
+        Transform this cache using specfied preprocessor.
+
+        :param preprocessor: Preprocessor to be used to transform cache.
+        """
         return Cache(self.proxy, self.cache_filter, preprocessor)
 
     def filter(self, cache_filter):
+        """
+        Filters this cache using specified filter.
+
+        :param filter: Filter to be used to filter cache.
+        """
         return Cache(self.proxy, cache_filter, self.preprocessor)
 
     def __len__(self):

@@ -19,6 +19,8 @@ package org.apache.ignite.ml.python;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.ignite.IgniteCache;
+import org.apache.ignite.Ignition;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.preprocessing.encoding.EncoderTrainer;
@@ -28,14 +30,14 @@ import org.apache.ignite.ml.preprocessing.encoding.EncoderTrainer;
  */
 public class PythonEncoderPreprocessingTrainer {
     /** Delegate. */
-    private final EncoderTrainer<Integer, Object[]> delegate;
+    private final EncoderTrainer<Integer, double[]> delegate;
 
     /**
      * Constructs a new instance of Python encoder preprocessing trainer.
      *
      * @param delegate Delegate.
      */
-    public PythonEncoderPreprocessingTrainer(EncoderTrainer<Integer, Object[]> delegate) {
+    public PythonEncoderPreprocessingTrainer(EncoderTrainer<Integer, double[]> delegate) {
         this.delegate = delegate;
     }
 
@@ -45,15 +47,30 @@ public class PythonEncoderPreprocessingTrainer {
      * @param x X (features).
      * @return Preprocessor.
      */
-    public IgniteBiFunction<Integer, Object[], Vector> fit(double[][] x) {
-        Map<Integer, Object[]> data = new HashMap<>();
-        for (int i = 0; i < x.length; i++) {
-            Object[] arr = new Object[x[i].length];
-            for (int j = 0; j < x[i].length; j++)
-                arr[j] = x[i][j];
-            data.put(i, arr);
-        }
+    public IgniteBiFunction<Integer, double[], Vector> fit(double[][] x) {
+        Map<Integer, double[]> data = new HashMap<>();
+        for (int i = 0; i < x.length; i++)
+            data.put(i, x[i]);
 
-        return delegate.fit(data, 1, (k, v) -> v);
+        return delegate.fit(data, 1, (k, v) -> toObject(v));
+    }
+
+    /**
+     * Trains model on local data.
+     *
+     * @param cache Ignite cache.
+     * @return Model.
+     */
+    public IgniteBiFunction<Integer, double[], Vector> fitOnCache(IgniteCache<Integer, double[]> cache) {
+        return delegate.fit(Ignition.ignite(), cache, (Integer k, double[] v) -> toObject(v));
+    }
+
+    private static Object[] toObject(double[] arr) {
+        Object[] res = new Double[arr.length];
+
+        for (int i = 0; i < arr.length; i++)
+            res[i] = arr[i];
+
+        return res;
     }
 }

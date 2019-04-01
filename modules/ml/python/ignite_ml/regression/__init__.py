@@ -17,8 +17,8 @@
 """
 
 import numpy as np
-from numbers import Number
 
+from ..common import Model
 from ..common import SupervisedTrainer
 from ..common import Proxy
 from ..common import Utils
@@ -27,74 +27,6 @@ from ..common import LearningEnvironmentBuilder
 from ..core import Cache
 
 from ..common import gateway
-
-class RegressionModel(Proxy):
-    """Regression model.
-    """
-    def __init__(self, proxy, accepts_matrix):
-        """Constructs a new instance of regression model.
-
-        Parameters
-        ----------
-        proxy : Proxy object that represents Java model.
-        accept_matrix : Flag that identifies if model accepts matrix or vector.
-        """
-        self.accepts_matrix = accepts_matrix
-        Proxy.__init__(self, proxy)
-
-    def predict(self, X):
-        """Predicts a result.
-
-        Parameters
-        ----------
-
-        X : Features.
-        """
-        X = np.array(X)
-
-        if X.ndim == 1:
-            X = X.reshape(X.shape[0], 1)
-        elif X.ndim > 2:
-            raise Exception("X has unexpected dimension [dim=%d]" % X.ndim)
-
-        # Check if model accepts multiple objects for inference.
-        if self.accepts_matrix:
-            java_array = Utils.to_java_double_array(X)
-            java_matrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.impl.DenseMatrix(java_array)
-            # Check if model is a single model or model-per-label.
-            if isinstance(self.proxy, list):
-                predictions = np.array([mdl.predict(java_matrix) for mdl in self.proxy])
-            else:
-                res = self.proxy.predict(java_matrix)
-                rows = res.rowSize()
-                cols = res.columnSize()
-                predictions = np.zeros((rows, cols))
-                for i in range(rows):
-                    for j in range(cols):
-                        predictions[i, j] = res.get(i, j)
-        else:
-            predictions = []
-            for i in range(X.shape[0]):
-                java_array = Utils.to_java_double_array(X[i])
-                java_vector_utils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils
-                # Check if model is a single model or model-per-label.
-                if isinstance(self.proxy, list):
-                    def parse_response(m):
-                        res = m.predict(java_vector_utils.of(java_array))
-                        # This if handles 'future' response.
-                        if not isinstance(res, Number):
-                            res = res.get()
-                        return res
-                    prediction = [parse_response(mdl) for mdl in self.proxy]
-                else:
-                    prediction = [self.proxy.predict(java_vector_utils.of(java_array))]
-                predictions.append(prediction)
-            predictions = np.array(predictions)
-
-        if predictions.ndim == 2 and predictions.shape[1] == 1:
-            predictions = np.hstack(predictions)
-
-        return predictions
 
 class RegressionTrainer(SupervisedTrainer, Proxy):
     """Regression.
@@ -132,7 +64,7 @@ class RegressionTrainer(SupervisedTrainer, Proxy):
         if self.multiple_labels:        
             y_java = Utils.to_java_double_array(y)
             java_model = self.proxy.fit(X_java, y_java, None)
-            return RegressionModel(java_model, self.accepts_matrix)
+            return Model(java_model, self.accepts_matrix)
         else:
             java_models = []
             # Here we need to prepare a model for each y column.
@@ -140,14 +72,14 @@ class RegressionTrainer(SupervisedTrainer, Proxy):
                 y_java = Utils.to_java_double_array(y[:,i])
                 java_model = self.proxy.fit(X_java, y_java, None)
                 java_models.append(java_model)
-            return RegressionModel(java_models, self.accepts_matrix)
+            return Model(java_models, self.accepts_matrix)
 
     def fit_on_cache(self, cache):
         if not isinstance(cache, Cache):
             raise Exception("Unexpected type of cache (%s)." % type(cache))
 
         java_model = self.proxy.fitOnCache(cache.proxy, cache.cache_filter, Proxy.proxy_or_none(cache.preprocessor))
-        return RegressionModel(java_model, self.accepts_matrix)
+        return Model(java_model, self.accepts_matrix)
 
 
 class DecisionTreeRegressionTrainer(RegressionTrainer):

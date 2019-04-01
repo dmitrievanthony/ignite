@@ -19,6 +19,7 @@
 import numpy as np
 from numbers import Number
 
+from ..common import Model
 from ..common import UnsupervisedTrainer
 from ..common import Proxy
 from ..common import Utils
@@ -26,48 +27,6 @@ from ..common import LearningEnvironmentBuilder
 
 from ..core import Cache
 from ..common import gateway
-
-class ClusteringModel(Proxy):
-    """Clustering model.
-    """
-    def __init__(self, proxy):
-        """Constructs a new instance of clustering model.
-
-        Parameters
-        ----------
-        proxy : Proxy object that represents Java model.
-        """
-        Proxy.__init__(self, proxy)
-
-    def predict(self, X):
-        """Predicts a result.
-
-        Parameters
-        ----------
-        X : Features.
-        """
-        X = np.array(X)
-
-        if X.ndim == 1:
-            X = X.reshape(X.shape[0], 1)           
-        elif X.ndim > 2:
-            raise Exception("X has unexpected dimension [dim=%d]" % X.ndim)
-
-        predictions = np.array([self.__predict(x) for x in X])
-        if predictions.ndim == 2 and predictions.shape[1] == 1:
-            predictions = np.hstack(predictions)
-
-        return predictions
-
-    def __predict(self, X):
-        java_vector_utils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils
-        java_array = Utils.to_java_double_array(X)
-
-        res = self.proxy.predict(java_vector_utils.of(java_array))
-        # This if handles 'future' response.
-        if not isinstance(res, Number):
-            res = res.get()
-        return res
 
 class ClusteringTrainer(UnsupervisedTrainer, Proxy):
     """Clustering trainer.
@@ -86,14 +45,14 @@ class ClusteringTrainer(UnsupervisedTrainer, Proxy):
 
         java_model = self.proxy.fit(X_java, y_java, None)
 
-        return ClusteringModel(java_model)
+        return Model(java_model, False)
     
     def fit_on_cache(self, cache):
         if not isinstance(cache, Cache):
             raise Exception("Unexpected type of cache (%s)." % type(cache))
 
         java_model = self.proxy.fitOnCache(cache.proxy, cache.cache_filter, Proxy.proxy_or_none(cache.preprocessor))
-        return ClusteringModel(java_model)
+        return Model(java_model, False)
 
 class GMMClusteringTrainer(ClusteringTrainer):
     """GMM clustring trainer.

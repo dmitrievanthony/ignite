@@ -101,6 +101,74 @@ class LearningEnvironmentBuilder(Proxy):
         java_proxy = gateway.jvm.org.apache.ignite.ml.environment.LearningEnvironmentBuilder.defaultBuilder()
         Proxy.__init__(self, java_proxy)
 
+class Model(Proxy):
+    """Model.
+    """
+    def __init__(self, proxy, accepts_matrix):
+        """Constructs a new instance of regression model.
+
+        Parameters
+        ----------
+        proxy : Proxy object that represents Java model.
+        accept_matrix : Flag that identifies if model accepts matrix or vector.
+        """
+        self.accepts_matrix = accepts_matrix
+        Proxy.__init__(self, proxy)
+
+    def predict(self, X):
+        """Predicts a result.
+
+        Parameters
+        ----------
+
+        X : Features.
+        """
+        X = np.array(X)
+
+        if X.ndim == 1:
+            X = X.reshape(X.shape[0], 1)
+        elif X.ndim > 2:
+            raise Exception("X has unexpected dimension [dim=%d]" % X.ndim)
+
+        # Check if model accepts multiple objects for inference.
+        if self.accepts_matrix:
+            java_array = Utils.to_java_double_array(X)
+            java_matrix = gateway.jvm.org.apache.ignite.ml.math.primitives.matrix.impl.DenseMatrix(java_array)
+            # Check if model is a single model or model-per-label.
+            if isinstance(self.proxy, list):
+                predictions = np.array([mdl.predict(java_matrix) for mdl in self.proxy])
+            else:
+                res = self.proxy.predict(java_matrix)
+                rows = res.rowSize()
+                cols = res.columnSize()
+                predictions = np.zeros((rows, cols))
+                for i in range(rows):
+                    for j in range(cols):
+                        predictions[i, j] = res.get(i, j)
+        else:
+            predictions = []
+            for i in range(X.shape[0]):
+                java_array = Utils.to_java_double_array(X[i])
+                java_vector_utils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils
+                # Check if model is a single model or model-per-label.
+                if isinstance(self.proxy, list):
+                    def parse_response(m):
+                        res = m.predict(java_vector_utils.of(java_array))
+                        # This if handles 'future' response.
+                        if hasattr(res, 'get') and callable(res.get):
+                            res = res.get()
+                        return res
+                    prediction = [parse_response(mdl) for mdl in self.proxy]
+                else:
+                    prediction = [self.proxy.predict(java_vector_utils.of(java_array))]
+                predictions.append(prediction)
+            predictions = np.array(predictions)
+
+        if predictions.ndim == 2 and predictions.shape[1] == 1:
+            predictions = np.hstack(predictions)
+
+        return predictions
+
 class SupervisedTrainer:
     """Supervised trainer.
     """

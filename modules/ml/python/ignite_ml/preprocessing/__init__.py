@@ -113,36 +113,6 @@ class BinarizationTrainer(PreprocessingTrainer):
 
         PreprocessingTrainer.__init__(self, gateway.jvm.org.apache.ignite.ml.python.PythonPreprocessingTrainer(proxy))
 
-class EncoderPreprocessingModel(PreprocessingModel):
-    """Encoder preprocessing model.
-    """
-    def __init__(self, proxy):
-        """Constructs a new instance of encoder preprocessing model.
-        """
-        PreprocessingModel.__init__(self, proxy)
-
-    def transform(self, X):
-        X = np.array(X)
-
-        if X.ndim == 1:
-            X = X.reshape(X.shape[0], 1)
-        elif X.ndim > 2:
-            raise Exception("X has unexpected dimension [dim=%d]" % X.ndim)
-
-        transformations = np.array([self.__transform(x) for x in X])
-        if transformations.ndim == 2 and transformations.shape[1] == 1:
-            transformations = np.hstack(transformations)
-
-        return transformations
-
-    def __transform(self, X):
-        java_array = gateway.new_array(gateway.jvm.java.lang.Object, X.shape[0])
-        for i in range(X.shape[0]):
-            java_array[i] = gateway.jvm.java.lang.Double(float(X[i]))
-
-        res = self.proxy.apply(0, java_array)
-        return [res.get(i) for i in range(res.size())]
-
 class EncoderTrainer(PreprocessingTrainer):
     """Encoder trainer.
     """
@@ -181,11 +151,22 @@ class EncoderTrainer(PreprocessingTrainer):
 
         self.proxy = gateway.jvm.org.apache.ignite.ml.python.PythonEncoderPreprocessingTrainer(proxy)
 
-    def fit(self, X, preprocessing=None):
+    def fit(self, X):
+        if isinstance(X, Cache):
+            return self.fit_on_cache(X)
+
         X_java = Utils.to_java_double_array(X)
         java_model = self.proxy.fit(X_java)
 
-        return EncoderPreprocessingModel(java_model)
+        return PreprocessingModel(java_model)
+
+    def fit_on_cache(self, cache):
+        if cache.preprocessor:
+            raise Exception("Encoder preprocessing trainer doesn't support upstream preprocessors")
+
+        java_model = self.proxy.fitOnCache(cache.proxy)
+
+        return PreprocessingModel(java_model)
 
 class ImputerTrainer(PreprocessingTrainer):
     """Imputer trainer.

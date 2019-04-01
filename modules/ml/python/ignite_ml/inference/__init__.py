@@ -18,32 +18,12 @@
 
 from ..common import Proxy
 from ..common import Utils
-from ..classification import ClassificationModel
+from ..common import Model
 from ..common import gateway
 from copy import copy
-from numbers import Number
 
-class IgniteModel:
-    """Constructs a new instance of Ignite model (local).
-
-    Parameters
-    ----------
-    mdl : Model.
-    """
-    def __init__(self, mdl):
-        self.mdl = mdl
-
-    def predict(self, X):
-        """Predict.
-
-        Parameters
-        ----------
-        X : Features.
-        """
-        return self.mdl.predict(X)
-
-class DistributedModel:
-    def __init__(self, ignite, reader, parser, mdl, instances=1, max_per_node=1):
+class DistributedModel(Model):
+    def __init__(self, ignite, reader, parser, instances=1, max_per_node=1):
         """Constructs a new instance of distributed model.
 
         Parameters
@@ -55,28 +35,13 @@ class DistributedModel:
         instances : Number of worker instances.
         max_per_node : Max number of worker per node.
         """
+        super(DistributedModel, self).__init__(None, False)
+
         self.ignite = ignite
         self.reader = reader
         self.parser = parser
-        self.mdl = mdl
         self.instances = instances
         self.max_per_node = max_per_node
-
-    def predict(self, X):
-        """Predict.
-
-        Parameters
-        ----------
-        X : Features.
-        """
-        if self.proxy is None:
-            raise Exception("Use IgniteDistributedModel() inside with.. as.. command.")
-        mdl = copy(self.mdl)
-        if isinstance(mdl.proxy, list):
-            mdl.proxy = self.proxy
-        else:
-            mdl.proxy = self.proxy[0]
-        return mdl.predict(X)
 
     def __enter__(self):
         self.proxy = [gateway.jvm.org.apache.ignite.ml.inference.builder.IgniteDistributedModelBuilder(
@@ -93,14 +58,17 @@ class DistributedModel:
             self.proxy = None
         return False
 
-class XGBoostModel(ClassificationModel):
-    def __init__(self):
-        super(XGBoostModel, self).__init__(None)
+class XGBoostDistributedModel(DistributedModel):
+    def __init__(self, ignite, mdl, instances=1, max_per_node=1):
+        reader = [gateway.jvm.org.apache.ignite.ml.inference.reader.FileSystemModelReader(mdl)]
+        parser = gateway.jvm.org.apache.ignite.ml.xgboost.parser.XGModelParser()
+        
+        super(XGBoostDistributedModel, self).__init__(ignite, reader, parser, instances, max_per_node)
 
     def predict(self, X):
         keys = gateway.jvm.java.util.HashMap()
         data = []
-        
+
         idx = 0
         for key in X:
             keys[key] = idx
@@ -111,20 +79,12 @@ class XGBoostModel(ClassificationModel):
         java_vector_utils = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.VectorUtils
 
         X = gateway.jvm.org.apache.ignite.ml.math.primitives.vector.impl.DelegatingNamedVector(java_vector_utils.of(java_array), keys)
- 
-        res = self.proxy.predict(X)
-        # This if handles 'future' response.
-        if not isinstance(res, Number):
-            res = res.get()
-        return res   
 
-class XGBoostDistributedModel(DistributedModel):
-    def __init__(self, ignite, mdl, instances=1, max_per_node=1):
-        reader = [gateway.jvm.org.apache.ignite.ml.inference.reader.FileSystemModelReader(mdl)]
-        parser = gateway.jvm.org.apache.ignite.ml.xgboost.parser.XGModelParser()
-        
-        mdl_wrapper = XGBoostModel()
-        super(XGBoostDistributedModel, self).__init__(ignite, reader, parser, mdl_wrapper, instances, max_per_node)
+        res = self.proxy[0].predict(X)
+        # This if handles 'future' response.
+        if hasattr(res, 'get') and callable(res.get):
+            res = res.get()
+        return res
 
 class IgniteDistributedModel(DistributedModel):
     """Ignite distributed model.
@@ -154,4 +114,4 @@ class IgniteDistributedModel(DistributedModel):
 
         parser = gateway.jvm.org.apache.ignite.ml.inference.parser.IgniteModelParser()
 
-        super(IgniteDistributedModel, self).__init__(ignite, reader, parser, mdl, instances, max_per_node)
+        super(IgniteDistributedModel, self).__init__(ignite, reader, parser, instances, max_per_node)

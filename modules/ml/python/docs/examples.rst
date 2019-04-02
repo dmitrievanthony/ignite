@@ -471,7 +471,7 @@ Let’s imagine that we have a trainer, a training set and we want to make cross
 Inference
 ---------
 
-Inference...
+Ignite ML provides an ability to distribute inference workload within a cluster. It means that inference performed not on a single node, but on several nodes within a cluster and so that linearly scalable.
 
 Distributed Inference
 ^^^^^^^^^^^^^^^^^^^^^
@@ -483,6 +483,8 @@ Distributed Inference
 
 Model storage
 ^^^^^^^^^^^^^
+
+Ignite ML provides an ability to save and read models. Models can be saved usign local file system and using IGFS (distributed file system supplied as part of Apache Ignite).
 
 Using local file system:
 

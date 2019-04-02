@@ -389,7 +389,7 @@ One-Hot-Encoding Preprocessing
 
 One-hot encoding maps a categorical feature, represented as a label index (Double or String value), to a binary vector with at most a single one-value indicating the presence of a specific feature value from among the set of all feature values.
 
-This preprocessor can transform multiple columns in which indices are handled during the training process. These indexes could be defined via a .withEncodedFeature(featureIndex) call.
+This preprocessor can transform multiple columns in which indices are handled during the training process. These indexes could be defined via *encoded_features* parameter.
 
 NOTE:
 

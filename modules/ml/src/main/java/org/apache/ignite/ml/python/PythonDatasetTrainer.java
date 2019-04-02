@@ -24,6 +24,10 @@ import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.IgniteModel;
+import org.apache.ignite.ml.dataset.feature.extractor.Vectorizer;
+import org.apache.ignite.ml.dataset.feature.extractor.impl.ArraysVectorizer;
+import org.apache.ignite.ml.dataset.feature.extractor.impl.FeatureLabelExtractorWrapper;
+import org.apache.ignite.ml.dataset.feature.extractor.impl.LabeledDummyVectorizer;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.math.primitives.vector.VectorUtils;
@@ -62,10 +66,20 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
         for (int i = 0; i < x.length; i++)
             data.put(i, new LabeledVector<>(VectorUtils.of(x[i]), y[i]));
 
-        if (preprocessor != null)
-            return delegate.fit(data, 1, (k, v) -> preprocessor.apply(k, v.features().asArray()), (k, v) -> v.label());
 
-        return delegate.fit(data, 1, (k, v) -> v.features(), (k, v) -> v.label());
+        if (preprocessor != null)
+            return delegate.fit(
+                data,
+                1,
+                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
+                    preprocessor.apply(k, v.features().asArray()).labeled(v.label()))
+            );
+
+        return delegate.fit(
+            data,
+            1,
+            new LabeledDummyVectorizer<>()
+        );
     }
 
     /**
@@ -81,15 +95,14 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
             return fitOnCache(
                 cache,
                 filter,
-                (k, v) -> preprocessor.apply(k, Arrays.copyOf(v, v.length - 1)),
-                (k, v) -> v[v.length - 1]
+                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
+                    preprocessor.apply(k, Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1]))
             );
 
         return fitOnCache(
             cache,
             filter,
-            (k, v) -> VectorUtils.of(Arrays.copyOf(v,v.length - 1)),
-            (k, v) -> v[v.length - 1]
+            new ArraysVectorizer<Integer>().labeled(Vectorizer.LabelCoordinate.LAST)
         );
     }
 
@@ -98,18 +111,15 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
      *
      * @param cache Ignite cache.
      * @param filter Filter.
-     * @param featureExtractor Feature extractor.
-     * @param lbExtractor Label extractor.
+     * @param vectorizer Vectorizer.
      * @return Model.
      */
     private M fitOnCache(IgniteCache<Integer, double[]> cache,
-        IgniteBiPredicate<Integer, double[]> filter,
-        IgniteBiFunction<Integer, double[], Vector> featureExtractor,
-        IgniteBiFunction<Integer, double[], Double> lbExtractor) {
+        IgniteBiPredicate<Integer, double[]> filter, Vectorizer<Integer, double[], Integer, Double> vectorizer) {
         if (filter == null)
-            return delegate.fit(Ignition.ignite(), cache, featureExtractor, lbExtractor);
+            return delegate.fit(Ignition.ignite(), cache, vectorizer);
 
-        return delegate.fit(Ignition.ignite(), cache, filter, featureExtractor, lbExtractor);
+        return delegate.fit(Ignition.ignite(), cache, filter, vectorizer);
     }
 
     public SingleLabelDatasetTrainer<M> getDelegate() {

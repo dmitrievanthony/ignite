@@ -23,6 +23,10 @@ import java.util.Map;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.lang.IgniteBiPredicate;
+import org.apache.ignite.ml.dataset.feature.extractor.Vectorizer;
+import org.apache.ignite.ml.dataset.feature.extractor.impl.ArraysVectorizer;
+import org.apache.ignite.ml.dataset.feature.extractor.impl.FeatureLabelExtractorWrapper;
+import org.apache.ignite.ml.dataset.feature.extractor.impl.LabeledDummyVectorizer;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.functions.IgniteDifferentiableVectorToDoubleFunction;
 import org.apache.ignite.ml.math.functions.IgniteFunction;
@@ -65,8 +69,8 @@ public class PythonMLPDatasetTrainer {
             LossFunctions.MSE,
             new UpdatesStrategy<>(
                 new SimpleGDUpdateCalculator(learningRate),
-                SimpleGDParameterUpdate::sumLocal,
-                SimpleGDParameterUpdate::avg
+                SimpleGDParameterUpdate.SUM_LOCAL,
+                SimpleGDParameterUpdate.AVG
             ),
             maxIterations,
             batchSize,
@@ -94,15 +98,14 @@ public class PythonMLPDatasetTrainer {
             return delegate.fit(
                 data,
                 1,
-                (k, v) -> preprocessor.apply(k, v.features().asArray()),
-                (k, v) -> v.label()
+                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
+                    preprocessor.apply(k, v.features().asArray()).labeled(v.label()))
             );
 
         return delegate.fit(
             data,
             1,
-            (k, v) -> v.features(),
-            (k, v) -> v.label()
+            new LabeledDummyVectorizer<>()
         );
     }
 
@@ -116,7 +119,9 @@ public class PythonMLPDatasetTrainer {
     public MultilayerPerceptron fitOnCache(IgniteCache<Integer, double[]> cache,
         IgniteBiPredicate<Integer, double[]> filter, IgniteBiFunction<Integer, double[], Vector> preprocessor) {
         if (preprocessor != null)
-            return fitOnCache(cache, filter, new FeatureLabelExtractor<Integer, double[], double[]>() {
+
+            return fitOnCache(cache, filter, new FeatureLabelExtractorWrapper<>(
+                new FeatureLabelExtractor<Integer, double[], double[]>() {
 
                 @Override public LabeledVector<double[]> extract(Integer k, double[] v) {
                     return new LabeledVector<>(
@@ -124,17 +129,15 @@ public class PythonMLPDatasetTrainer {
                         new double[] {v[v.length - 1]}
                     );
                 }
-            });
+            }));
 
-        return fitOnCache(cache, filter, new FeatureLabelExtractor<Integer, double[], double[]>() {
-
-            @Override public LabeledVector<double[]> extract(Integer k, double[] v) {
-                return new LabeledVector<>(
-                    VectorUtils.of(Arrays.copyOf(v, v.length - 1)),
-                    new double[] {v[v.length - 1]}
-                );
-            }
-        });
+        return fitOnCache(
+            cache,
+            filter,
+            new ArraysVectorizer<Integer>()
+                .labeled(Vectorizer.LabelCoordinate.LAST)
+                .map(v -> v.features().labeled(new double[] {v.label()}))
+        );
     }
 
     /**
@@ -142,21 +145,20 @@ public class PythonMLPDatasetTrainer {
      *
      * @param cache Ignite cache.
      * @param filter Filter.
-     * @param featureLbExtractor Feature label extractor.
+     * @param vectorizer Vectorizer.
      * @return Model.
      */
     private MultilayerPerceptron fitOnCache(IgniteCache<Integer, double[]> cache,
         IgniteBiPredicate<Integer, double[]> filter,
-        FeatureLabelExtractor<Integer, double[], double[]> featureLbExtractor) {
+        Vectorizer<Integer, double[], Integer, double[]> vectorizer) {
         if (filter != null)
             return delegate.fit(
                 Ignition.ignite(),
                 cache,
                 filter,
-                featureLbExtractor::extractFeatures,
-                featureLbExtractor::extractLabel
+                vectorizer
             );
 
-        return delegate.fit(Ignition.ignite(), cache, featureLbExtractor);
+        return delegate.fit(Ignition.ignite(), cache, vectorizer);
     }
 }

@@ -218,7 +218,7 @@ def decode_label(x):
     else:
         return 1
 
-trainer = MLPRegressionTrainer(MLPArchitecture(neurons=20).with_layer(neurons=2, activator='sigmoid'))
+trainer = MLPRegressionTrainer(MLPArchitecture(input_size=20).with_layer(neurons=2, activator='sigmoid'))
 model = trainer.fit(x_train, [encode_label(x) for x in y_train])
 
 accuracy_score(y_test, [decode_label(x) for x in model.predict(x_test)])

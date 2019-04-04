@@ -140,7 +140,7 @@ from ggml.regression import MLPRegressionTrainer
 x, y = make_regression()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
 
-trainer = MLPRegressionTrainer(MLPArchitecture(neurons=100).with_layer(neurons=1, activator='linear'))
+trainer = MLPRegressionTrainer(MLPArchitecture(input_size=100).with_layer(neurons=1, activator='linear'))
 model = trainer.fit(x_train, y_train)
 
 r2_score(y_test, model.predict(x_test))
@@ -161,6 +161,6 @@ with Ignite("example-ignite.xml") as ignite:
 
     train_cache, test_cache = train_test_split(cache)
 
-    trainer = MLPRegressionTrainer(MLPArchitecture(neurons=100).with_layer(neurons=1, activator='linear'))
+    trainer = MLPRegressionTrainer(MLPArchitecture(input_size=100).with_layer(neurons=1, activator='linear'))
     model = trainer.fit(train_cache)
     print(rmse_score(test_cache, model))

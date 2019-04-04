@@ -31,7 +31,7 @@ class TestClassification(unittest.TestCase):
         train_x, test_x, train_y, test_y = self.__generate_dataset()
         trainer = DecisionTreeClassificationTrainer()
         model = trainer.fit(train_x, train_y)
-        self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.5)
+        self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.8)
 
     def test_ann_classification(self):
         train_x, test_x, train_y, test_y = self.__generate_dataset()
@@ -43,25 +43,25 @@ class TestClassification(unittest.TestCase):
         train_x, test_x, train_y, test_y = self.__generate_dataset()
         trainer = KNNClassificationTrainer()
         model = trainer.fit(train_x, train_y)
-        self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.5)
+        self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.8)
 
     def test_log_reg_classification(self):
         train_x, test_x, train_y, test_y = self.__generate_dataset()
         trainer = LogRegClassificationTrainer()
         model = trainer.fit(train_x, train_y)
-        self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.5)
+        self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.8)
 
     def test_svm_classification(self):
         train_x, test_x, train_y, test_y = self.__generate_dataset()
         trainer = SVMClassificationTrainer()
         model = trainer.fit(train_x, train_y)
-        self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.5)
+        self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.7)
 
     def test_random_forest_classification(self):
         train_x, test_x, train_y, test_y = self.__generate_dataset()
         trainer = RandomForestClassificationTrainer(20)
         model = trainer.fit(train_x, train_y)
-        self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.5)
+        self.assertTrue(accuracy_score(test_y, model.predict(test_x)) > 0.8)
 
     def __generate_dataset(self):
         x, y = make_classification(random_state=42, n_features=20, n_informative=10, n_samples=100)

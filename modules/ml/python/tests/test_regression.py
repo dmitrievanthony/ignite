@@ -18,12 +18,12 @@ import unittest
 from sklearn.metrics import r2_score
 from sklearn.datasets import make_regression
 
-from ignite_ml.regression import LinearRegressionTrainer
-from ignite_ml.regression import DecisionTreeRegressionTrainer
-from ignite_ml.regression import KNNRegressionTrainer
-from ignite_ml.regression import RandomForestRegressionTrainer
-from ignite_ml.regression import MLPArchitecture
-from ignite_ml.regression import MLPRegressionTrainer
+from ggml.regression import LinearRegressionTrainer
+from ggml.regression import DecisionTreeRegressionTrainer
+from ggml.regression import KNNRegressionTrainer
+from ggml.regression import RandomForestRegressionTrainer
+from ggml.regression import MLPArchitecture
+from ggml.regression import MLPRegressionTrainer
 
 class TestRegressions(unittest.TestCase):
 

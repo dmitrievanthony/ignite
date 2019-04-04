@@ -2,7 +2,7 @@
 from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-from ignite_ml.regression import LinearRegressionTrainer
+from ggml.regression import LinearRegressionTrainer
 
 x, y = make_regression()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -15,10 +15,10 @@ r2_score(y_test, model.predict(x_test))
 # Linear regression with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_regression
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import rmse_score
-from ignite_ml.regression import LinearRegressionTrainer
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import rmse_score
+from ggml.regression import LinearRegressionTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -35,7 +35,7 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-from ignite_ml.regression import DecisionTreeRegressionTrainer
+from ggml.regression import DecisionTreeRegressionTrainer
 
 x, y = make_regression()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -48,10 +48,10 @@ r2_score(y_test, model.predict(x_test))
 # Decision Tree regression with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_regression
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import rmse_score
-from ignite_ml.regression import DecisionTreeRegressionTrainer
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import rmse_score
+from ggml.regression import DecisionTreeRegressionTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -68,7 +68,7 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-from ignite_ml.regression import KNNRegressionTrainer
+from ggml.regression import KNNRegressionTrainer
 
 x, y = make_regression()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -81,10 +81,10 @@ r2_score(y_test, model.predict(x_test))
 # KNN regression with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_regression
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import rmse_score
-from ignite_ml.regression import KNNRegressionTrainer
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import rmse_score
+from ggml.regression import KNNRegressionTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -101,7 +101,7 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-from ignite_ml.regression import RandomForestRegressionTrainer
+from ggml.regression import RandomForestRegressionTrainer
 
 x, y = make_regression()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -114,10 +114,10 @@ r2_score(y_test, model.predict(x_test))
 # Random Forest regression with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_regression
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import rmse_score
-from ignite_ml.regression import RandomForestRegressionTrainer
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import rmse_score
+from ggml.regression import RandomForestRegressionTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -134,8 +134,8 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-from ignite_ml.regression import MLPArchitecture
-from ignite_ml.regression import MLPRegressionTrainer
+from ggml.regression import MLPArchitecture
+from ggml.regression import MLPRegressionTrainer
 
 x, y = make_regression()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -148,11 +148,11 @@ r2_score(y_test, model.predict(x_test))
 # MLP regression with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_regression
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import rmse_score
-from ignite_ml.regression import MLPArchitecture
-from ignite_ml.regression import MLPRegressionTrainer
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import rmse_score
+from ggml.regression import MLPArchitecture
+from ggml.regression import MLPRegressionTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")

@@ -2,9 +2,9 @@
 from sklearn.datasets import make_classification
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
-from ignite_ml.core import Ignite
-from ignite_ml.inference import IgniteDistributedModel
-from ignite_ml.classification import DecisionTreeClassificationTrainer
+from ggml.core import Ignite
+from ggml.inference import IgniteDistributedModel
+from ggml.classification import DecisionTreeClassificationTrainer
 
 x, y = make_classification()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -23,10 +23,10 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-from ignite_ml.core import Ignite
-from ignite_ml.regression import LinearRegressionTrainer
-from ignite_ml.storage import save_model
-from ignite_ml.storage import read_model
+from ggml.core import Ignite
+from ggml.regression import LinearRegressionTrainer
+from ggml.storage import save_model
+from ggml.storage import read_model
 
 x, y = make_regression()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -44,10 +44,10 @@ r2_score(y_test, model.predict(x_test))
 from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-from ignite_ml.core import Ignite
-from ignite_ml.regression import LinearRegressionTrainer
-from ignite_ml.storage import save_model
-from ignite_ml.storage import read_model
+from ggml.core import Ignite
+from ggml.regression import LinearRegressionTrainer
+from ggml.storage import save_model
+from ggml.storage import read_model
 
 x, y = make_regression()
 x_train, x_test, y_train, y_test = train_test_split(x, y)

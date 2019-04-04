@@ -20,11 +20,11 @@ Basic Information
 What is it
 ----------
 
-This is Apache Ignite ML client library, written in Python 3, abbreviated as *ignite_ml*.
+This is GridGain ML client library, written in Python 3, abbreviated as *ggml*.
 
-`Apache Ignite`_ is a memory-centric distributed database, caching, and processing platform for transactional, analytical, and streaming workloads delivering in-memory speeds at petabyte scale.
+`GridGain`_ is a memory-centric distributed database, caching, and processing platform for transactional, analytical, and streaming workloads delivering in-memory speeds at petabyte scale.
 
-Ignite ML client library provides user applications the ability to work with Ignite ML functionality using `Py4J`_ as an integration mechanism.
+GridGain ML client library provides user applications the ability to work with GridGain ML functionality using `Py4J`_ as an integration mechanism.
 
 Prerequisites
 -------------
@@ -38,11 +38,11 @@ Installation
 for end user
 ^^^^^^^^^^^^
 
-If you want to use *ignite_ml* in your project, you may install it from PyPI:
+If you want to use *ggml* in your project, you may install it from PyPI:
 
 ::
 
-$ pip install ignite_ml
+$ pip install ggml
 
 for developer
 ^^^^^^^^^^^^^
@@ -55,8 +55,8 @@ $ git clone git@github.com:apache/ignite.git
 $ cd ignite/modules/ml/python
 $ pip install -e .
 
-This will install the repository version of *ignite_ml* into your environment in so-called “develop” or “editable” mode. You may read more about `editable installs`_ in the pip manual.
+This will install the repository version of *ggml* into your environment in so-called “develop” or “editable” mode. You may read more about `editable installs`_ in the pip manual.
 
-.. _Apache Ignite: https://apacheignite.readme.io/docs/what-is-ignite
+.. _GridGain: https://apacheignite.readme.io/docs/what-is-ignite
 .. _Py4J: https://www.py4j.org/
 .. _editable installs: https://pip.pypa.io/en/stable/reference/pip_install/#editable-installs

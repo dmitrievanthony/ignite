@@ -1,6 +1,6 @@
 # Normalization preprocessing with Ignite ML (local).
 from sklearn.datasets import make_classification
-from ignite_ml.preprocessing import NormalizationTrainer
+from ggml.preprocessing import NormalizationTrainer
 
 x, y = make_classification()
 normalizer = NormalizationTrainer().fit(x)
@@ -9,8 +9,8 @@ normalizer.transform(x)
 # Normalization preprocessing with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.preprocessing import NormalizationTrainer
+from ggml.core import Ignite
+from ggml.preprocessing import NormalizationTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -23,7 +23,7 @@ head
 
 # Binarization preprocessing with Ignite ML (local).
 from sklearn.datasets import make_classification
-from ignite_ml.preprocessing import BinarizationTrainer
+from ggml.preprocessing import BinarizationTrainer
 
 x, y = make_classification()
 binarizer = BinarizationTrainer(threshold=0.5).fit([[]])
@@ -32,8 +32,8 @@ binarizer.transform(x)
 # Binarization preprocessing with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.preprocessing import BinarizationTrainer
+from ggml.core import Ignite
+from ggml.preprocessing import BinarizationTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -46,7 +46,7 @@ head
 
 # Imputing preprocessing with Ignite ML (local).
 from sklearn.datasets import make_classification
-from ignite_ml.preprocessing import ImputerTrainer
+from ggml.preprocessing import ImputerTrainer
 
 x = [[None, 1, 1], [2, None, 2]]
 imputer = ImputerTrainer().fit(x)
@@ -55,8 +55,8 @@ imputer.transform(x)
 # Imputing preprocessing with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.preprocessing import ImputerTrainer
+from ggml.core import Ignite
+from ggml.preprocessing import ImputerTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -69,7 +69,7 @@ head
 
 # One-Hot-Encoding preprocessing with Ignite ML (local).
 from sklearn.datasets import make_classification
-from ignite_ml.preprocessing import EncoderTrainer
+from ggml.preprocessing import EncoderTrainer
 
 x = [[1, 2, 0], [2, 1, 0]]
 encoder = EncoderTrainer(encoded_features=[0, 1]).fit(x)
@@ -78,8 +78,8 @@ encoder.transform(x)
 # One-Hot-Encoding preprocessing with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.preprocessing import EncoderTrainer
+from ggml.core import Ignite
+from ggml.preprocessing import EncoderTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -92,7 +92,7 @@ head
 
 # MinMax scaling preprocessing with Ignite ML (local).
 from sklearn.datasets import make_classification
-from ignite_ml.preprocessing import MinMaxScalerTrainer
+from ggml.preprocessing import MinMaxScalerTrainer
 
 x, y = make_classification()
 scaler = MinMaxScalerTrainer().fit(x)
@@ -101,8 +101,8 @@ scaler.transform(x)
 # MinMax scaling preprocessing with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.preprocessing import MinMaxScalerTrainer
+from ggml.core import Ignite
+from ggml.preprocessing import MinMaxScalerTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -115,7 +115,7 @@ head
 
 # MaxAbs scaling preprocessing with Ignite ML (local).
 from sklearn.datasets import make_classification
-from ignite_ml.preprocessing import MaxAbsScalerTrainer
+from ggml.preprocessing import MaxAbsScalerTrainer
 
 x, y = make_classification()
 scaler = MaxAbsScalerTrainer().fit(x)
@@ -124,8 +124,8 @@ scaler.transform(x)
 # MaxAbs scaling preprocessing with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.preprocessing import MaxAbsScalerTrainer
+from ggml.core import Ignite
+from ggml.preprocessing import MaxAbsScalerTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")

@@ -20,7 +20,7 @@ Examples of usage
 Cache API
 ---------
 
-Apache Ignite ML Python API allows to fill cache using *int* as a key and NumPy *array* as a value. To make it user have to have Ignite instance which allows to create a new cache or get an existing.
+GridGain ML Python API allows to fill cache using *int* as a key and NumPy *array* as a value. To make it user have to have Ignite instance which allows to create a new cache or get an existing.
 
 .. literalinclude:: ../examples/cache.py
   :language: python
@@ -36,7 +36,7 @@ Applicability: drug response, stock prices, supermarket revenue.
 Linear Regression
 ^^^^^^^^^^^^^^^^^
 
-Apache Ignite supports the ordinary least squares Linear Regression algorithm - one of the most basic and powerful machine learning algorithms.
+GridGain supports the ordinary least squares Linear Regression algorithm - one of the most basic and powerful machine learning algorithms.
 
 With local data:
 
@@ -55,7 +55,7 @@ Decision Tree Regression
 
 Decision trees are a simple yet powerful model in supervised machine learning. The main idea is to split a feature space into regions such as that the value in each region varies a little. The measure of the values' variation in a region is called the impurity of the region.
 
-Apache Ignite provides an implementation of the algorithm optimized for data stored in rows.
+GridGain provides an implementation of the algorithm optimized for data stored in rows.
 
 Splits are done recursively and every region created from a split can be split further. Therefore, the whole process can be described by a binary tree, where each node is a particular region and its children are the regions derived from it by another split.
 
@@ -76,7 +76,7 @@ With data stored in distributed cache:
 KNN Regression
 ^^^^^^^^^^^^^^
 
-The Apache Ignite Machine Learning component provides two versions of the widely used k-NN (k-nearest neighbors) algorithm - one for classification tasks and the other for regression tasks.
+The GridGain Machine Learning component provides two versions of the widely used k-NN (k-nearest neighbors) algorithm - one for classification tasks and the other for regression tasks.
 
 The k-NN algorithm is a non-parametric method whose input consists of the k-closest training examples in the feature space. Each training example has a property value in a numerical form associated with the given training example.
 
@@ -119,7 +119,7 @@ Multiplayer Perceptron (MLP) is the basic form of neural network. It consists of
 
 One of the popular ways for supervised model training is batch training. In this approach, training is done in iterations; during each iteration we extract a subpart(batch) of labeled data (data consisting of input of approximated function and corresponding values of this function which are often called 'ground truth') on which we train and update model parameters using this subpart. Updates are made to minimize loss function on batches.
 
-Apache Ignite MLPTrainer is used for distributed batch training, which works in a map-reduce way. Each iteration (let's call it global iteration) consists of several parallel iterations which in turn consists of several local steps. Each local iteration is executed by it's own worker and performs the specified number of local steps (called synchronization period) to compute it's update of model parameters. Then all updates are accumulated on the node, that started training, and are transformed to global update which is sent back to all workers. This process continues until stop criteria is reached.
+GridGain MLPTrainer is used for distributed batch training, which works in a map-reduce way. Each iteration (let's call it global iteration) consists of several parallel iterations which in turn consists of several local steps. Each local iteration is executed by it's own worker and performs the specified number of local steps (called synchronization period) to compute it's update of model parameters. Then all updates are accumulated on the node, that started training, and are transformed to global update which is sent back to all workers. This process continues until stop criteria is reached.
 
 
 With local data:
@@ -140,7 +140,7 @@ Decision Tree Classification
 
 Decision trees are a simple yet powerful model in supervised machine learning. The main idea is to split a feature space into regions such as that the value in each region varies a little. The measure of the values’ variation in a region is called the impurity of the region.
 
-Apache Ignite provides an implementation of the algorithm optimized for data stored in rows.
+GridGain provides an implementation of the algorithm optimized for data stored in rows.
 
 Splits are done recursively and every region created from a split can be split further. Therefore, the whole process can be described by a binary tree, where each node is a particular region and its children are the regions derived from it by another split.
 
@@ -178,7 +178,7 @@ With data stored in distributed cache:
 KNN Classification
 ^^^^^^^^^^^^^^^^^^
 
-The Apache Ignite Machine Learning component provides two versions of the widely used k-NN (k-nearest neighbors) algorithm - one for classification tasks and the other for regression tasks.
+The GridGain Machine Learning component provides two versions of the widely used k-NN (k-nearest neighbors) algorithm - one for classification tasks and the other for regression tasks.
 
 The k-NN algorithm is a non-parametric method whose input consists of the k-closest training examples in the feature space. Each training example has a property value in a numerical form associated with the given training example.
 
@@ -199,7 +199,7 @@ With data stored in distributed cache:
 LogReg Classification
 ^^^^^^^^^^^^^^^^^^^^^
 
-Binary Logistic Regression is a special type of regression where a binary response variable is related to a set of explanatory variables, which can be discrete and/or continuous. The important point here to note is that in linear regression, the expected values of the response variable are modeled based on a combination of values taken by the predictors. In logistic regression Probability or Odds of the response taking a particular value is modeled based on the combination of values taken by the predictors. In the Apache Ignite ML module it is implemented via LogisticRegressionModel that solves the binary classification problem.
+Binary Logistic Regression is a special type of regression where a binary response variable is related to a set of explanatory variables, which can be discrete and/or continuous. The important point here to note is that in linear regression, the expected values of the response variable are modeled based on a combination of values taken by the predictors. In logistic regression Probability or Odds of the response taking a particular value is modeled based on the combination of values taken by the predictors. In the GridGain ML module it is implemented via LogisticRegressionModel that solves the binary classification problem.
 
 For binary classification problems, the algorithm outputs a binary logistic regression model. 
 
@@ -222,7 +222,7 @@ Support Vector Machines (SVMs) are supervised learning models with associated le
 
 Given a set of training examples, each marked as belonging to one or the other of two categories, an SVM training algorithm builds a model that assigns new examples to one category or the other, making it a non-probabilistic binary linear classifier.
 
-Only Linear SVM is supported in the Apache Ignite Machine Learning module.
+Only Linear SVM is supported in the GridGain Machine Learning module.
 
 With local data:
 
@@ -260,7 +260,7 @@ Multiplayer Perceptron (MLP) is the basic form of neural network. It consists of
 
 One of the popular ways for supervised model training is batch training. In this approach, training is done in iterations; during each iteration we extract a subpart(batch) of labeled data (data consisting of input of approximated function and corresponding values of this function which are often called ‘ground truth’) on which we train and update model parameters using this subpart. Updates are made to minimize loss function on batches.
 
-Apache Ignite MLPTrainer is used for distributed batch training, which works in a map-reduce way. Each iteration (let’s call it global iteration) consists of several parallel iterations which in turn consists of several local steps. Each local iteration is executed by it’s own worker and performs the specified number of local steps (called synchronization period) to compute it’s update of model parameters. Then all updates are accumulated on the node, that started training, and are transformed to global update which is sent back to all workers. This process continues until stop criteria is reached.
+GridGain MLPTrainer is used for distributed batch training, which works in a map-reduce way. Each iteration (let’s call it global iteration) consists of several parallel iterations which in turn consists of several local steps. Each local iteration is executed by it’s own worker and performs the specified number of local steps (called synchronization period) to compute it’s update of model parameters. Then all updates are accumulated on the node, that started training, and are transformed to global update which is sent back to all workers. This process continues until stop criteria is reached.
 
 With local data:
 
@@ -278,7 +278,7 @@ Applicability: customer segmentation, grouping experiment outcomes, grouping of 
 KMeans Clustering
 ^^^^^^^^^^^^^^^^^
 
-The Apache Ignite Machine Learning component provides a K-Means clustering algorithm implementation. K-Means clustering aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean, serving as a prototype of the cluster.
+The GridGain Machine Learning component provides a K-Means clustering algorithm implementation. K-Means clustering aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean, serving as a prototype of the cluster.
 
 The model holds a vector of k centers and one of the distance metrics provided by the ML framework such as Euclidean, Hamming or Manhattan.
 
@@ -464,7 +464,7 @@ Splitting that splits data stored in cache on two parts: training part that shou
 Cross Validation
 ^^^^^^^^^^^^^^^^
 
-Cross validation functionality in Apache Ignite is represented by the class CrossValidation. This is a calculator parameterized by the type of model, type of label and key-value types of data. After instantiation (constructor doesn’t accept any additional parameters) we can use a score method to perform cross validation.
+Cross validation functionality in GridGain is represented by the class CrossValidation. This is a calculator parameterized by the type of model, type of label and key-value types of data. After instantiation (constructor doesn’t accept any additional parameters) we can use a score method to perform cross validation.
 
 Let’s imagine that we have a trainer, a training set and we want to make cross validation using accuracy as a metric and using 4 folds.
 
@@ -475,7 +475,7 @@ Let’s imagine that we have a trainer, a training set and we want to make cross
 Inference
 ---------
 
-Ignite ML provides an ability to distribute inference workload within a cluster. It means that inference performed not on a single node, but on several nodes within a cluster and so that linearly scalable.
+GridGain ML provides an ability to distribute inference workload within a cluster. It means that inference performed not on a single node, but on several nodes within a cluster and so that linearly scalable.
 
 Distributed Inference
 ^^^^^^^^^^^^^^^^^^^^^
@@ -488,7 +488,7 @@ Distributed Inference
 Model storage
 ^^^^^^^^^^^^^
 
-Ignite ML provides an ability to save and read models. Models can be saved usign local file system and using IGFS (distributed file system supplied as part of Apache Ignite).
+GridGain ML provides an ability to save and read models. Models can be saved usign local file system and using IGFS (distributed file system supplied as part of GridGain).
 
 Using local file system:
 

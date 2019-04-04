@@ -2,7 +2,7 @@
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from ignite_ml.classification import DecisionTreeClassificationTrainer
+from ggml.classification import DecisionTreeClassificationTrainer
 
 x, y = make_classification()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -15,10 +15,10 @@ accuracy_score(y_test, model.predict(x_test))
 # Decision Tree classification with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import accuracy_score
-from ignite_ml.classification import DecisionTreeClassificationTrainer 
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import accuracy_score
+from ggml.classification import DecisionTreeClassificationTrainer 
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -35,7 +35,7 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from ignite_ml.classification import ANNClassificationTrainer
+from ggml.classification import ANNClassificationTrainer
 
 x, y = make_classification()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -48,10 +48,10 @@ accuracy_score(y_test, model.predict(x_test))
 # ANN classification with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import accuracy_score
-from ignite_ml.classification import ANNClassificationTrainer
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import accuracy_score
+from ggml.classification import ANNClassificationTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -68,7 +68,7 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from ignite_ml.classification import KNNClassificationTrainer
+from ggml.classification import KNNClassificationTrainer
 
 x, y = make_classification()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -81,10 +81,10 @@ accuracy_score(y_test, model.predict(x_test))
 # KNN classification with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import accuracy_score
-from ignite_ml.classification import KNNClassificationTrainer
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import accuracy_score
+from ggml.classification import KNNClassificationTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -101,7 +101,7 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from ignite_ml.classification import LogRegClassificationTrainer
+from ggml.classification import LogRegClassificationTrainer
 
 x, y = make_classification()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -114,10 +114,10 @@ accuracy_score(y_test, model.predict(x_test))
 # LogReg classification with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import accuracy_score
-from ignite_ml.classification import LogRegClassificationTrainer
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import accuracy_score
+from ggml.classification import LogRegClassificationTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -134,7 +134,7 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from ignite_ml.classification import SVMClassificationTrainer
+from ggml.classification import SVMClassificationTrainer
 
 x, y = make_classification()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -147,10 +147,10 @@ accuracy_score(y_test, model.predict(x_test))
 # SVM classification with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import accuracy_score
-from ignite_ml.classification import SVMClassificationTrainer
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import accuracy_score
+from ggml.classification import SVMClassificationTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -167,7 +167,7 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from ignite_ml.classification import RandomForestClassificationTrainer
+from ggml.classification import RandomForestClassificationTrainer
 
 x, y = make_classification()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -180,10 +180,10 @@ accuracy_score(y_test, model.predict(x_test))
 # Random Forest classification with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
-from ignite_ml.metrics import accuracy_score
-from ignite_ml.classification import RandomForestClassificationTrainer
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
+from ggml.metrics import accuracy_score
+from ggml.classification import RandomForestClassificationTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -200,8 +200,8 @@ with Ignite("example-ignite.xml") as ignite:
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from ignite_ml.regression import MLPArchitecture
-from ignite_ml.regression import MLPRegressionTrainer
+from ggml.regression import MLPArchitecture
+from ggml.regression import MLPRegressionTrainer
 
 x, y = make_classification()
 x_train, x_test, y_train, y_test = train_test_split(x, y)

@@ -1,3 +1,3 @@
-# Apache Ignite ML Python API
+# GridGain ML Python API
 
-Apache Ignite ML Python API that allows to use Ignite ML from Python.
+GridGain ML Python API that allows to use GridGain ML from Python.

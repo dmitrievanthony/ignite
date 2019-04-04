@@ -18,12 +18,12 @@ API Specification
 =================
 
 The modules and subpackages listed here are the basis of a stable API
-of `igntie_ml`, intended for end users.
+of `ggml`, intended for end users.
 
 Core
 ----
 
-.. automodule:: ignite_ml.core
+.. automodule:: ggml.core
     :members:
     :undoc-members:
     :show-inheritance:
@@ -31,7 +31,7 @@ Core
 Regression
 ----------
 
-.. automodule:: ignite_ml.regression
+.. automodule:: ggml.regression
     :members:
     :undoc-members:
     :show-inheritance:
@@ -39,7 +39,7 @@ Regression
 Classification
 --------------
 
-.. automodule:: ignite_ml.classification
+.. automodule:: ggml.classification
     :members:
     :undoc-members:
     :show-inheritance:
@@ -47,7 +47,7 @@ Classification
 Clustering
 ----------
 
-.. automodule:: ignite_ml.clustering
+.. automodule:: ggml.clustering
     :members:
     :undoc-members:
     :show-inheritance:
@@ -55,7 +55,7 @@ Clustering
 Preprocessing
 -------------
 
-.. automodule:: ignite_ml.preprocessing
+.. automodule:: ggml.preprocessing
     :members:
     :undoc-members:
     :show-inheritance:
@@ -63,7 +63,7 @@ Preprocessing
 Model Selection
 ---------------
 
-.. automodule:: ignite_ml.model_selection
+.. automodule:: ggml.model_selection
     :members:
     :undoc-members:
     :show-inheritance:
@@ -71,7 +71,7 @@ Model Selection
 Inference
 ---------
 
-.. automodule:: ignite_ml.inference
+.. automodule:: ggml.inference
     :members:
     :undoc-members:
     :show-inheritance:

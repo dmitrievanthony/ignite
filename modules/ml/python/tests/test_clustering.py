@@ -17,8 +17,8 @@ import unittest
 
 from sklearn.datasets import make_blobs
 
-from ignite_ml.clustering import KMeansClusteringTrainer
-from ignite_ml.clustering import GMMClusteringTrainer
+from ggml.clustering import KMeansClusteringTrainer
+from ggml.clustering import GMMClusteringTrainer
 
 class TestClustering(unittest.TestCase):
 

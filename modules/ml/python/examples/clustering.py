@@ -1,6 +1,6 @@
 # KMeans clustering with Ignite ML (local).
 from sklearn.datasets import make_blobs
-from ignite_ml.clustering import KMeansClusteringTrainer
+from ggml.clustering import KMeansClusteringTrainer
 
 x, y = make_blobs(
     n_samples=2000, 
@@ -15,8 +15,8 @@ model = trainer.fit(x)
 # KMeans clustering with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_blobs
-from ignite_ml.core import Ignite
-from ignite_ml.clustering import KMeansClusteringTrainer
+from ggml.core import Ignite
+from ggml.clustering import KMeansClusteringTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     x, y = make_blobs(
@@ -34,7 +34,7 @@ with Ignite("example-ignite.xml") as ignite:
 
 # GMM clustering with Ignite ML (local).
 from sklearn.datasets import make_blobs
-from ignite_ml.clustering import GMMClusteringTrainer
+from ggml.clustering import GMMClusteringTrainer
 
 x, y = make_blobs(
     n_samples=2000,
@@ -52,8 +52,8 @@ model = trainer.fit(x)
 # GMM clustering with Ignite ML (cache).
 import numpy as np
 from sklearn.datasets import make_blobs
-from ignite_ml.core import Ignite
-from ignite_ml.clustering import GMMClusteringTrainer
+from ggml.core import Ignite
+from ggml.clustering import GMMClusteringTrainer
 
 with Ignite("example-ignite.xml") as ignite:
     x, y = make_blobs(

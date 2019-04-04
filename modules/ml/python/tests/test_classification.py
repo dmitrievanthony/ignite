@@ -18,12 +18,12 @@ import unittest
 from sklearn.metrics import accuracy_score
 from sklearn.datasets import make_classification
 
-from ignite_ml.classification import DecisionTreeClassificationTrainer
-from ignite_ml.classification import ANNClassificationTrainer
-from ignite_ml.classification import KNNClassificationTrainer
-from ignite_ml.classification import LogRegClassificationTrainer
-from ignite_ml.classification import SVMClassificationTrainer
-from ignite_ml.classification import RandomForestClassificationTrainer
+from ggml.classification import DecisionTreeClassificationTrainer
+from ggml.classification import ANNClassificationTrainer
+from ggml.classification import KNNClassificationTrainer
+from ggml.classification import LogRegClassificationTrainer
+from ggml.classification import SVMClassificationTrainer
+from ggml.classification import RandomForestClassificationTrainer
 
 class TestClassification(unittest.TestCase):
 

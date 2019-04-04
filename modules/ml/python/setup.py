@@ -23,7 +23,7 @@ PYTHON_INSTALLED = sys.version_info[:2]
 if PYTHON_INSTALLED < PYTHON_REQUIRED:
     sys.stderr.write('''
 
-`ignite_ml` is not compatible with Python {}.{}!
+`ggml` is not compatible with Python {}.{}!
 Use Python {}.{} or above.
 
 '''.format(
@@ -66,12 +66,12 @@ with open('README.md', 'r', encoding='utf-8') as readme_file:
     long_description = readme_file.read()
 
 setuptools.setup(
-    name='ignite_ml',
+    name='ggml',
     version='0.0.1',
     python_requires='>={}.{}'.format(*PYTHON_REQUIRED),
     author='Anton Dmitriev',
     author_email='dmitrievanthony@gmail.com',
-    description='Apache Ignite ML Python API',
+    description='GridGain ML Python API',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url=(

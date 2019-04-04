@@ -1,8 +1,8 @@
 # Test/Train splitting.
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.model_selection import train_test_split
+from ggml.core import Ignite
+from ggml.model_selection import train_test_split
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache")
@@ -17,9 +17,9 @@ with Ignite("example-ignite.xml") as ignite:
 # Cross Validation.
 import numpy as np
 from sklearn.datasets import make_classification
-from ignite_ml.core import Ignite
-from ignite_ml.classification import DecisionTreeClassificationTrainer
-from ignite_ml.model_selection import cross_val_score
+from ggml.core import Ignite
+from ggml.classification import DecisionTreeClassificationTrainer
+from ggml.model_selection import cross_val_score
 
 with Ignite("example-ignite.xml") as ignite:
     cache = ignite.create_cache("my-cache", parts=1)

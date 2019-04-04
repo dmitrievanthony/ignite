@@ -98,7 +98,7 @@ With data stored in distributed cache:
 Random Forest Regression
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Random forest is an ensemble learning method to solve any classification and regression problem. Random forest training builds a model composition (ensemble) of one type and uses some aggregation algorithm of several answers from models. Each model is trained on a part of the training dataset. The part is defined according to bagging and feature subspace methods. More information about these concepts may be found here: 1, 2 and 3.
+Random forest is an ensemble learning method to solve any classification and regression problem. Random forest training builds a model composition (ensemble) of one type and uses some aggregation algorithm of several answers from models. Each model is trained on a part of the training dataset. The part is defined according to bagging and feature subspace methods.
 
 With local data:
 
@@ -160,6 +160,8 @@ With data stored in distributed cache:
 
 ANN Classification
 ^^^^^^^^^^^^^^^^^^
+
+ANN algorithm trainer to solve multi-class classification task. This trainer is based on ACD strategy and KMeans clustering algorithm to find centroids.
 
 With local data:
 
@@ -237,7 +239,7 @@ With data stored in distributed cache:
 Random Forest Classification
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Random forest is an ensemble learning method to solve any classification and regression problem. Random forest training builds a model composition (ensemble) of one type and uses some aggregation algorithm of several answers from models. Each model is trained on a part of the training dataset. The part is defined according to bagging and feature subspace methods. More information about these concepts may be found here: 1, 2 and 3.
+Random forest is an ensemble learning method to solve any classification and regression problem. Random forest training builds a model composition (ensemble) of one type and uses some aggregation algorithm of several answers from models. Each model is trained on a part of the training dataset. The part is defined according to bagging and feature subspace methods.
 
 With local data:
 
@@ -448,10 +450,12 @@ With data stored in distribtued cache:
 Model Selection
 ---------------
 
-Model selection...
+Model selection is a set of tools that provides an ability to prepare and test models efficiently. It allows to split data on training and test data as well as perform cross validation.
 
 Test/Train Splitting
 ^^^^^^^^^^^^^^^^^^^^
+
+Splitting that splits data stored in cache on two parts: training part that should be used to train model and test part that should be used to estimate model quality.
 
 .. literalinclude:: ../examples/model_selection.py
   :language: python

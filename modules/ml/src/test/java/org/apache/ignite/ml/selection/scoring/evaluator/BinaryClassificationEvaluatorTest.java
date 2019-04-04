@@ -91,6 +91,6 @@ public class BinaryClassificationEvaluatorTest extends TrainerTest {
         IgniteBiFunction<Integer, Vector, Double> lbExtractor = (k, v) -> v.get(0);
         double score = Evaluator.evaluate(cacheMock, mdl, featureExtractor, lbExtractor, new Accuracy<>());
 
-        assertEquals(0.9, score, 1);
+        assertEquals(0.9, score, 0.1);
     }
 }

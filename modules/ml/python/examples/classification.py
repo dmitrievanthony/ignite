@@ -172,7 +172,7 @@ from ignite_ml.classification import RandomForestClassificationTrainer
 x, y = make_classification()
 x_train, x_test, y_train, y_test = train_test_split(x, y)
 
-trainer = RandomForestClassificationTrainer(20)
+trainer = RandomForestClassificationTrainer(features=20)
 model = trainer.fit(x_train, y_train)
 
 accuracy_score(y_test, model.predict(x_test))
@@ -192,7 +192,7 @@ with Ignite("example-ignite.xml") as ignite:
 
     train_cache, test_cache = train_test_split(cache)
 
-    trainer = RandomForestClassificationTrainer(20)
+    trainer = RandomForestClassificationTrainer(features=20)
     model = trainer.fit(train_cache)
     print(accuracy_score(test_cache, model))
 
@@ -218,7 +218,7 @@ def decode_label(x):
     else:
         return 1
 
-trainer = MLPRegressionTrainer(MLPArchitecture(20).with_layer(2, activator='sigmoid'))
+trainer = MLPRegressionTrainer(MLPArchitecture(neurons=20).with_layer(neurons=2, activator='sigmoid'))
 model = trainer.fit(x_train, [encode_label(x) for x in y_train])
 
 accuracy_score(y_test, [decode_label(x) for x in model.predict(x_test)])

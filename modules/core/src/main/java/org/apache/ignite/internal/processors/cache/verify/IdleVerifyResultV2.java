@@ -35,7 +35,7 @@ import org.apache.ignite.internal.util.typedef.internal.U;
 import org.apache.ignite.internal.visor.VisorDataTransferObject;
 import org.jetbrains.annotations.Nullable;
 
-import static org.apache.ignite.internal.commandline.cache.CacheCommand.IDLE_VERIFY;
+import static org.apache.ignite.internal.commandline.cache.CacheSubcommands.IDLE_VERIFY;
 
 /**
  * Encapsulates result of {@link VerifyBackupPartitionsTaskV2}.
@@ -66,22 +66,28 @@ public class IdleVerifyResultV2 extends VisorDataTransferObject {
     @GridToStringInclude
     private Map<ClusterNode, Exception> exceptions;
 
+    /** Whether job succeeded or not. */
+    private boolean succeeded = true;
+
     /**
      * @param cntrConflicts Counter conflicts.
      * @param hashConflicts Hash conflicts.
      * @param movingPartitions Moving partitions.
      * @param exceptions Occured exceptions.
+     * @param succeeded Whether succeeded or not.
      */
     public IdleVerifyResultV2(
         Map<PartitionKeyV2, List<PartitionHashRecordV2>> cntrConflicts,
         Map<PartitionKeyV2, List<PartitionHashRecordV2>> hashConflicts,
         Map<PartitionKeyV2, List<PartitionHashRecordV2>> movingPartitions,
-        Map<ClusterNode, Exception> exceptions
+        Map<ClusterNode, Exception> exceptions,
+        boolean succeeded
     ) {
         this.cntrConflicts = cntrConflicts;
         this.hashConflicts = hashConflicts;
         this.movingPartitions = movingPartitions;
         this.exceptions = exceptions;
+        this.succeeded = succeeded;
     }
 
     /**
@@ -182,27 +188,46 @@ public class IdleVerifyResultV2 extends VisorDataTransferObject {
 
     /** */
     private void print(Consumer<String> printer, boolean printExceptionMessages) {
-        if (!F.isEmpty(exceptions)) {
-            int size = exceptions.size();
+        boolean noMatchingCaches = false;
 
-            printer.accept("idle_verify failed on " + size + " node" + (size == 1 ? "" : "s") + ".\n");
+        for (Exception e : exceptions.values()) {
+            if (e instanceof NoMatchingCachesException) {
+                noMatchingCaches = true;
+                succeeded = false;
+
+                break;
+            }
         }
 
-        if (!hasConflicts())
-            printer.accept("idle_verify check has finished, no conflicts have been found.\n");
-        else
-            printConflicts(printer);
+        if (succeeded) {
+            if (!F.isEmpty(exceptions)) {
+                int size = exceptions.size();
 
-        if (!F.isEmpty(movingPartitions())) {
-            printer.accept("Verification was skipped for " + movingPartitions().size() + " MOVING partitions:\n");
-
-            for (Map.Entry<PartitionKeyV2, List<PartitionHashRecordV2>> entry : movingPartitions().entrySet()) {
-                printer.accept("Rebalancing partition: " + entry.getKey() + "\n");
-
-                printer.accept("Partition instances: " + entry.getValue() + "\n");
+                printer.accept("idle_verify failed on " + size + " node" + (size == 1 ? "" : "s") + ".\n");
             }
 
-            printer.accept("\n");
+            if (!hasConflicts())
+                printer.accept("idle_verify check has finished, no conflicts have been found.\n");
+            else
+                printConflicts(printer);
+
+            if (!F.isEmpty(movingPartitions())) {
+                printer.accept("Verification was skipped for " + movingPartitions().size() + " MOVING partitions:\n");
+
+                for (Map.Entry<PartitionKeyV2, List<PartitionHashRecordV2>> entry : movingPartitions().entrySet()) {
+                    printer.accept("Rebalancing partition: " + entry.getKey() + "\n");
+
+                    printer.accept("Partition instances: " + entry.getValue() + "\n");
+                }
+
+                printer.accept("\n");
+            }
+        }
+        else {
+            printer.accept("idle_verify failed.");
+
+            if (noMatchingCaches)
+                printer.accept("There are no caches matching given filter options.");
         }
 
         if (!F.isEmpty(exceptions())) {

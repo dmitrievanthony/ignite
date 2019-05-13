@@ -23,9 +23,6 @@ import java.util.Map;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.lang.IgniteBiPredicate;
-import org.apache.ignite.ml.dataset.feature.extractor.Vectorizer;
-import org.apache.ignite.ml.dataset.feature.extractor.impl.ArraysVectorizer;
-import org.apache.ignite.ml.dataset.feature.extractor.impl.FeatureLabelExtractorWrapper;
 import org.apache.ignite.ml.dataset.feature.extractor.impl.LabeledDummyVectorizer;
 import org.apache.ignite.ml.math.functions.IgniteBiFunction;
 import org.apache.ignite.ml.math.functions.IgniteDifferentiableVectorToDoubleFunction;
@@ -39,8 +36,8 @@ import org.apache.ignite.ml.nn.architecture.MLPArchitecture;
 import org.apache.ignite.ml.optimization.LossFunctions;
 import org.apache.ignite.ml.optimization.updatecalculators.SimpleGDParameterUpdate;
 import org.apache.ignite.ml.optimization.updatecalculators.SimpleGDUpdateCalculator;
+import org.apache.ignite.ml.preprocessing.Preprocessor;
 import org.apache.ignite.ml.structures.LabeledVector;
-import org.apache.ignite.ml.trainers.FeatureLabelExtractor;
 
 /**
  * Python wrapper for {@link MLPTrainer}.
@@ -98,8 +95,10 @@ public class PythonMLPDatasetTrainer {
             return delegate.fit(
                 data,
                 1,
-                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
-                    preprocessor.apply(k, v.features().asArray()).labeled(v.label()))
+                (k, v) -> preprocessor.apply(k, v.features().asArray()).labeled(v.label())
+
+//                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
+//                    preprocessor.apply(k, v.features().asArray()).labeled(v.label()))
             );
 
         return delegate.fit(
@@ -117,26 +116,39 @@ public class PythonMLPDatasetTrainer {
      * @return Model.
      */
     public MultilayerPerceptron fitOnCache(IgniteCache<Integer, double[]> cache,
-        IgniteBiPredicate<Integer, double[]> filter, IgniteBiFunction<Integer, double[], Vector> preprocessor) {
+        IgniteBiPredicate<Integer, double[]> filter, Preprocessor<Integer, double[]> preprocessor) {
         if (preprocessor != null)
 
-            return fitOnCache(cache, filter, new FeatureLabelExtractorWrapper<>(
-                new FeatureLabelExtractor<Integer, double[], double[]>() {
-
-                @Override public LabeledVector<double[]> extract(Integer k, double[] v) {
-                    return new LabeledVector<>(
-                        preprocessor.apply(k, Arrays.copyOf(v, v.length - 1)),
-                        new double[] {v[v.length - 1]}
-                    );
+            return fitOnCacheInternal(
+                cache,
+                filter,
+                (k, v) -> {
+                    @SuppressWarnings("unchecked")
+                    LabeledVector<Double> res = preprocessor.apply(k, Arrays.copyOf(v, v.length - 1));
+                    res.setLabel(v[v.length - 1]);
+                    return res;
                 }
-            }));
 
-        return fitOnCache(
+//                new FeatureLabelExtractorWrapper<>(
+//                    new FeatureLabelExtractor<Integer, double[], double[]>() {
+//
+//                        @Override public LabeledVector<double[]> extract(Integer k, double[] v) {
+//                            return new LabeledVector<>(
+//                                preprocessor.apply(k, Arrays.copyOf(v, v.length - 1)),
+//                                new double[] {v[v.length - 1]}
+//                            );
+//                        }
+//                    })
+            );
+
+        return fitOnCacheInternal(
             cache,
             filter,
-            new ArraysVectorizer<Integer>()
-                .labeled(Vectorizer.LabelCoordinate.LAST)
-                .map(v -> v.features().labeled(new double[] {v.label()}))
+            (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1])
+
+//            new ArraysVectorizer<Integer>()
+//                .labeled(Vectorizer.LabelCoordinate.LAST)
+//                .map(v -> v.features().labeled(new double[] {v.label()}))
         );
     }
 
@@ -145,20 +157,16 @@ public class PythonMLPDatasetTrainer {
      *
      * @param cache Ignite cache.
      * @param filter Filter.
-     * @param vectorizer Vectorizer.
+     * @param preprocessor Preprocessor
      * @return Model.
      */
-    private MultilayerPerceptron fitOnCache(IgniteCache<Integer, double[]> cache,
+    private MultilayerPerceptron fitOnCacheInternal(IgniteCache<Integer, double[]> cache,
         IgniteBiPredicate<Integer, double[]> filter,
-        Vectorizer<Integer, double[], Integer, double[]> vectorizer) {
+        Preprocessor<Integer, double[]> preprocessor) {
         if (filter != null)
-            return delegate.fit(
-                Ignition.ignite(),
-                cache,
-                filter,
-                vectorizer
-            );
+            return delegate.fit(Ignition.ignite(), cache, filter, preprocessor);
 
-        return delegate.fit(Ignition.ignite(), cache, vectorizer);
+        return delegate.fit(Ignition.ignite(), cache, preprocessor);
+
     }
 }

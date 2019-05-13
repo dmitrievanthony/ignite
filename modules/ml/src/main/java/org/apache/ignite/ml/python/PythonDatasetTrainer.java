@@ -24,13 +24,9 @@ import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.lang.IgniteBiPredicate;
 import org.apache.ignite.ml.IgniteModel;
-import org.apache.ignite.ml.dataset.feature.extractor.Vectorizer;
-import org.apache.ignite.ml.dataset.feature.extractor.impl.ArraysVectorizer;
-import org.apache.ignite.ml.dataset.feature.extractor.impl.FeatureLabelExtractorWrapper;
 import org.apache.ignite.ml.dataset.feature.extractor.impl.LabeledDummyVectorizer;
-import org.apache.ignite.ml.math.functions.IgniteBiFunction;
-import org.apache.ignite.ml.math.primitives.vector.Vector;
 import org.apache.ignite.ml.math.primitives.vector.VectorUtils;
+import org.apache.ignite.ml.preprocessing.Preprocessor;
 import org.apache.ignite.ml.structures.LabeledVector;
 import org.apache.ignite.ml.trainers.SingleLabelDatasetTrainer;
 
@@ -60,7 +56,7 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
      * @param preprocessor Preprocessor.
      * @return Model.
      */
-    public M fit(double[][] x, double[] y, IgniteBiFunction<Integer, double[], Vector> preprocessor) {
+    public M fit(double[][] x, double[] y, Preprocessor<Integer, double[]> preprocessor) {
         Map<Integer, LabeledVector<Double>> data = new HashMap<>();
 
         for (int i = 0; i < x.length; i++)
@@ -71,8 +67,15 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
             return delegate.fit(
                 data,
                 1,
-                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
-                    preprocessor.apply(k, v.features().asArray()).labeled(v.label()))
+                (k, v) -> {
+                    @SuppressWarnings("unchecked")
+                    LabeledVector<Double> res = preprocessor.apply(k, v.features().asArray());
+                    res.setLabel(v.label());
+                    return res;
+                }
+
+//                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
+//                    preprocessor.apply(k, v.features().asArray()).labeled(v.label()))
             );
 
         return delegate.fit(
@@ -90,19 +93,28 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
      * @return Model.
      */
     public M fitOnCache(IgniteCache<Integer, double[]> cache, IgniteBiPredicate<Integer, double[]> filter,
-        IgniteBiFunction<Integer, double[], Vector> preprocessor) {
+        Preprocessor<Integer, double[]> preprocessor) {
         if (preprocessor != null)
-            return fitOnCache(
+            return fitOnCacheInternal(
                 cache,
                 filter,
-                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
-                    preprocessor.apply(k, Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1]))
+                (k, v) -> {
+                    @SuppressWarnings("unchecked")
+                    LabeledVector<Double> res = preprocessor.apply(k, Arrays.copyOf(v, v.length - 1));
+                    res.setLabel(v[v.length - 1]);
+                    return res;
+                }
+
+//                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
+//                    preprocessor.apply(k, Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1]))
             );
 
-        return fitOnCache(
+        return fitOnCacheInternal(
             cache,
             filter,
-            new ArraysVectorizer<Integer>().labeled(Vectorizer.LabelCoordinate.LAST)
+            (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1])
+
+//            new ArraysVectorizer<Integer>().labeled(Vectorizer.LabelCoordinate.LAST)
         );
     }
 
@@ -111,15 +123,15 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
      *
      * @param cache Ignite cache.
      * @param filter Filter.
-     * @param vectorizer Vectorizer.
+     * @param preprocessor Preprocessor.
      * @return Model.
      */
-    private M fitOnCache(IgniteCache<Integer, double[]> cache,
-        IgniteBiPredicate<Integer, double[]> filter, Vectorizer<Integer, double[], Integer, Double> vectorizer) {
-        if (filter == null)
-            return delegate.fit(Ignition.ignite(), cache, vectorizer);
+    private M fitOnCacheInternal(IgniteCache<Integer, double[]> cache,
+        IgniteBiPredicate<Integer, double[]> filter, Preprocessor<Integer, double[]> preprocessor) {
+        if (filter != null)
+            return delegate.fit(Ignition.ignite(), cache, filter, preprocessor);
 
-        return delegate.fit(Ignition.ignite(), cache, filter, vectorizer);
+        return delegate.fit(Ignition.ignite(), cache, preprocessor);
     }
 
     public SingleLabelDatasetTrainer<M> getDelegate() {

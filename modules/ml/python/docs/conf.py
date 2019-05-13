@@ -19,8 +19,8 @@ sys.path.insert(0, os.path.abspath('../'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'Apache Ignite ML Python API'
-copyright = '2018, Apache Software Foundation (ASF)'
+project = 'GridGain ML Python API'
+copyright = '2018, GridGain Systems'
 author = 'Anton Dmitriev'
 
 # The short X.Y version
@@ -104,7 +104,7 @@ html_static_path = []
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'ApacheIgniteMLPythonAPIdoc'
+htmlhelp_basename = 'GridGainMLPythonAPIdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -131,8 +131,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'ApacheIgniteMLPythonAPI.tex', 'Apache Ignite ML Python API Documentation',
-     'Apache Software Foundation (ASF)', 'manual'),
+    (master_doc, 'GridGainMLPythonAPI.tex', 'GridGain ML Python API Documentation',
+     'GridGain Systems', 'manual'),
 ]
 
 
@@ -141,7 +141,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'apacheignitemlpythonapi', 'Apache Ignite ML Python API Documentation',
+    (master_doc, 'gridgainmlpythonapi', 'GridGain ML Python API Documentation',
      [author], 1)
 ]
 
@@ -152,8 +152,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'ApacheIgniteMLPythonAPI', 'Apache Ignite ML Python API Documentation',
-     author, 'ApacheIgniteMLPythonAPI', 'One line description of project.',
+    (master_doc, 'GridGainMLPythonAPI', 'GridGain ML Python API Documentation',
+     author, 'GridGainMLPythonAPI', 'One line description of project.',
      'Miscellaneous'),
 ]
 

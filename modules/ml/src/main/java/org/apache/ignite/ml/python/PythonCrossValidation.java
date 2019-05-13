@@ -50,8 +50,7 @@ public class PythonCrossValidation {
             metric,
             Ignition.ignite(),
             cache,
-            (Integer k, double[] v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)),
-            (Integer k, double[] v) -> v[v.length - 1],
+            (Integer k, double[] v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1]),
             cv
         );
     }

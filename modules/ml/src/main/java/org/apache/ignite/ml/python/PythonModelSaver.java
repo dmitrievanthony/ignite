@@ -40,7 +40,6 @@ public class PythonModelSaver {
      *
      * @param mdl Model.
      * @param dst File destination.
-     *
      * @throws IOException If the model cannot be serialized or written.
      */
     public static void save(IgniteModel<double[], Double> mdl, String dst, Ignite ignite) throws IOException {
@@ -70,7 +69,8 @@ public class PythonModelSaver {
      * @throws IOException If model cannot be read.
      * @throws ClassNotFoundException If model cannot be deserialized.
      */
-    public static IgniteModel<double[], Double> read(String src, Ignite ignite) throws IOException, ClassNotFoundException {
+    public static IgniteModel<double[], Double> read(String src,
+        Ignite ignite) throws IOException, ClassNotFoundException {
         if (src.startsWith("igfs://")) {
             ModelStorage storage = new ModelStorageFactory().getModelStorage(ignite);
             byte[] serializedMdl = storage.getFile(src.substring(7));

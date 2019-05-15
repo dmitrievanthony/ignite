@@ -49,7 +49,8 @@ public class PythonEvaluator {
             cache,
             filter != null ? filter : (k, v) -> true,
             mdl,
-            preprocessor != null ? preprocessor : (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1])
+            preprocessor != null ? preprocessor : (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1))
+                .labeled(v[v.length - 1])
         );
     }
 
@@ -70,7 +71,8 @@ public class PythonEvaluator {
             cache,
             filter != null ? filter : (k, v) -> true,
             mdl,
-            preprocessor != null ? preprocessor : (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1])
+            preprocessor != null ? preprocessor : (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1))
+                .labeled(v[v.length - 1])
         );
     }
 }

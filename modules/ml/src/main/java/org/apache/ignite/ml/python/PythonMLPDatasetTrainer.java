@@ -96,9 +96,6 @@ public class PythonMLPDatasetTrainer {
                 data,
                 1,
                 (k, v) -> preprocessor.apply(k, v.features().asArray()).labeled(v.label())
-
-//                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
-//                    preprocessor.apply(k, v.features().asArray()).labeled(v.label()))
             );
 
         return delegate.fit(
@@ -124,31 +121,16 @@ public class PythonMLPDatasetTrainer {
                 filter,
                 (k, v) -> {
                     @SuppressWarnings("unchecked")
-                    LabeledVector<Double> res = preprocessor.apply(k, Arrays.copyOf(v, v.length - 1));
-                    res.setLabel(v[v.length - 1]);
+                    LabeledVector<double[]> res = preprocessor.apply(k, Arrays.copyOf(v, v.length - 1));
+                    res.setLabel(new double[] {v[v.length - 1]});
                     return res;
                 }
-
-//                new FeatureLabelExtractorWrapper<>(
-//                    new FeatureLabelExtractor<Integer, double[], double[]>() {
-//
-//                        @Override public LabeledVector<double[]> extract(Integer k, double[] v) {
-//                            return new LabeledVector<>(
-//                                preprocessor.apply(k, Arrays.copyOf(v, v.length - 1)),
-//                                new double[] {v[v.length - 1]}
-//                            );
-//                        }
-//                    })
             );
 
         return fitOnCacheInternal(
             cache,
             filter,
-            (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1])
-
-//            new ArraysVectorizer<Integer>()
-//                .labeled(Vectorizer.LabelCoordinate.LAST)
-//                .map(v -> v.features().labeled(new double[] {v.label()}))
+            (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)).labeled(new double[] {v[v.length - 1]})
         );
     }
 

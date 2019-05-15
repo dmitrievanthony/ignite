@@ -55,7 +55,11 @@ public class PythonPreprocessingTrainer {
         for (int i = 0; i < x.length; i++)
             data.put(i, x[i]);
 
-        return delegate.fit(data, 1, preprocessor == null ? (k, v) -> VectorUtils.of(v).labeled(0.0) : preprocessor);
+        return delegate.fit(
+            data,
+            1,
+            preprocessor == null ? (k, v) -> VectorUtils.of(v).labeled(0.0) : preprocessor
+        );
     }
 
     /**
@@ -70,7 +74,8 @@ public class PythonPreprocessingTrainer {
         return delegate.fit(
             Ignition.ignite(),
             cache,
-            preprocessor == null ? (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)).labeled(0.0) : preprocessor
+            preprocessor == null ? (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1))
+                .labeled(0.0) : preprocessor
         );
     }
 }

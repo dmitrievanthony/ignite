@@ -73,9 +73,6 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
                     res.setLabel(v.label());
                     return res;
                 }
-
-//                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
-//                    preprocessor.apply(k, v.features().asArray()).labeled(v.label()))
             );
 
         return delegate.fit(
@@ -95,6 +92,7 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
     public M fitOnCache(IgniteCache<Integer, double[]> cache, IgniteBiPredicate<Integer, double[]> filter,
         Preprocessor<Integer, double[]> preprocessor) {
         if (preprocessor != null)
+
             return fitOnCacheInternal(
                 cache,
                 filter,
@@ -104,17 +102,12 @@ public class PythonDatasetTrainer<M extends IgniteModel> {
                     res.setLabel(v[v.length - 1]);
                     return res;
                 }
-
-//                new FeatureLabelExtractorWrapper<>((k, v) -> //TODO: IGNITE-11504
-//                    preprocessor.apply(k, Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1]))
             );
 
         return fitOnCacheInternal(
             cache,
             filter,
             (k, v) -> VectorUtils.of(Arrays.copyOf(v, v.length - 1)).labeled(v[v.length - 1])
-
-//            new ArraysVectorizer<Integer>().labeled(Vectorizer.LabelCoordinate.LAST)
         );
     }
 
